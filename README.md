@@ -1,1 +1,1 @@
-# cms-core
+# cms-core by CraftMySite
