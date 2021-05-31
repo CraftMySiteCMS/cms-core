@@ -3,7 +3,6 @@
 namespace CMS\Controller;
 
 class newsController {
-
     public function show($id) {
         echo "<form method='post' action=''>
                 <input type='text' name='text'>
