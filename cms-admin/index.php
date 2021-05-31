@@ -26,7 +26,7 @@ require_once('resources/lang/fr.php');
 $router = new Router($_GET['url']);
 
 /* Pages simples */
-$router->get('/', function(){ newsController::news_list(); });
+$router->get('/', "news#news_list");
 
 try {
     $router->listen();
