@@ -7,6 +7,7 @@ class Router {
     private $url;
     private $routes = [];
     private $namedRoutes = [];
+    private $GroupPattern;
 
     public function __construct($url){
         $this->url = $url;
@@ -21,6 +22,9 @@ class Router {
     }
 
     private function add($path, $callable, $name, $method){
+        if(!empty($this->GroupPattern)){
+            $path = $this->GroupPattern.$path;
+        }
         $route = new Route($path, $callable);
         $this->routes[$method][] = $route;
         if(is_string($callable) && $name === null){
@@ -32,7 +36,13 @@ class Router {
         return $route;
     }
 
-    public function run(){
+    public function scope($GroupPattern, \Closure $routes){
+        $this->GroupPattern = $GroupPattern;
+        $routes($this);
+        unset($this->GroupPattern);
+    }
+
+    public function listen(){
         if(!isset($this->routes[$_SERVER['REQUEST_METHOD']])){
             throw new RouterException('REQUEST_METHOD does not exist');
         }
