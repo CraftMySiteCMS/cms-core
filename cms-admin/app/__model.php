@@ -6,4 +6,4 @@ require(PATH_CONFIG . 'database.php');
 *       All Model
 *  ---------------------------
 */
-require(PATH_MODEL . 'MainModel.php');
+require(PATH_MODULES . 'news/model/NewsModel.php');

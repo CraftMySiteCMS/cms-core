@@ -5,4 +5,4 @@
 *     All Controller
 *  ---------------------------
 */
-require(PATH_CONTROLLER . 'MainController.php');
+require(PATH_MODULES . 'news/controller/NewsController.php');
