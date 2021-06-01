@@ -32,6 +32,17 @@ $router->scope('/posts', function($router) {
 
 });
 
+
+
+/* ADMINISTRATION */
+define('PATH_ADMIN_VIEW', 'admin/resources/views/');
+define('PATH_SCRIPTS', 'admin/resources/js/');
+define('PATH_VENDOR', 'admin/vendor/');
+$router->scope('/admin', function($router) {
+    require_once('admin/resources/lang/fr.php');
+    $router->get('/news-list', "news#admin");
+});
+
 try {
     $router->listen();
 }

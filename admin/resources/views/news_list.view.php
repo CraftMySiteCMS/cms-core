@@ -90,4 +90,4 @@ $description = _HomeView_DESC; ?>
 <!-- /.content-wrapper -->
 <?php $content = ob_get_clean(); ?>
 
-<?php require(PATH_VIEW.'template.php'); ?>
+<?php require(PATH_ADMIN_VIEW.'template.php'); ?>

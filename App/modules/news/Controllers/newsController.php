@@ -10,4 +10,8 @@ class newsController {
               </form>";
         echo "Je suis l'article $id";
     }
+
+    public function admin() {
+        require(PATH_ADMIN_VIEW.'news_list.view.php');
+    }
 }
