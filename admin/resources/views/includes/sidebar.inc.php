@@ -2,71 +2,37 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-        <img src="resources/images/identity/CraftMySite_Logo.svg" alt="<?=_ALT_LOGO?>" class="brand-image img-circle elevation-3">
+        <img src="<?=WEBSITE_ADMIN_URL?>resources/images/identity/CraftMySite_Logo.svg" alt="<?=_ALT_LOGO?>" class="brand-image img-circle elevation-3">
         <span class="brand-text font-weight-light">Craft My Site</span>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
+        <!-- Sidebar user panel -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="resources/images/identity/CraftMySite_Logo.svg" class="img-circle elevation-2" alt="User Image">
+                <img src="<?=WEBSITE_ADMIN_URL?>resources/images/identity/CraftMySite_Logo.svg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block">LoGuardiaN</a>
             </div>
         </div>
 
-        <!-- SidebarSearch Form -->
-        <div class="form-inline">
-            <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-sidebar">
-                        <i class="fas fa-search fa-fw"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <!-- Add icons to the links using the .nav-icon class
-                     with font-awesome or any other icon font library -->
-                <li class="nav-item menu-open">
-                    <a href="#" class="nav-link active">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Starter Pages
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link active">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Active Page</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Inactive Page</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Simple Link
-                            <span class="right badge badge-danger">New</span>
-                        </p>
-                    </a>
-                </li>
+                <?php $packages_folder = 'app/package/';
+                $scanned_directory = array_diff(scandir($packages_folder), array('..', '.'));
+                foreach ($scanned_directory as $package) :
+                    $strJsonFileContents = file_get_contents("app/package/$package/infos.json");
+                    $array = json_decode($strJsonFileContents, true); ?>
+                    <li class="nav-item">
+                        <a href="<?=WEBSITE_ADMIN_URL?><?=$array['url_menu']?>" class="nav-link">
+                            <i class="nav-icon <?=$array['icon_menu']?>"></i>
+                            <p><?=$array['name_menu']?></p>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

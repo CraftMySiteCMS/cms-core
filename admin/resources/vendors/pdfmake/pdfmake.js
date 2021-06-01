@@ -38,7 +38,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/
 /******/
-/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	// expose the package object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
 /******/
 /******/ 	// expose the module cache
@@ -75,7 +75,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		return ns;
 /******/ 	};
 /******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	// getDefaultExport function for compatibility with non-harmony package
 /******/ 	__webpack_require__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
 /******/ 			function getDefault() { return module['default']; } :
@@ -8412,7 +8412,7 @@ function _normalizeEncoding(enc) {
 };
 
 // Do not cache `Buffer.isEncoding` when checking encoding names as some
-// modules monkey-patch it to support additional encodings
+// package monkey-patch it to support additional encodings
 function normalizeEncoding(enc) {
   var nenc = _normalizeEncoding(enc);
   if (typeof nenc !== 'string' && (Buffer.isEncoding === isEncoding || !isEncoding(enc))) throw new Error('Unknown encoding: ' + enc);
@@ -14572,7 +14572,7 @@ if (isForced(NUMBER, !NativeNumber(' 0o1') || !NativeNumber('0b1') || NativeNumb
   for (var keys = DESCRIPTORS ? getOwnPropertyNames(NativeNumber) : (
     // ES3:
     'MAX_VALUE,MIN_VALUE,NaN,NEGATIVE_INFINITY,POSITIVE_INFINITY,' +
-    // ES2015 (in case, if modules with ES2015 Number statics required before):
+    // ES2015 (in case, if package with ES2015 Number statics required before):
     'EPSILON,isFinite,isInteger,isNaN,isSafeInteger,MAX_SAFE_INTEGER,' +
     'MIN_SAFE_INTEGER,parseFloat,parseInt,isInteger,' +
     // ESNext
@@ -17493,7 +17493,7 @@ function getMessage(self) {
 }
 
 // At present only the three keys mentioned above are used and
-// understood by the spec. Implementations or sub modules can pass
+// understood by the spec. Implementations or sub package can pass
 // other keys to the AssertionError's constructor - they will be
 // ignored.
 
@@ -55546,7 +55546,7 @@ StripBOMWrapper.prototype.end = function() {
 
 
 // Update this array if you add/rename/remove files in this directory.
-// We support Browserify by skipping automatic module discovery and requiring modules directly.
+// We support Browserify by skipping automatic module discovery and requiring package directly.
 var modules = [
     __webpack_require__(397),
     __webpack_require__(398),
@@ -67233,13 +67233,13 @@ var nfullbits = function (ver) {
 	 * |       |                                v
 	 * +-------+                             ----
 	 *
-	 * when the entire code has n^2 modules and there are m^2-3 alignment
+	 * when the entire code has n^2 package and there are m^2-3 alignment
 	 * patterns, we have:
-	 * - 225 (= 9x9 + 9x8 + 8x9) modules for finder patterns and
+	 * - 225 (= 9x9 + 9x8 + 8x9) package for finder patterns and
 	 *   format information;
-	 * - 2n-34 (= 2(n-17)) modules for timing patterns;
-	 * - 36 (= 3x6 + 6x3) modules for version information, if any;
-	 * - 25m^2-75 (= (m^2-3)(5x5)) modules for alignment patterns
+	 * - 2n-34 (= 2(n-17)) package for timing patterns;
+	 * - 36 (= 3x6 + 6x3) package for version information, if any;
+	 * - 25m^2-75 (= (m^2-3)(5x5)) package for alignment patterns
 	 *   if any, but 10m-20 (= 2(m-2)x5) of them overlaps with
 	 *   timing patterns.
 	 */
@@ -67613,10 +67613,10 @@ var putformatinfo = function (matrix, reserved, ecclevel, mask) {
 // note: zxing seems to use the same procedure and in many cases its choice
 // agrees to ours, but sometimes it does not. practically it doesn't matter.
 var evaluatematrix = function (matrix) {
-	// N1+(k-5) points for each consecutive row of k same-colored modules,
+	// N1+(k-5) points for each consecutive row of k same-colored package,
 	// where k >= 5. no overlapping row counts.
 	var PENALTY_CONSECUTIVE = 3;
-	// N2 points for each 2x2 block of same-colored modules.
+	// N2 points for each 2x2 block of same-colored package.
 	// overlapping block does count.
 	var PENALTY_TWOBYTWO = 3;
 	// N3 points for each pattern with >4W:1B:1W:3B:1W:1B or
@@ -67794,11 +67794,11 @@ function generateFrame(data, options) {
 
 
 // options
-// - modulesize: a number. this is a size of each modules in pixels, and
+// - modulesize: a number. this is a size of each package in pixels, and
 //   defaults to 5px.
-// - margin: a number. this is a size of margin in *modules*, and defaults to
-//   4 (white modules). the specficiation mandates the margin no less than 4
-//   modules, so it is better not to alter this value unless you know what
+// - margin: a number. this is a size of margin in *package*, and defaults to
+//   4 (white package). the specficiation mandates the margin no less than 4
+//   package, so it is better not to alter this value unless you know what
 //   you're doing.
 function buildCanvas(data, options) {
 

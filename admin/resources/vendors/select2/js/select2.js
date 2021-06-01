@@ -14,7 +14,7 @@
     module.exports = function (root, jQuery) {
       if (jQuery === undefined) {
         // require('jQuery') returns a factory that requires window to
-        // build a jQuery instance, we normalize how we use modules
+        // build a jQuery instance, we normalize how we use package
         // that require this pattern but the window provided is a noop
         // if it's defined (how jquery works)
         if (typeof window !== 'undefined') {
@@ -6095,7 +6095,7 @@ S2.define('jquery.select2',[
 }());
 
   // Autoload the jQuery bindings
-  // We know that all of the modules exist above this, so we're safe
+  // We know that all of the package exist above this, so we're safe
   var select2 = S2.require('jquery.select2');
 
   // Hold the AMD module references on the jQuery function that was just loaded

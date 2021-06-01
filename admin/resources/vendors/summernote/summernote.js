@@ -49,7 +49,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/
 /******/
-/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	// expose the package object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
 /******/
 /******/ 	// expose the module cache
@@ -86,7 +86,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		return ns;
 /******/ 	};
 /******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	// getDefaultExport function for compatibility with non-harmony package
 /******/ 	__webpack_require__.n = function(module) {
 /******/ 		var getter = module && module.__esModule ?
 /******/ 			function getDefault() { return module['default']; } :
@@ -2242,7 +2242,7 @@ var Context_Context = /*#__PURE__*/function () {
     this.initialize();
   }
   /**
-   * create layout and initialize modules and other resources
+   * create layout and initialize package and other resources
    */
 
 
@@ -2257,7 +2257,7 @@ var Context_Context = /*#__PURE__*/function () {
       return this;
     }
     /**
-     * destroy modules and other resources and remove layout
+     * destroy package and other resources and remove layout
      */
 
   }, {
@@ -2269,7 +2269,7 @@ var Context_Context = /*#__PURE__*/function () {
       this.ui.removeLayout(this.$note, this.layoutInfo);
     }
     /**
-     * destory modules and other resources and initialize it again
+     * destory package and other resources and initialize it again
      */
 
   }, {
@@ -2300,7 +2300,7 @@ var Context_Context = /*#__PURE__*/function () {
       Object.keys(buttons).forEach(function (key) {
         _this.memo('button.' + key, buttons[key]);
       });
-      var modules = external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default.a.extend({}, this.options.modules, external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default.a.summernote.plugins || {}); // add and initialize modules
+      var modules = external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default.a.extend({}, this.options.modules, external_root_jQuery_commonjs2_jquery_commonjs_jquery_amd_jquery_default.a.summernote.plugins || {}); // add and initialize package
 
       Object.keys(modules).forEach(function (key) {
         _this.module(key, modules[key], true);
@@ -2314,7 +2314,7 @@ var Context_Context = /*#__PURE__*/function () {
     value: function _destroy() {
       var _this2 = this;
 
-      // destroy modules with reversed order
+      // destroy package with reversed order
       Object.keys(this.modules).reverse().forEach(function (key) {
         _this2.removeModule(key);
       });
@@ -10205,7 +10205,7 @@ var ui_ui = function ui(editorOptions) {
 };
 
 /* harmony default export */ var bs3_ui = (ui_ui);
-// EXTERNAL MODULE: ./src/js/base/settings.js + 37 modules
+// EXTERNAL MODULE: ./src/js/base/settings.js + 37 package
 var settings = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./src/styles/summernote-bs3.scss

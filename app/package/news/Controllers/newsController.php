@@ -12,6 +12,6 @@ class newsController {
     }
 
     public function admin() {
-        require(PATH_ADMIN_VIEW.'news_list.view.php');
+        require('app/package/news/views/list.admin.view.php');
     }
 }
