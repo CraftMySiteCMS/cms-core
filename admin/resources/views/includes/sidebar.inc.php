@@ -1,8 +1,8 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-        <img src="<?=WEBSITE_ADMIN_URL?>resources/images/identity/CraftMySite_Logo.svg" alt="<?=_ALT_LOGO?>" class="brand-image img-circle elevation-3">
+    <a href="<?=getenv("PATH_SUBFOLDER")?>cms-admin/" class="brand-link">
+        <img src="<?=getenv("PATH_SUBFOLDER")?>admin/resources/images/identity/CraftMySite_Logo.svg" alt="<?=_ALT_LOGO?>" class="brand-image img-circle elevation-3">
         <span class="brand-text font-weight-light">Craft My Site</span>
     </a>
 
@@ -11,7 +11,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="<?=WEBSITE_ADMIN_URL?>resources/images/identity/CraftMySite_Logo.svg" class="img-circle elevation-2" alt="User Image">
+                <img src="<?=getenv("PATH_SUBFOLDER")?>admin/resources/images/identity/CraftMySite_Logo.svg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block">LoGuardiaN</a>
@@ -27,7 +27,7 @@
                     $strJsonFileContents = file_get_contents("app/package/$package/infos.json");
                     $array = json_decode($strJsonFileContents, true); ?>
                     <li class="nav-item">
-                        <a href="<?=WEBSITE_ADMIN_URL?><?=$array['url_menu']?>" class="nav-link">
+                        <a href="<?=getenv("PATH_SUBFOLDER_ADMIN")?>cms-admin/<?=$array['url_menu']?>" class="nav-link">
                             <i class="nav-icon <?=$array['icon_menu']?>"></i>
                             <p><?=$array['name_menu']?></p>
                         </a>

@@ -1,17 +1,21 @@
 <?php
 
+/* FAUT S'EN PASSER
 if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') $url = "https://";
 else $url = "http://";
-// Append the host(domain name, ip) to the URL.
 $url.= $_SERVER['HTTP_HOST'].'/';
 
 define('WEBSITE_URL', $url);
 define('WEBSITE_ADMIN_URL', $url.'admin/');
+END */
+
 
 /* For dev Only, display all warnings and errors */
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+/* End Dev Only */
+
 
 /* Loading environment variables */
 require_once("app/EnvBuilder.php");
@@ -39,13 +43,10 @@ $router->get('/', function(){ echo 'Homepage';});
 $router->get('/posts', function(){ echo 'Tous les articles';});
 
 /* ADMINISTRATION */
-$router->scope('/admin', function($router) {
+$router->scope('/cms-admin', function($router) {
     // TODO : Créer la page d'accueil admin
     $router->get('/', "news#admin");
 });
-
-
-
 
 
 /* EXEMPLE - Afficher une page avec plusieurs paramètres */

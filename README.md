@@ -25,11 +25,15 @@ Installation
 Attention, sur Nginx uniquement, la configuration suivante du serveur est nécéssaire :
 
 ```bash
+autoindex off;
+
 location / {
+  if (!-e $request_filename){
+    rewrite ^(.*)$ /%1 redirect;
+  }
   if (!-e $request_filename){
     rewrite ^(.*)$ /index.php?url=$1 break;
   }
-}
 ```
 
 Nous aider dans le développement

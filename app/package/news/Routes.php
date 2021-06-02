@@ -7,7 +7,7 @@ $router->scope('/posts', function($router) {
 });
 
 /* Administration scope of package */
-$router->scope('/admin', function($router) {
+$router->scope('/cms-admin', function($router) {
     $router->get('/news', "news#admin");
     $router->get('/news/list', "news#admin");
 });
