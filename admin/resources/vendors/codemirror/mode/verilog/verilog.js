@@ -228,13 +228,13 @@ CodeMirror.defineMode("verilog", function(config, parserConfig) {
             // "disable fork;" and "wait fork;" (trailing semicolon)
             stream.eatSpace()
             if (stream.peek() == ';') {
-              curPunc = "newstatement";
+              curPunc = "poststatement";
             }
             stream.backUp(stream.current().length - cur.length);
           }
         }
         if (statementKeywords[cur]) {
-          curPunc = "newstatement";
+          curPunc = "poststatement";
         }
         curKeyword = cur;
         return "keyword";
@@ -414,7 +414,7 @@ CodeMirror.defineMode("verilog", function(config, parserConfig) {
         pushContext(state, stream.column(), ")");
       } else if (ctx && ctx.type == "endcase" && curPunc == ":") {
         pushContext(state, stream.column(), "statement", "case");
-      } else if (curPunc == "newstatement") {
+      } else if (curPunc == "poststatement") {
         pushContext(state, stream.column(), "statement", curKeyword);
       } else if (curPunc == "newblock") {
         if (curKeyword == "function" && ctx && (ctx.type == "statement" || ctx.type == "endgroup")) {

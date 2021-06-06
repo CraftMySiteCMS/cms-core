@@ -111,14 +111,14 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
 
     var cur = stream.current();
     if (contains(keywords, cur)) {
-      if (contains(blockKeywords, cur)) curPunc = "newstatement";
+      if (contains(blockKeywords, cur)) curPunc = "poststatement";
       if (contains(defKeywords, cur)) isDefKeyword = true;
       return "keyword";
     }
     if (contains(types, cur)) return "type";
     if (contains(builtin, cur)
         || (isReservedIdentifier && isReservedIdentifier(cur))) {
-      if (contains(blockKeywords, cur)) curPunc = "newstatement";
+      if (contains(blockKeywords, cur)) curPunc = "poststatement";
       return "builtin";
     }
     if (contains(atoms, cur)) return "atom";
@@ -194,7 +194,7 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
       else if (curPunc == ctx.type) popContext(state);
       else if (indentStatements &&
                (((ctx.type == "}" || ctx.type == "top") && curPunc != ";") ||
-                (ctx.type == "statement" && curPunc == "newstatement"))) {
+                (ctx.type == "statement" && curPunc == "poststatement"))) {
         pushContext(state, stream.column(), "statement", stream.current());
       }
 

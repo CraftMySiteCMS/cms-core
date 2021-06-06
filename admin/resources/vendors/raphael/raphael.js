@@ -7269,8 +7269,8 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
             }
             node.appendChild(fill);
             var stroke = (node.getElementsByTagName("stroke") && node.getElementsByTagName("stroke")[0]),
-            newstroke = false;
-            !stroke && (newstroke = stroke = createNode("stroke"));
+            poststroke = false;
+            !stroke && (poststroke = stroke = createNode("stroke"));
             if ((params.stroke && params.stroke != "none") ||
                 params["stroke-width"] ||
                 params["stroke-opacity"] != null ||
@@ -7309,7 +7309,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_
                 };
                 stroke.dashstyle = dasharray[has](params["stroke-dasharray"]) ? dasharray[params["stroke-dasharray"]] : E;
             }
-            newstroke && node.appendChild(stroke);
+            poststroke && node.appendChild(stroke);
         }
         if (res.type == "text") {
             res.paper.canvas.style.display = E;

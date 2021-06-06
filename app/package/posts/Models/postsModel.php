@@ -1,60 +1,62 @@
 <?php
 
-namespace CMS\Model;
+namespace CMS\Model\posts;
 
+use CMS\Model\Manager;
+use CMS\Model\UserModel;
 use PDO;
 use stdClass;
 
-class NewsModel extends Database {
+class PostsModel extends Manager {
 
-    public $news_id;
-    public $news_slug;
+    public $posts_id;
+    public $posts_slug;
     public $user_id;
-    public $news_title;
-    public $news_content;
-    public $news_image;
-    public $news_created;
-    public $news_updated;
-    public $news_state;
+    public $posts_title;
+    public $posts_content;
+    public $posts_image;
+    public $posts_created;
+    public $posts_updated;
+    public $posts_state;
 
-    public $news_excerpt;
+    public $posts_excerpt;
     public $categories = array();
     public $user = array();
 
-    public static function checkNews($var, $is_slug = null) {
-        if($is_slug) $var = array("news_slug" => $var);
-        else $var = array("news_id" => $var);
+    public static function checkPosts($var, $is_slug = null) {
+        if($is_slug) $var = array("posts_slug" => $var);
+        else $var = array("posts_id" => $var);
 
-        $sql = "SELECT COUNT(news_id) as exist"
-            ." FROM cms_news";
-        if($is_slug) $sql .= " WHERE news_slug=:news_slug";
-        else $sql .= " WHERE news_id=:news_id";
+        $sql = "SELECT COUNT(posts_id) as exist"
+            ." FROM cms_posts_list";
+        if($is_slug) $sql .= " WHERE posts_slug=:posts_slug";
+        else $sql .= " WHERE posts_id=:posts_id";
 
-        $db = Database::dbSConnect();
+        $db = Manager::db_connect();
         $req = $db->prepare($sql);
         $req->execute($var);
 
         return $req->fetchColumn();
     }
 
-    public function getNews($is_slug = null) {
-        if($is_slug) $var = array("news_slug" => $this->news_slug);
-        else $var = array("news_id" => $this->news_id);
+    public function getPosts($is_slug = null) {
+        if($is_slug) $var = array("posts_slug" => $this->posts_slug);
+        else $var = array("posts_id" => $this->posts_id);
 
-        $sql = "SELECT news_id, news_slug, user_id, news_title, news_content, DATE_FORMAT(news_created, '%d/%m/%Y à %H:%i:%s') AS 'news_created', DATE_FORMAT(news_updated, '%d/%m/%Y à %H:%i:%s') AS 'news_updated'"
-            ." FROM cms_news"
-            ." WHERE news_state = 1";
-        if($is_slug) $sql .= " AND news_slug=:news_slug";
-        else $sql .= " AND news_id=:news_id";
+        $sql = "SELECT posts_id, posts_slug, user_id, posts_title, posts_content, DATE_FORMAT(posts_created, '%d/%m/%Y à %H:%i:%s') AS 'posts_created', DATE_FORMAT(posts_updated, '%d/%m/%Y à %H:%i:%s') AS 'posts_updated'"
+            ." FROM cms_posts_list"
+            ." WHERE posts_state = 1";
+        if($is_slug) $sql .= " AND posts_slug=:posts_slug";
+        else $sql .= " AND posts_id=:posts_id";
 
-        $db = $this->dbConnect();
+        $db = $this->db_connect();
         $req = $db->prepare($sql);
         $req->execute($var);
 
         if($req) :
             $result = $req->fetch(PDO::FETCH_ASSOC);
             foreach ($result as $key => $property) :
-                if(property_exists(NewsModel::class, $key)) :
+                if(property_exists(PostsModel::class, $key)) :
                     $this->$key = $property;
                 endif;
             endforeach;
@@ -62,53 +64,55 @@ class NewsModel extends Database {
             $user->getUser($result['user_id']);
             $this->user = $user;
             $this->getCategories();
-            $this->TranslateNews();
+            $this->TranslatePosts();
         endif;
     }
 
-    public static function getAllNews($limit = null, $offset = null, $category = null): array {
+    public static function getAllPosts($limit = null, $offset = null, $category = null): array {
         $return = [];
 
-        $sql = "SELECT news_id, news_slug, user_id, news_title, news_content, DATE_FORMAT(news_created, '%d/%m/%Y à %H:%i:%s') AS 'news_created', DATE_FORMAT(news_updated, '%d/%m/%Y à %H:%i:%s') AS 'news_updated'"
-            ." FROM cms_news "
-            ." WHERE news_state = 1"
-            ." ORDER BY news_id DESC";
+        $sql = "SELECT posts_id, posts_slug, user_id, posts_title, posts_content, DATE_FORMAT(posts_created, '%d/%m/%Y à %H:%i:%s') AS 'posts_created', DATE_FORMAT(posts_updated, '%d/%m/%Y à %H:%i:%s') AS 'posts_updated'"
+            ." FROM cms_posts_list "
+            ." WHERE posts_state = 1"
+            ." ORDER BY posts_id DESC";
         if($limit != null && $offset != null) $sql .= " LIMIT $offset, $limit";
         elseif($limit != null && $offset == null) $sql .= " LIMIT $limit";
 
-        $db = Database::dbSConnect();
+        $db = Manager::db_connect();
         $req = $db->prepare($sql);
         $req->execute();
 
         if($req) :
             while($result = $req->fetch()) :
-                $news = new NewsModel();
-                $news->news_id = $result['news_id'];
-                $news->news_slug = $result['news_slug'];
-                $news->news_title = $result['news_title'];
-                $news->news_content = $result['news_content'];
-                $news->news_created = $result['news_created'];
-                $news->news_updated = $result['news_updated'];
+                $posts = new PostsModel();
+                $posts->posts_id = $result['posts_id'];
+                $posts->posts_slug = $result['posts_slug'];
+                $posts->posts_title = $result['posts_title'];
+                $posts->posts_content = $result['posts_content'];
+                $posts->posts_created = $result['posts_created'];
+                $posts->posts_updated = $result['posts_updated'];
 
-                $news->ExcerptNews();
-                $news->TranslateNews();
+                if(!empty($posts->posts_content)) {
+                    $posts->ExcerptPosts();
+                    $posts->TranslatePosts();
+                }
 
                 $user = new UserModel();
                 $user->getUser($result['user_id']);
-                $news->user = $user;
+                $posts->user = $user;
 
-                $news->getCategories();
+                $posts->getCategories();
 
 
 
                 $is_in_category = false;
-                foreach ($news->categories as $category_infos) {
+                foreach ($posts->categories as $category_infos) {
                     if($category == $category_infos->category_id) {
                         $is_in_category = true;
                     }
                 }
                 if($category != null && $is_in_category || $category == null) {
-                    array_push($return,$news);
+                    array_push($return,$posts);
                 }
 
             endwhile;
@@ -119,16 +123,16 @@ class NewsModel extends Database {
     public function getCategories() {
         $this->categories = [];
         $var = array(
-            "news_id" => $this->news_id
+            "posts_id" => $this->posts_id
         );
 
-        $sql = "SELECT cms_categories_news.category_id, cms_categories.category_name, cms_categories.category_slug"
-            ." FROM cms_categories_news"
-            ." INNER JOIN cms_categories"
-            ." ON cms_categories.category_id = cms_categories_news.category_id"
-            ." WHERE cms_categories_news.news_id=:news_id";
+        $sql = "SELECT cms_posts_categories_posts.category_id, cms_posts_categories.category_name, cms_posts_categories.category_slug"
+            ." FROM cms_posts_categories_posts"
+            ." INNER JOIN cms_posts_categories"
+            ." ON cms_posts_categories.category_id = cms_posts_categories_posts.category_id"
+            ." WHERE cms_posts_categories_posts.posts_id=:posts_id";
 
-        $db = $this->dbConnect();
+        $db = $this->db_connect();
         $req = $db->prepare($sql);
         $req->execute($var);
 
@@ -143,70 +147,70 @@ class NewsModel extends Database {
         endif;
     }
 
-    public static function searchNews($search_keyword): array {
+    public static function searchPosts($search_keyword): array {
         $return = [];
         $var = array(
             "keyword" => "%$search_keyword%"
         );
 
-        $sql = "SELECT news_id, news_slug, user_id, news_title, news_content, DATE_FORMAT(news_created, '%d/%m/%Y à %H:%i:%s') AS 'news_created', DATE_FORMAT(news_updated, '%d/%m/%Y à %H:%i:%s') AS 'news_updated'"
-            ." FROM cms_news "
-            ." WHERE news_title LIKE :keyword OR news_content LIKE :keyword"
-            ." AND news_state = 1"
-            ." ORDER BY news_id DESC";
+        $sql = "SELECT posts_id, posts_slug, user_id, posts_title, posts_content, DATE_FORMAT(posts_created, '%d/%m/%Y à %H:%i:%s') AS 'posts_created', DATE_FORMAT(posts_updated, '%d/%m/%Y à %H:%i:%s') AS 'posts_updated'"
+            ." FROM cms_posts_list "
+            ." WHERE posts_title LIKE :keyword OR posts_content LIKE :keyword"
+            ." AND posts_state = 1"
+            ." ORDER BY posts_id DESC";
 
-        $db = Database::dbSConnect();
+        $db = Manager::db_connect();
         $req = $db->prepare($sql);
         $req->execute($var);
 
         if($req) :
             while($result = $req->fetch()) :
-                $news = new NewsModel();
-                $news->news_id = $result['news_id'];
-                $news->news_slug = $result['news_slug'];
-                $news->news_title = $result['news_title'];
-                $news->news_content = $result['news_content'];
-                $news->news_created = $result['news_created'];
-                $news->news_updated = $result['news_updated'];
-                $news->ExcerptNews();
+                $posts = new PostsModel();
+                $posts->posts_id = $result['posts_id'];
+                $posts->posts_slug = $result['posts_slug'];
+                $posts->posts_title = $result['posts_title'];
+                $posts->posts_content = $result['posts_content'];
+                $posts->posts_created = $result['posts_created'];
+                $posts->posts_updated = $result['posts_updated'];
+                $posts->ExcerptPosts();
 
                 $user = new UserModel();
                 $user->getUser($result['user_id']);
-                $news->user = $user;
+                $posts->user = $user;
 
-                $news->getCategories();
+                $posts->getCategories();
 
-                array_push($return,$news);
+                array_push($return,$posts);
             endwhile;
         endif;
 
         return $return;
     }
 
-    public function createNews() {
+    public function createPosts() {
         $infos = array(
-            "news_slug" => $this->news_slug,
+            "posts_slug" => $this->posts_slug,
             "user_id" => $this->user_id,
-            "news_title" => $this->news_title,
-            "news_content" => $this->news_content,
-            "news_state" => 1
+            "posts_title" => $this->posts_title,
+            "posts_content" => $this->posts_content,
+            "posts_state" => 1
         );
-        $sql = "INSERT INTO cms_news(news_slug, user_id, news_title, news_content, news_state) VALUES (:news_slug, :user_id, :news_title, :news_content, :news_state)";
+        $sql = "INSERT INTO cms_posts_list(posts_slug, user_id, posts_title, posts_content, posts_state) VALUES (:posts_slug, :user_id, :posts_title, :posts_content, :posts_state)";
 
-        $db = $this->dbConnect();
+        $db = $this->db_connect();
         $req = $db->prepare($sql);
         $status = $req->execute($infos);
 
         if($status){
-            $this->news_id = $db->lastInsertId();
-            return $this->news_id;
+            $this->posts_id = $db->lastInsertId();
+            return $this->posts_id;
         } else {
             return -1;
         }
     }
 
-    public function ExcerptNews() {
-        $content = json_decode($this->news_content);
+    public function ExcerptPosts() {
+        $content = json_decode($this->posts_content);
         $blocks = $content->blocks;
         $convertedHtml = "";
         foreach ($blocks as $block) :
@@ -224,11 +228,11 @@ class NewsModel extends Database {
 
         if(strlen($convertedHtml) >= 183) $convertedHtml = substr($convertedHtml, 0, 180)."...";
 
-        $this->news_excerpt = "<p>$convertedHtml</p>";
+        $this->posts_excerpt = "<p>$convertedHtml</p>";
     }
 
-    public function TranslateNews() {
-        $content = json_decode($this->news_content);
+    public function TranslatePosts() {
+        $content = json_decode($this->posts_content);
         $blocks = $content->blocks;
         $convertedHtml = "";
         foreach ($blocks as $block) :
@@ -303,16 +307,16 @@ class NewsModel extends Database {
             endswitch;
         endforeach;
 
-        $this->news_content = $convertedHtml;
+        $this->posts_content = $convertedHtml;
     }
 }
 
 
-// Toutes les news d'un article
-//SELECT * FROM "cms_categories_news" INNER JOIN cms_categories ON cms_categories_news.category_id = cms_categories.category_id WHERE cms_categories_news.news_id = 1
+// Je sais plus pourquoi j'ai mis ça là mais je le garde au cas où
+//SELECT * FROM "cms_posts_categories_posts" INNER JOIN cms_posts_categories ON cms_posts_categories_posts.category_id = cms_posts_categories.category_id WHERE cms_posts_categories_posts.posts_id = 1
 
 
-//SELECT cms_news.news_id, news_slug, user_id, news_title, news_content, DATE_FORMAT(news_created, '%d/%m/%Y à %H:%i:%s') AS 'news_created', DATE_FORMAT(news_updated, '%d/%m/%Y à %H:%i:%s') AS 'news_updated', GROUP_CONCAT(cms_categories.category_name,"|",cms_categories.category_slug SEPARATOR '&&' ) AS categories FROM "cms_news"
-//INNER JOIN cms_categories_news ON cms_categories_news.news_id = cms_news.news_id
-//INNER JOIN cms_categories ON cms_categories_news.category_id = cms_categories.category_id
-//GROUP BY news_id
+//SELECT cms_posts_list.posts_id, posts_slug, user_id, posts_title, posts_content, DATE_FORMAT(posts_created, '%d/%m/%Y à %H:%i:%s') AS 'posts_created', DATE_FORMAT(posts_updated, '%d/%m/%Y à %H:%i:%s') AS 'posts_updated', GROUP_CONCAT(cms_posts_categories.category_name,"|",cms_posts_categories.category_slug SEPARATOR '&&' ) AS categories FROM "cms_posts_list"
+//INNER JOIN cms_posts_categories_posts ON cms_posts_categories_posts.posts_id = cms_posts_list.posts_id
+//INNER JOIN cms_posts_categories ON cms_posts_categories_posts.category_id = cms_posts_categories.category_id
+//GROUP BY posts_id

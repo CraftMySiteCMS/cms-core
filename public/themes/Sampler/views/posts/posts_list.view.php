@@ -1,20 +1,11 @@
-<?php
-use function CMS\Controller\posts\cms_posts_list_list;
-use function CMS\Controller\posts\cms_searchbar_posts;
-?>
+<h1>Nos actualités</h1>
 
-<?php $title = "Accueil";
-$description = "Coucou"; ?>
-
-<?php ob_start(); ?>
-<h1>Accueil</h1>
-<?= $posts_controller->cms_searchbar_posts() ?>
-<?php $posts = $posts_controller->cms_posts_list_list(4);
+<?php $posts = cms_posts_list_list();
 foreach ($posts as $item) :
     $user = $item->user;
     $categories = $item->categories;
 
-    echo "<h3>$item->posts_title</h3>";
+    echo "<h2>$item->posts_title</h2>";
     echo "<small>(publié le $item->posts_created et mis à jour le $item->posts_updated, par $user->user_pseudo)</small><br>";
     foreach ($categories as $category) :
         echo "<a href='/categorie/$category->category_slug'>$category->category_name</a>";
@@ -23,7 +14,3 @@ foreach ($posts as $item) :
     echo "<a href='/actualite/$item->posts_slug'>Lire l'article</a>";
     echo "<hr>";
 endforeach;?>
-
-<?php $content = ob_get_clean(); ?>
-
-<?php require('template.php'); ?>

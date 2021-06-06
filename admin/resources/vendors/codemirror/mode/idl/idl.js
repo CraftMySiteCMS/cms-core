@@ -52,7 +52,7 @@
     'dblarr', 'dcindgen', 'dcomplex', 'dcomplexarr', 'define_key',
     'define_msgblk', 'define_msgblk_from_file', 'defroi', 'defsysv',
     'delvar', 'dendro_plot', 'dendrogram', 'deriv', 'derivsig',
-    'determ', 'device', 'dfpmin', 'diag_matrix', 'dialog_dbconnect',
+    'determ', 'device', 'dfpmin', 'diag_matrix', 'dialog_db_connect',
     'dialog_message', 'dialog_pickfile', 'dialog_printersetup',
     'dialog_printjob', 'dialog_read_image',
     'dialog_write_image', 'dictionary', 'digital_filter', 'dilate', 'dindgen',

@@ -2,7 +2,7 @@
 
 namespace CMS\Model;
 
-class UserModel extends Database {
+class UserModel extends Manager {
     public $user_id;
     public $user_email;
     public $user_pseudo;
@@ -40,9 +40,9 @@ class UserModel extends Database {
             "user_id" => $user_id
         );
 
-        $sql = "SELECT user_id, user_email, user_pseudo, user_firstname, user_lastname, user_state, user_role, DATE_FORMAT(user_created, '%d/%m/%Y à %H:%i:%s') AS 'user_created', DATE_FORMAT(user_updated, '%d/%m/%Y à %H:%i:%s') AS 'user_updated' FROM cms_users WHERE user_state = 1 AND user_id=:user_id";
+        $sql = "SELECT user_id, user_email, user_pseudo, user_firstname, user_lastname, user_state, user_role, DATE_FORMAT(user_created, '%d/%m/%Y à %H:%i:%s') AS 'user_created', DATE_FORMAT(user_updated, '%d/%m/%Y à %H:%i:%s') AS 'user_updated' FROM cms_core_users WHERE user_state = 1 AND user_id=:user_id";
 
-        $db = $this->dbConnect();
+        $db = $this->db_connect();
         $req = $db->prepare($sql);
         $req->execute($var);
 
@@ -65,11 +65,11 @@ class UserModel extends Database {
         );
 
         $sql = "SELECT user_id, user_role, user_password"
-            ." FROM cms_users WHERE user_state=1"
+            ." FROM cms_core_users WHERE user_state=1"
             ." AND (user_email=:identifiant"
             ." OR user_pseudo=:identifiant)";
 
-        $db = Manager::dbSConnect();
+        $db = Manager::db_connect();
         $req = $db->prepare($sql);
         $req->execute($infoSql);
 

@@ -73,19 +73,19 @@ CodeMirror.defineMode("ecl", function(config) {
     stream.eatWhile(/[\w\$_]/);
     var cur = stream.current().toLowerCase();
     if (keyword.propertyIsEnumerable(cur)) {
-      if (blockKeywords.propertyIsEnumerable(cur)) curPunc = "newstatement";
+      if (blockKeywords.propertyIsEnumerable(cur)) curPunc = "poststatement";
       return "keyword";
     } else if (variable.propertyIsEnumerable(cur)) {
-      if (blockKeywords.propertyIsEnumerable(cur)) curPunc = "newstatement";
+      if (blockKeywords.propertyIsEnumerable(cur)) curPunc = "poststatement";
       return "variable";
     } else if (variable_2.propertyIsEnumerable(cur)) {
-      if (blockKeywords.propertyIsEnumerable(cur)) curPunc = "newstatement";
+      if (blockKeywords.propertyIsEnumerable(cur)) curPunc = "poststatement";
       return "variable-2";
     } else if (variable_3.propertyIsEnumerable(cur)) {
-      if (blockKeywords.propertyIsEnumerable(cur)) curPunc = "newstatement";
+      if (blockKeywords.propertyIsEnumerable(cur)) curPunc = "poststatement";
       return "variable-3";
     } else if (builtin.propertyIsEnumerable(cur)) {
-      if (blockKeywords.propertyIsEnumerable(cur)) curPunc = "newstatement";
+      if (blockKeywords.propertyIsEnumerable(cur)) curPunc = "poststatement";
       return "builtin";
     } else { //Data types are of from KEYWORD##
                 var i = cur.length - 1;
@@ -95,7 +95,7 @@ CodeMirror.defineMode("ecl", function(config) {
                 if (i > 0) {
                         var cur2 = cur.substr(0, i + 1);
                 if (variable_3.propertyIsEnumerable(cur2)) {
-                        if (blockKeywords.propertyIsEnumerable(cur2)) curPunc = "newstatement";
+                        if (blockKeywords.propertyIsEnumerable(cur2)) curPunc = "poststatement";
                         return "variable-3";
                 }
             }
@@ -181,7 +181,7 @@ CodeMirror.defineMode("ecl", function(config) {
         while (ctx.type == "statement") ctx = popContext(state);
       }
       else if (curPunc == ctx.type) popContext(state);
-      else if (ctx.type == "}" || ctx.type == "top" || (ctx.type == "statement" && curPunc == "newstatement"))
+      else if (ctx.type == "}" || ctx.type == "top" || (ctx.type == "statement" && curPunc == "poststatement"))
         pushContext(state, stream.column(), "statement");
       state.startOfLine = false;
       return style;

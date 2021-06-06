@@ -1,10 +1,11 @@
 <?php
 
-namespace CMS\Model;
+namespace CMS\Model\posts;
 
+use CMS\Model\Manager;
 use stdClass;
 
-class CategoriesModel extends Database {
+class CategoriesModel extends Manager {
 
     public $category_id;
     public $category_name;
@@ -18,11 +19,11 @@ class CategoriesModel extends Database {
         else $var = array("category_id" => $var);
 
         $sql = "SELECT COUNT(category_id) as exist"
-            ." FROM cms_categories";
+            ." FROM cms_posts_categories";
         if($is_slug) $sql .= " WHERE category_slug=:category_slug";
         else $sql .= " WHERE category_id=:category_id";
 
-        $db = Database::dbSConnect();
+        $db = Manager::db_connect();
         $req = $db->prepare($sql);
         $req->execute($var);
 
@@ -34,9 +35,9 @@ class CategoriesModel extends Database {
             "category_slug" => $this->category_slug
         );
 
-        $sql = "SELECT category_id, category_name, category_slug, category_description, DATE_FORMAT(category_created, '%d/%m/%Y à %H:%i:%s') AS 'category_created', DATE_FORMAT(category_updated, '%d/%m/%Y à %H:%i:%s') AS 'category_updated' FROM cms_categories WHERE category_slug=:category_slug";
+        $sql = "SELECT category_id, category_name, category_slug, category_description, DATE_FORMAT(category_created, '%d/%m/%Y à %H:%i:%s') AS 'category_created', DATE_FORMAT(category_updated, '%d/%m/%Y à %H:%i:%s') AS 'category_updated' FROM cms_posts_categories WHERE category_slug=:category_slug";
 
-        $db = $this->dbConnect();
+        $db = $this->db_connect();
         $req = $db->prepare($sql);
         $req->execute($var);
 

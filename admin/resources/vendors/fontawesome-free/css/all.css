@@ -2013,10 +2013,10 @@ readers do not read off random characters that represent icons */
 .fa-h-square:before {
   content: "\f0fd"; }
 
-.fa-hacker-news:before {
+.fa-hacker-posts:before {
   content: "\f1d4"; }
 
-.fa-hacker-news-square:before {
+.fa-hacker-posts-square:before {
   content: "\f3af"; }
 
 .fa-hackerrank:before {
@@ -2808,7 +2808,7 @@ readers do not read off random characters that represent icons */
 .fa-neuter:before {
   content: "\f22c"; }
 
-.fa-newspaper:before {
+.fa-postspaper:before {
   content: "\f1ea"; }
 
 .fa-nimblr:before {

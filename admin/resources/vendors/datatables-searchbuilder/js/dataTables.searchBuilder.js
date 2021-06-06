@@ -869,7 +869,7 @@
 		 * Create a cell that contains week of the year - ISO8601
 		 *
 		 * Based on https://stackoverflow.com/questions/6117814/ and
-		 * http://techblog.procurios.nl/k/n618/news/view/33796/14863/
+		 * http://techblog.procurios.nl/k/n618/posts/view/33796/14863/
 		 *
 		 * @param  {integer} d Day of month
 		 * @param  {integer} m Month of year (zero index)

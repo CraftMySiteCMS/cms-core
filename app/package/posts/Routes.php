@@ -1,13 +1,15 @@
 <?php
 require_once('lang/fr.php');
 
+/* FRONT */
 $router->scope('/posts', function($router) {
-    $router->get('/:id', "news#show");
+    $router->get('/:id', "posts#show");
     $router->post('/:id', function($id){ echo 'Poster pour l\'article ' . $id . '<pre>' . print_r($_POST, true) . '</pre>';});
 });
 
-/* Administration scope of package */
+/* BACK */
 $router->scope('/cms-admin', function($router) {
-    $router->get('/news', "news#admin");
-    $router->get('/news/list', "news#admin");
+    $router->get('/posts', "posts#admin");
+    $router->get('/posts/list', "posts#admin");
+    $router->get('/posts/list/test', "posts#admin");
 });

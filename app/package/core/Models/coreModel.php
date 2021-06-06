@@ -2,7 +2,7 @@
 
 namespace CMS\Model;
 
-class CoreModel extends Database {
+class CoreModel extends Manager {
     var $theme;
     var $menu;
 
@@ -10,8 +10,8 @@ class CoreModel extends Database {
      * $option : string
      */
     public function fetchOption($option) {
-        $db = $this->dbConnect();
-        $req = $db->prepare('SELECT option_value FROM cms_options WHERE option_name = ?');
+        $db = $this->db_connect();
+        $req = $db->prepare('SELECT option_value FROM cms_core_options WHERE option_name = ?');
         $req->execute(array($option));
         $option = $req->fetch();
 
@@ -21,16 +21,16 @@ class CoreModel extends Database {
      * $option_infos : array("option_value" => "value", "option_name" => "name")
      */
     public function updateOption($option_infos) {
-        $db = $this->dbConnect();
-        $req = $db->prepare('UPDATE cms_options SET option_value=:option_value, option_updated=now() WHERE option_name=:option_name');
+        $db = $this->db_connect();
+        $req = $db->prepare('UPDATE cms_core_options SET option_value=:option_value, option_updated=now() WHERE option_name=:option_name');
         $req->execute($option_infos);
     }
     /* Récupère le menu
      *
      */
     public function fetchMenu() {
-        $db = $this->dbConnect();
-        $req = $db->prepare('SELECT menu_id, menu_name, menu_url, menu_level, menu_parent_id FROM cms_menu');
+        $db = $this->db_connect();
+        $req = $db->prepare('SELECT menu_id, menu_name, menu_url, menu_level, menu_parent_id FROM cms_core_menu');
         $req->execute();
         $this->menu = $req->fetchAll(\PDO::FETCH_CLASS);
     }

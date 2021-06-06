@@ -83,7 +83,7 @@ CodeMirror.defineMode("vhdl", function(config, parserConfig) {
     stream.eatWhile(/[\w\$_]/);
     var cur = stream.current();
     if (keywords.propertyIsEnumerable(cur.toLowerCase())) {
-      if (blockKeywords.propertyIsEnumerable(cur)) curPunc = "newstatement";
+      if (blockKeywords.propertyIsEnumerable(cur)) curPunc = "poststatement";
       return "keyword";
     }
     if (atoms.propertyIsEnumerable(cur)) return "atom";
@@ -166,7 +166,7 @@ CodeMirror.defineMode("vhdl", function(config, parserConfig) {
         while (ctx.type == "statement") ctx = popContext(state);
       }
       else if (curPunc == ctx.type) popContext(state);
-      else if (ctx.type == "}" || ctx.type == "top" || (ctx.type == "statement" && curPunc == "newstatement"))
+      else if (ctx.type == "}" || ctx.type == "top" || (ctx.type == "statement" && curPunc == "poststatement"))
         pushContext(state, stream.column(), "statement");
       state.startOfLine = false;
       return style;

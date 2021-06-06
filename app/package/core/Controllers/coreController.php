@@ -9,8 +9,12 @@ class coreController {
         $core_controller = new coreController();
         $theme_path = $this->cms_theme_path();
 
-        $news_controller = new namespace\newsController();
+        $posts_controller = new namespace\posts\postsController();
         require("$theme_path/views/home.view.php");
+    }
+
+    public function admin() {
+        require('app/package/core/views/dashboard.admin.view.php');
     }
 
     /* //////////////////////////////////////////////////////////////////////////// */
@@ -34,7 +38,7 @@ class coreController {
         $head .= "<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>";
         $head .= "<title>$title</title>";
         $head .= "<meta name='description' content='$description'>";
-        $head .= "<meta name='author' content='LoGuardiaN'>";
+        $head .= "<meta name='author' content='LoGuardiaN, Teyir, Badiiix, Emilien52'>";
         return $head;
     }
     /*

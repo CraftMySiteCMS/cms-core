@@ -63,11 +63,11 @@ CodeMirror.defineMode("d", function(config, parserConfig) {
     stream.eatWhile(/[\w\$_\xa1-\uffff]/);
     var cur = stream.current();
     if (keywords.propertyIsEnumerable(cur)) {
-      if (blockKeywords.propertyIsEnumerable(cur)) curPunc = "newstatement";
+      if (blockKeywords.propertyIsEnumerable(cur)) curPunc = "poststatement";
       return "keyword";
     }
     if (builtin.propertyIsEnumerable(cur)) {
-      if (blockKeywords.propertyIsEnumerable(cur)) curPunc = "newstatement";
+      if (blockKeywords.propertyIsEnumerable(cur)) curPunc = "poststatement";
       return "builtin";
     }
     if (atoms.propertyIsEnumerable(cur)) return "atom";
@@ -166,7 +166,7 @@ CodeMirror.defineMode("d", function(config, parserConfig) {
         while (ctx.type == "statement") ctx = popContext(state);
       }
       else if (curPunc == ctx.type) popContext(state);
-      else if (((ctx.type == "}" || ctx.type == "top") && curPunc != ';') || (ctx.type == "statement" && curPunc == "newstatement"))
+      else if (((ctx.type == "}" || ctx.type == "top") && curPunc != ';') || (ctx.type == "statement" && curPunc == "poststatement"))
         pushContext(state, stream.column(), "statement");
       state.startOfLine = false;
       return style;

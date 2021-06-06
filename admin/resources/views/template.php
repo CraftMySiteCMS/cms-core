@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php include_once("admin/resources/lang/fr.php"); ?>
 <html lang="fr-FR">
 <head>
     <meta charset="utf-8" />

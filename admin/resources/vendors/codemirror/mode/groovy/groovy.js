@@ -70,7 +70,7 @@ CodeMirror.defineMode("groovy", function(config) {
     var cur = stream.current();
     if (atoms.propertyIsEnumerable(cur)) { return "atom"; }
     if (keywords.propertyIsEnumerable(cur)) {
-      if (blockKeywords.propertyIsEnumerable(cur)) curPunc = "newstatement";
+      if (blockKeywords.propertyIsEnumerable(cur)) curPunc = "poststatement";
       else if (standaloneKeywords.propertyIsEnumerable(cur)) curPunc = "standalone";
       return "keyword";
     }
@@ -136,7 +136,7 @@ CodeMirror.defineMode("groovy", function(config) {
 
   function expectExpression(last, newline) {
     return !last || last == "operator" || last == "->" || /[\.\[\{\(,;:]/.test(last) ||
-      last == "newstatement" || last == "keyword" || last == "proplabel" ||
+      last == "poststatement" || last == "keyword" || last == "proplabel" ||
       (last == "standalone" && !newline);
   }
 
@@ -202,7 +202,7 @@ CodeMirror.defineMode("groovy", function(config) {
         while (ctx.type == "statement") ctx = popContext(state);
       }
       else if (curPunc == ctx.type) popContext(state);
-      else if (ctx.type == "}" || ctx.type == "top" || (ctx.type == "statement" && curPunc == "newstatement"))
+      else if (ctx.type == "}" || ctx.type == "top" || (ctx.type == "statement" && curPunc == "poststatement"))
         pushContext(state, stream.column(), "statement");
       state.startOfLine = false;
       state.lastToken = curPunc || style;

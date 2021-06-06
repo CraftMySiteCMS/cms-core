@@ -1,8 +1,8 @@
 {
-  "name": "news",
+  "name": "posts",
   "name_menu": "Actualités",
   "icon_menu": "fas fa-th",
-  "url_menu": "news/list",
+  "url_menu": "posts/list",
   "description": "Gérer et afficher des actualités sur le site",
   "version": "1.0.0",
   "author": "LoGuardiaN"

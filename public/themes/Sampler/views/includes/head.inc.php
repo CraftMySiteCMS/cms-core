@@ -6,6 +6,6 @@
     <?= $core_controller->cms_head($title, $description); ?>
 
     <!-- Theme style -->
-    <link rel="stylesheet" type="text/css" href="public/themes/Sampler/assets/css/main.css">
+    <link rel="stylesheet" type="text/css" href="<?=getenv("PATH_SUBFOLDER")?>public/themes/Sampler/assets/css/main.css">
 </head>
 <body>
