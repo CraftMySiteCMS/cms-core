@@ -36,6 +36,24 @@ location / {
   }
 ```
 
+Configuration des variables d'environnement, à mettre dans le fichier `.env` à la racine du projet :
+
+```bash
+PATH_ADMIN_VIEW=admin/resources/views/
+DB_HOST=
+DB_USERNAME=
+DB_PASSWORD=
+DB_NAME=
+PATH_SUBFOLDER=
+DEV_MODE=
+```
+* `DB_HOST` : Adresse du serveur SQL (Généralement localhost)
+* `DB_USERNAME` : Utilisateur SQL
+* `DB_PASSWORD` : Mot de passe utilisateur SQL
+* `DB_NAME` : Nom de la base de données
+* `PATH_SUBFOLDER` : Sous-dossier d'installation. Si le CMS est installé à la racine, mettre un `/`
+* `DEV_MODE` : `1` active le mode debug (affiche les erreurs PHP), sinon mettre `0`
+
 Nous aider dans le développement
 ------------
 
