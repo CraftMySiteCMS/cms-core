@@ -1,16 +1,6 @@
-<?php
-use function CMS\Controller\cms_news_list;
-use function CMS\Controller\cms_searchbar_news;
-?>
-
-<?php $title = "Accueil";
-$description = "Coucou"; ?>
-
-<?php ob_start(); ?>
-<h1>Accueil</h1>
-<?= $news_controller->cms_searchbar_news() ?>
-<?php $news = $news_controller->cms_news_list(4);
-foreach ($news as $item) :
+<h1>Recherche : <?=$keyword?></h1>
+<?= cms_searchbar_news() ?>
+<?php foreach ($news as $item) :
     $user = $item->user;
     $categories = $item->categories;
 
@@ -23,7 +13,3 @@ foreach ($news as $item) :
     echo "<a href='/actualite/$item->news_slug'>Lire l'article</a>";
     echo "<hr>";
 endforeach;?>
-
-<?php $content = ob_get_clean(); ?>
-
-<?php require('template.php'); ?>
