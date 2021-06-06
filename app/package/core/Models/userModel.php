@@ -2,7 +2,7 @@
 
 namespace CMS\Model;
 
-class UserModel extends Manager {
+class userModel extends Manager {
     public $user_id;
     public $user_email;
     public $user_pseudo;
@@ -49,7 +49,7 @@ class UserModel extends Manager {
         if($req) :
             $result = $req->fetch();
             foreach ($result as $key => $property) :
-                if(property_exists(UserModel::class, $key)) :
+                if(property_exists(userModel::class, $key)) :
                     $this->$key = $property;
                 endif;
             endforeach;

@@ -3,11 +3,11 @@
 namespace CMS\Model\posts;
 
 use CMS\Model\Manager;
-use CMS\Model\UserModel;
+use CMS\Model\userModel;
 use PDO;
 use stdClass;
 
-class PostsModel extends Manager {
+class postsModel extends Manager {
 
     public $posts_id;
     public $posts_slug;
@@ -56,11 +56,11 @@ class PostsModel extends Manager {
         if($req) :
             $result = $req->fetch(PDO::FETCH_ASSOC);
             foreach ($result as $key => $property) :
-                if(property_exists(PostsModel::class, $key)) :
+                if(property_exists(postsModel::class, $key)) :
                     $this->$key = $property;
                 endif;
             endforeach;
-            $user = new UserModel();
+            $user = new userModel();
             $user->getUser($result['user_id']);
             $this->user = $user;
             $this->getCategories();
@@ -84,7 +84,7 @@ class PostsModel extends Manager {
 
         if($req) :
             while($result = $req->fetch()) :
-                $posts = new PostsModel();
+                $posts = new postsModel();
                 $posts->posts_id = $result['posts_id'];
                 $posts->posts_slug = $result['posts_slug'];
                 $posts->posts_title = $result['posts_title'];
@@ -97,7 +97,7 @@ class PostsModel extends Manager {
                     $posts->TranslatePosts();
                 }
 
-                $user = new UserModel();
+                $user = new userModel();
                 $user->getUser($result['user_id']);
                 $posts->user = $user;
 
@@ -165,7 +165,7 @@ class PostsModel extends Manager {
 
         if($req) :
             while($result = $req->fetch()) :
-                $posts = new PostsModel();
+                $posts = new postsModel();
                 $posts->posts_id = $result['posts_id'];
                 $posts->posts_slug = $result['posts_slug'];
                 $posts->posts_title = $result['posts_title'];
@@ -174,7 +174,7 @@ class PostsModel extends Manager {
                 $posts->posts_updated = $result['posts_updated'];
                 $posts->ExcerptPosts();
 
-                $user = new UserModel();
+                $user = new userModel();
                 $user->getUser($result['user_id']);
                 $posts->user = $user;
 

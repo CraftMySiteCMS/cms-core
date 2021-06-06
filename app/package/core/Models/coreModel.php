@@ -2,7 +2,7 @@
 
 namespace CMS\Model;
 
-class CoreModel extends Manager {
+class coreModel extends Manager {
     var $theme;
     var $menu;
 

@@ -5,7 +5,7 @@ namespace CMS\Model\posts;
 use CMS\Model\Manager;
 use stdClass;
 
-class CategoriesModel extends Manager {
+class categoriesModel extends Manager {
 
     public $category_id;
     public $category_name;
@@ -44,7 +44,7 @@ class CategoriesModel extends Manager {
         if($req) :
             $result = $req->fetch();
             foreach ($result as $key => $property) :
-                if(property_exists(CategoriesModel::class, $key)) :
+                if(property_exists(categoriesModel::class, $key)) :
                     $this->$key = $property;
                 endif;
             endforeach;

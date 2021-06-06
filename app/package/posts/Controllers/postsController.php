@@ -4,7 +4,7 @@ namespace CMS\Controller\posts;
 
 use CMS\Controller\coreController;
 use CMS\Model\posts\postsModel;
-use CMS\Model\posts\CategoriesModel;
+use CMS\Model\posts\categoriesModel;
 
 class postsController extends coreController {
     public function show($id) {
@@ -26,23 +26,23 @@ class postsController extends coreController {
      * Vérifie si une catégorie existe. Retourne 1 si existe, 0 le cas contraire
      */
     public function cms_category_exist($var): bool {
-        $CategoriesModel = new CategoriesModel();
-        return $CategoriesModel->checkCategory($var,true);
+        $categoriesModel = new categoriesModel();
+        return $categoriesModel->checkCategory($var,true);
     }
     /*
      * Récupère toutes les informations de la catégorie d'après le slug dans l'URL
      */
-    public function cms_category_infos(): CategoriesModel {
-        $CategoriesModel = new CategoriesModel();
+    public function cms_category_infos(): categoriesModel {
+        $categoriesModel = new categoriesModel();
         if(isset($_GET['category_slug'])) :
-            $CategoriesModel = new CategoriesModel();
-            $CategoriesModel->category_slug = $_GET['category_slug'];
-            $CategoriesModel->getCategory();
+            $categoriesModel = new categoriesModel();
+            $categoriesModel->category_slug = $_GET['category_slug'];
+            $categoriesModel->getCategory();
         else :
             cms_errors(1);
         endif;
 
-        return $CategoriesModel;
+        return $categoriesModel;
     }
     /*
      * Retourne l'ID de la catégorie courante
@@ -90,24 +90,24 @@ class postsController extends coreController {
      * Vérifie si une actualité existe. Retourne 1 si existe, 0 le cas contraire
      */
     public function cms_posts_list_exist($var): bool {
-        $PostsModel = new PostsModel();
-        return $PostsModel->checkPosts($var,true);
+        $postsModel = new postsModel();
+        return $postsModel->checkPosts($var,true);
     }
 
     /*
      * Récupère toutes les informations de l'actualité d'après le slug dans l'URL
      */
-    public function cms_posts_list_infos(): PostsModel {
-        $PostsModel = new PostsModel();
+    public function cms_posts_list_infos(): postsModel {
+        $postsModel = new postsModel();
         if(isset($_GET['posts_slug'])) :
-            $PostsModel = new PostsModel();
-            $PostsModel->posts_slug = $_GET['posts_slug'];
-            $PostsModel->getPosts(true);
+            $postsModel = new postsModel();
+            $postsModel->posts_slug = $_GET['posts_slug'];
+            $postsModel->getPosts(true);
         else :
             cms_errors(1);
         endif;
 
-        return $PostsModel;
+        return $postsModel;
     }
     /*
      * Retourne l'id de l'actualité courante
@@ -142,18 +142,18 @@ class postsController extends coreController {
      * Récupération de toutes les actualités enregistrées en base de données
      */
     public function cms_posts_list_list($limit = null, $offset = null, $category = null): array {
-        $PostsModel = new PostsModel();
-        return $PostsModel->getAllPosts($limit, $offset, $category);
+        $postsModel = new postsModel();
+        return $postsModel->getAllPosts($limit, $offset, $category);
     }
     /*
      * Récupération d'une actualité d'après son slug
      */
-    public function cms_posts_list(): PostsModel {
-        $PostsModel = new PostsModel();
-        $PostsModel->posts_slug = $_GET['posts_slug'];
-        $PostsModel->getPosts(true);
+    public function cms_posts_list(): postsModel {
+        $postsModel = new postsModel();
+        $postsModel->posts_slug = $_GET['posts_slug'];
+        $postsModel->getPosts(true);
 
-        return $PostsModel;
+        return $postsModel;
     }
     /*
      * Barre de recherche des actualités

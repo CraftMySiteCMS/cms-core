@@ -2,7 +2,7 @@
 
 namespace CMS\Controller;
 
-use CMS\Model\CoreModel;
+use CMS\Model\coreModel;
 
 class coreController {
     public function home() {
@@ -22,10 +22,10 @@ class coreController {
      * Get active theme
      */
     private function cms_theme_path(): string {
-        $CoreModel = new CoreModel();
-        $CoreModel->fetchOption("theme");
+        $coreModel = new coreModel();
+        $coreModel->fetchOption("theme");
 
-        return 'public/themes/'.$CoreModel->theme;
+        return 'public/themes/'.$coreModel->theme;
     }
 
     /* //////////////////////////////////////////////////////////////////////////// */
@@ -84,10 +84,10 @@ class coreController {
      * Récupération du menu enregistré en base de données
      */
     public function cms_menu(): array {
-        $CoreModel = new CoreModel();
-        $CoreModel->fetchMenu();
+        $coreModel = new coreModel();
+        $coreModel->fetchMenu();
 
-        return $CoreModel->menu;
+        return $coreModel->menu;
     }
 }
 

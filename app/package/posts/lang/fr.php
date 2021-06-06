@@ -1,4 +1,4 @@
 <?php
 
-define("_HomeView_TITLE","CraftMySite | Administration");
-define("_HomeView_DESC","Bienvenue sur votre panneau d'administration !");
+const _HomeView_TITLE = "CraftMySite | Administration";
+const _HomeView_DESC = "Bienvenue sur votre panneau d'administration !";

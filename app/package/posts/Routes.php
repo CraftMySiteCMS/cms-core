@@ -8,8 +8,8 @@ $router->scope('/posts', function($router) {
 });
 
 /* BACK */
-$router->scope('/cms-admin', function($router) {
-    $router->get('/posts', "posts#admin");
-    $router->get('/posts/list', "posts#admin");
-    $router->get('/posts/list/test', "posts#admin");
+$router->scope('/cms-admin/', function($router) {
+    $router->get('posts', "posts#admin");
+    $router->get('posts/list', "posts#admin");
+    $router->get('posts/list/test', "posts#admin");
 });
