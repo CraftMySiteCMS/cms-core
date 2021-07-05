@@ -1,4 +1,7 @@
 <?php
+
+use CMS\Controller\users\usersController;
+
 require_once('Lang/fr.php');
 
 /* Fronts pages of CMS */
@@ -20,11 +23,16 @@ $router->scope('/cms-admin', function($router) {
 $router->scope('/cms-admin/users', function($router) {
     $router->get('/list', "users#admin_users_list");
 
-    $router->get('/edit', "users#admin_users_edit");
-    $router->post('/edit', "users#admin_users_edit_post");
+    $router->get('/edit/:id', function($id) {
+        (new CMS\Controller\users\usersController)->admin_users_edit($id);
+    })->with('id', '[0-9]+');
+    $router->post('/edit/:id', function($id) {
+        (new CMS\Controller\users\usersController)->admin_users_edit_post($id);
+    })->with('id', '[0-9]+');
 
     $router->get('/add', "users#admin_users_add");
     $router->post('/add', "users#admin_users_add_post");
 
-    $router->get('/delete', "users#admin_user_delete");
+    $router->post('/edit-state', "users#admin_user_state");
+    $router->post('/delete', "users#admin_users_delete");
 });
