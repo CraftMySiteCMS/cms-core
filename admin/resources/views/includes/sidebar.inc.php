@@ -15,7 +15,7 @@
                 <img src="<?=getenv("PATH_SUBFOLDER")?>admin/resources/images/identity/CraftMySite_Logo.svg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block"><?php $user = new usersModel; $user->getUser($_SESSION['cms_user_id']); echo $user->user_pseudo; ?></a>
+                <a href="#" class="d-block"><?php $user = new usersModel; $user->fetch($_SESSION['cms_user_id']); echo $user->user_pseudo; ?></a>
             </div>
         </div>
 
