@@ -10,3 +10,9 @@ const _Users_login_password = "Mot de passe";
 const _Users_login_remember = "Se souvenir de moi";
 const _Users_login_signin = "Connexion";
 const _Users_login_lost_password = "J'ai perdu mon mot de passe";
+
+
+
+/* Edition de profil */
+const _Users_edit_title = "Edition de compte";
+const _Users_edit_desc = "Editez les comptes de vos utilisateurs";
