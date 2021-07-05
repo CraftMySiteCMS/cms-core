@@ -61,7 +61,7 @@ class postsModel extends Manager {
                 endif;
             endforeach;
             $user = new usersModel();
-            $user->getUser($result['user_id']);
+            $user->fetch($result['user_id']);
             $this->user = $user;
             $this->getCategories();
             $this->TranslatePosts();
@@ -98,7 +98,7 @@ class postsModel extends Manager {
                 }
 
                 $user = new usersModel();
-                $user->getUser($result['user_id']);
+                $user->fetch($result['user_id']);
                 $posts->user = $user;
 
                 $posts->getCategories();
@@ -175,7 +175,7 @@ class postsModel extends Manager {
                 $posts->ExcerptPosts();
 
                 $user = new usersModel();
-                $user->getUser($result['user_id']);
+                $user->fetch($result['user_id']);
                 $posts->user = $user;
 
                 $posts->getCategories();
