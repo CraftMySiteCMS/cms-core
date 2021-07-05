@@ -3,7 +3,7 @@
 namespace CMS\Model\posts;
 
 use CMS\Model\Manager;
-use CMS\Model\userModel;
+use CMS\Model\users\usersModel;
 use PDO;
 use stdClass;
 
@@ -60,7 +60,7 @@ class postsModel extends Manager {
                     $this->$key = $property;
                 endif;
             endforeach;
-            $user = new userModel();
+            $user = new usersModel();
             $user->getUser($result['user_id']);
             $this->user = $user;
             $this->getCategories();
@@ -97,7 +97,7 @@ class postsModel extends Manager {
                     $posts->TranslatePosts();
                 }
 
-                $user = new userModel();
+                $user = new usersModel();
                 $user->getUser($result['user_id']);
                 $posts->user = $user;
 
@@ -174,7 +174,7 @@ class postsModel extends Manager {
                 $posts->posts_updated = $result['posts_updated'];
                 $posts->ExcerptPosts();
 
-                $user = new userModel();
+                $user = new usersModel();
                 $user->getUser($result['user_id']);
                 $posts->user = $user;
 

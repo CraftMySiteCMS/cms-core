@@ -1,15 +1,10 @@
-<?php
-use function CMS\Controller\posts\cms_posts_list_list;
-use function CMS\Controller\posts\cms_searchbar_posts;
-?>
-
 <?php $title = "Accueil";
 $description = "Coucou"; ?>
 
 <?php ob_start(); ?>
 <h1>Accueil</h1>
-<?= $posts_controller->cms_searchbar_posts() ?>
-<?php $posts = $posts_controller->cms_posts_list_list(4);
+<?= $posts->cms_searchbar_posts() ?>
+<?php $posts = $posts->cms_posts_list_list(4);
 foreach ($posts as $item) :
     $user = $item->user;
     $categories = $item->categories;

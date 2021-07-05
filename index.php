@@ -16,6 +16,8 @@ if(getenv("DEV_MODE")) {
 
 /* Router Initialization */
 require_once("Router/Router.php");
+
+
 use CMS\Router\Router;
 require_once("Router/Route.php");
 require_once("Router/RouterException.php");

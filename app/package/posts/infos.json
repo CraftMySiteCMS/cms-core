@@ -1,8 +1,12 @@
 {
   "name": "posts",
   "name_menu": "Actualités",
-  "icon_menu": "fas fa-th",
-  "url_menu": "posts/list",
+  "icon_menu": "fas fa-rss-square",
+  "url_menu": "",
+  "urls_submenu": {
+    "Liste":"posts/list",
+    "Ajouter":"posts/add"
+  },
   "description": "Gérer et afficher des actualités sur le site",
   "version": "1.0.0",
   "author": "LoGuardiaN"

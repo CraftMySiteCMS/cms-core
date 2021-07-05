@@ -1,0 +1,13 @@
+{
+  "name": "users",
+  "name_menu": "Utilisateurs",
+  "icon_menu": "fas fa-user",
+  "url_menu": "",
+  "urls_submenu": {
+    "Liste":"users/list",
+    "Ajouter":"users/add"
+  },
+  "description": "Gérer et afficher les utilisateurs du site",
+  "version": "1.0.0",
+  "author": "LoGuardiaN"
+}

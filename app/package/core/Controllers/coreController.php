@@ -1,20 +1,33 @@
 <?php
-
 namespace CMS\Controller;
+
+use CMS\Controller\menus\menusController;
+use CMS\Controller\posts\postsController;
+use CMS\Controller\users\usersController;
 
 use CMS\Model\coreModel;
 
 class coreController {
-    public function home() {
-        $core_controller = new coreController();
-        $theme_path = $this->cms_theme_path();
 
-        $posts_controller = new namespace\posts\postsController();
-        require("$theme_path/views/home.view.php");
+    public static string $theme_path;
+
+    public function __construct($theme_path = null) {
+        self::$theme_path = $this->cms_theme_path();
     }
 
-    public function admin() {
+    /* ADMINISTRATION */
+    public function admin_dashboard() {
+        usersController::is_admin_logged();
         require('app/package/core/views/dashboard.admin.view.php');
+    }
+
+    /* FRONT */
+    public function front_home() {
+        $core = new coreController();
+        $menu = new menusController();
+        $posts = new postsController();
+
+        require(self::$theme_path."/Views/home.view.php");
     }
 
     /* //////////////////////////////////////////////////////////////////////////// */
@@ -30,8 +43,9 @@ class coreController {
 
     /* //////////////////////////////////////////////////////////////////////////// */
     /* CMS FUNCTION */
+
     /*
-     * Construction du head du CMS
+     * Head constructor
      */
     public function cms_head($title, $description): string {
         $head = "<meta charset='utf-8'>";
@@ -41,22 +55,28 @@ class coreController {
         $head .= "<meta name='author' content='LoGuardiaN, Teyir, Badiiix, Emilien52'>";
         return $head;
     }
+
     /*
-     * Construction des mentions légales et des scripts à injecter dans le footer
+     * Footer constructor
      */
     public function cms_footer(): string {
         return "<p>Coucou je suis le footer</p>";
     }
+
     /*
-     * Gestion des erreurs
+     * Error management
      */
-    function cms_errors($error = null) {
+    static function cms_errors($error = null) {
         if($error != null) :
             $_SESSION["cms_errors"] = array();
             switch ($error) :
                 case 1 :
                     $_SESSION["cms_errors"][] = "Une erreur est survenue, aucune donnée n'a été récuperée. Assurez-vous d'utiliser cette fonction au bon endroit.";
                     break;
+                case 2 :
+                    $_SESSION["cms_errors"][] = "La combinaison email / mot de passe est incorrecte.";
+                    break;
+
                 default :
                     $_SESSION["cms_errors"][] = "Une erreur est survenue. Veuillez contacter l'administrateur du site si l'erreur persiste.";
                     break;
@@ -65,29 +85,20 @@ class coreController {
             $_SESSION["cms_errors"][] = "Une erreur est survenue. Veuillez contacter l'administrateur du site si l'erreur persiste.";
         endif;
     }
-    public function cms_errors_display(): string {
+    static function cms_errors_display(): string {
         $r = "";
         if(isset($_SESSION["cms_errors"])) :
-            $r .= "<div class='errors'>";
+            $r .= "<div class='alert alert-danger alert-dismissible'>";
+            $r .= "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>";
+            $r .= "<h5><i class='icon fas fa-info'></i> Information</h5>";
             foreach ($_SESSION["cms_errors"] as $error) :
-                $r .= "<p>$error</p>";
+                $r .= "<p class='m-0'>$error</p>";
             endforeach;
             $r .= "</div>";
         endif;
         unset($_SESSION["cms_errors"]);
 
         return $r;
-    }
-    /* //////////////////////////////////////////////////////////////////////////// */
-    /* GLOBALS FUNCTIONS */
-    /*
-     * Récupération du menu enregistré en base de données
-     */
-    public function cms_menu(): array {
-        $coreModel = new coreModel();
-        $coreModel->fetchMenu();
-
-        return $coreModel->menu;
     }
 }
 

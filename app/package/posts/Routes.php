@@ -1,5 +1,5 @@
 <?php
-require_once('lang/fr.php');
+require_once('Lang/fr.php');
 
 /* FRONT */
 $router->scope('/posts', function($router) {

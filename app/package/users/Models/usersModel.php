@@ -1,8 +1,10 @@
 <?php
 
-namespace CMS\Model;
+namespace CMS\Model\users;
 
-class userModel extends Manager {
+use CMS\Model\Manager;
+
+class usersModel extends Manager {
     public $user_id;
     public $user_email;
     public $user_pseudo;
@@ -40,38 +42,37 @@ class userModel extends Manager {
             "user_id" => $user_id
         );
 
-        $sql = "SELECT user_id, user_email, user_pseudo, user_firstname, user_lastname, user_state, user_role, DATE_FORMAT(user_created, '%d/%m/%Y à %H:%i:%s') AS 'user_created', DATE_FORMAT(user_updated, '%d/%m/%Y à %H:%i:%s') AS 'user_updated' FROM cms_core_users WHERE user_state = 1 AND user_id=:user_id";
+        $sql = "SELECT user_id, user_email, user_pseudo, user_firstname, user_lastname, user_state, user_role, DATE_FORMAT(user_created, '%d/%m/%Y à %H:%i:%s') AS 'user_created', DATE_FORMAT(user_updated, '%d/%m/%Y à %H:%i:%s') AS 'user_updated' FROM cms_users WHERE user_id=:user_id";
 
-        $db = $this->db_connect();
+        $db = Manager::db_connect();
         $req = $db->prepare($sql);
         $req->execute($var);
 
-        if($req) :
+        if($req) {
             $result = $req->fetch();
-            foreach ($result as $key => $property) :
-                if(property_exists(userModel::class, $key)) :
+            foreach ($result as $key => $property) {
+                if(property_exists(usersModel::class, $key)) {
                     $this->$key = $property;
-                endif;
-            endforeach;
-        endif;
+                }
+            }
+        }
     }
     public function getAllusers() {
 
     }
     public static function logIn($info, $cookie = false) {
-        $password = $info["user_password"];
-        $infoSql = array(
-            "identifiant" => $info["identifiant"]
+        $password = $info["password"];
+        $var = array(
+            "user_email" => $info["email"]
         );
 
         $sql = "SELECT user_id, user_role, user_password"
-            ." FROM cms_core_users WHERE user_state=1"
-            ." AND (user_email=:identifiant"
-            ." OR user_pseudo=:identifiant)";
+            ." FROM cms_users WHERE user_state=1"
+            ." AND user_email=:user_email";
 
         $db = Manager::db_connect();
         $req = $db->prepare($sql);
-        $req->execute($infoSql);
+        $req->execute($var);
 
         if($req){
             $result = $req->fetch();
@@ -96,5 +97,14 @@ class userModel extends Manager {
         } else {
             return -3; // Erreur SQL
         }
+    }
+    public static function logout() {
+        $_SESSION = array();
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+        );
+        session_destroy();
     }
 }

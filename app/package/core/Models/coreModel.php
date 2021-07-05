@@ -25,13 +25,4 @@ class coreModel extends Manager {
         $req = $db->prepare('UPDATE cms_core_options SET option_value=:option_value, option_updated=now() WHERE option_name=:option_name');
         $req->execute($option_infos);
     }
-    /* Récupère le menu
-     *
-     */
-    public function fetchMenu() {
-        $db = $this->db_connect();
-        $req = $db->prepare('SELECT menu_id, menu_name, menu_url, menu_level, menu_parent_id FROM cms_core_menu');
-        $req->execute();
-        $this->menu = $req->fetchAll(\PDO::FETCH_CLASS);
-    }
 }
