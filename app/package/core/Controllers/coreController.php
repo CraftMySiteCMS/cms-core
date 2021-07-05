@@ -42,6 +42,25 @@ class coreController {
     }
 
     /* //////////////////////////////////////////////////////////////////////////// */
+    /*
+     * Useful toast generation
+     */
+    function toaster(): string
+    {
+        $toasters = "";
+        if(isset($_SESSION['toaster'])) {
+            foreach ($_SESSION['toaster'] as $toaster) {
+                $toaster_title = $toaster['title'];
+                $toaster_body = $toaster['body'];
+                $toaster_class = $toaster['type'];
+                $toasters .= '<script>$(document).Toasts("create", {title: "'.$toaster_title.'",body: "'.$toaster_body.'",class: "'.$toaster_class.'"});</script>';
+            }
+            unset($_SESSION['toaster']);
+        }
+        return $toasters;
+    }
+
+    /* //////////////////////////////////////////////////////////////////////////// */
     /* CMS FUNCTION */
 
     /*

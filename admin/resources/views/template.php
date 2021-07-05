@@ -33,10 +33,11 @@
 <?php endif; ?>
 
 <!-- jQuery -->
-<script src="<?=getenv("PATH_SUBFOLDER")?>admin/resources/vendors/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="<?=getenv("PATH_SUBFOLDER")?>admin/resources/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?=getenv("PATH_SUBFOLDER")?>admin/resources/js/adminlte.min.js"></script>
+<?= (isset($scripts) && !empty($scripts)) ? $scripts : ""; ?>
+<?= (isset($toaster) && !empty($toaster)) ? $toaster : ""; ?>
 </body>
 </html>
