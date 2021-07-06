@@ -13,6 +13,6 @@ const _Users_login_lost_password = "J'ai perdu mon mot de passe";
 
 
 
-/* Edition de profil */
+/* Editing the profile */
 const _Users_edit_title = "Edition de compte";
 const _Users_edit_desc = "Editez les comptes de vos utilisateurs";
