@@ -31,18 +31,26 @@ class usersModel extends Manager {
         }
     }
 
-    public function createUser($user) {
+    public function create() {
+        $var = array(
+            'user_email' => $this->user_email,
+            'user_pseudo' => $this->user_pseudo,
+            'user_firstname' => $this->user_firstname,
+            'user_lastname' => $this->user_lastname,
+            'user_state' => 1,
+            'role_id' => $this->role_id,
+            'user_key' => uniqid()
+        );
 
-    }
-    public function updateUser_infos($user) {
+        $sql = "INSERT INTO cms_users (user_email, user_pseudo, user_firstname, user_lastname, user_state, role_id, user_key, user_created, user_updated) VALUES (:user_email, :user_pseudo, :user_firstname, :user_lastname,:user_state, :role_id, :user_key, NOW(), NOW())";
 
-    }
-    public function updateUser_password($user) {
+        $db = Manager::db_connect();
+        $req = $db->prepare($sql);
+        $req->execute($var);
 
+        $this->user_id = $db->lastInsertId();
     }
-    public function deleteUser($user) {
 
-    }
     public function fetch($user_id) {
         $var = array(
             "user_id" => $user_id

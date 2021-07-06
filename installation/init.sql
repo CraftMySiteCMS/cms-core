@@ -31,7 +31,7 @@ CREATE TABLE `cms_users`
     `user_pseudo`    varchar(255)          DEFAULT NULL,
     `user_firstname` varchar(255)          DEFAULT NULL,
     `user_lastname`  varchar(255)          DEFAULT NULL,
-    `user_password`  varchar(255) NOT NULL,
+    `user_password`  varchar(255)          DEFAULT NULL,
     `user_state`     tinyint(1)   NOT NULL DEFAULT '1',
     `role_id`        int(11)      NOT NULL DEFAULT '1',
     `user_key`       varchar(255) NOT NULL,

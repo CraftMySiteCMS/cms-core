@@ -88,35 +88,58 @@ class usersController extends coreController {
     public function admin_users_edit_post($id) {
         $this->is_admin_logged();
 
-        $user_id = $id;
-        $user_email = $_POST['email'];
-        $user_pseudo = $_POST['pseudo'];
-        $user_firstname = $_POST['name'];
-        $user_lastname = $_POST['lastname'];
-        $role_id = $_POST['role'];
-
         $user = new usersModel();
-        $user->user_id = $user_id;
-        $user->user_email = $user_email;
-        $user->user_pseudo = $user_pseudo;
-        $user->user_firstname = $user_firstname;
-        $user->user_lastname = $user_lastname;
-        $user->role_id = $role_id;
+        $user->user_id = $id;
+        $user->user_email = $_POST['email'];
+        $user->user_pseudo = $_POST['pseudo'];
+        $user->user_firstname = $_POST['name'];
+        $user->user_lastname = $_POST['lastname'];
+        $user->role_id = $_POST['role'];
         $user->update();
 
-        if(!empty($_POST['pass']) && $_POST['pass'] === $_POST['pass_verif']) {
-            $user->setPassword(password_hash($_POST['pass'], PASSWORD_BCRYPT));
-            $user->update_pass();
+        $_SESSION['toaster'][0]['title'] = "Information";
+        $_SESSION['toaster'][0]['type'] = "bg-success";
+        $_SESSION['toaster'][0]['body'] = "Le compte a bien été mis à jours !";
+
+        if(!empty($_POST['pass'])) {
+            if($_POST['pass'] === $_POST['pass_verif']) {
+                $user->setPassword(password_hash($_POST['pass'], PASSWORD_BCRYPT));
+                $user->update_pass();
+            }
+            else {
+                $_SESSION['toaster'][1]['title'] = "Attention";
+                $_SESSION['toaster'][1]['type'] = "bg-danger";
+                $_SESSION['toaster'][1]['body'] = "Une erreur est survenue dans la modification du mot de passe.<br>Les mots de passes ne correspondent pas.";
+            }
+
         }
 
-        header("location: ../edit/".$user_id);
+        header("location: ../edit/".$id);
         die();
     }
     public function admin_users_add() {
         $this->is_admin_logged();
+
+        $roles = new rolesModel();
+        $roles = $roles->fetchAll();
+
+        require('app/package/users/views/add.admin.view.php');
     }
     public function admin_users_add_post() {
         $this->is_admin_logged();
+
+        $user = new usersModel();
+        $user->user_email = $_POST['email'];
+        $user->user_pseudo = $_POST['pseudo'];
+        $user->user_firstname = $_POST['name'];
+        $user->user_lastname = $_POST['lastname'];
+        $user->role_id = $_POST['role'];
+        $user->create();
+
+        $user->setPassword(password_hash($_POST['pass'], PASSWORD_BCRYPT));
+        $user->update_pass();
+
+        header("location: ../users/list");
     }
     public function admin_user_state() {
         $this->is_admin_logged();

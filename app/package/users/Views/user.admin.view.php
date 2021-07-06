@@ -1,4 +1,4 @@
-<?php $title = _Users_edit_title; //Variables du fichier lang
+<?php $title = _Users_edit_title;
 $description = _Users_edit_desc; ?>
 
 <?php ob_start(); ?>
