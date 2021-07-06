@@ -161,13 +161,21 @@ class usersController extends coreController {
     public function admin_users_delete() {
         $this->is_admin_logged();
 
+        if(usersModel::getLogedUser() == $_POST['id']) {
+            $_SESSION['toaster'][0]['title'] = "Attention";
+            $_SESSION['toaster'][0]['type'] = "bg-danger";
+            $_SESSION['toaster'][0]['body'] = "Vous ne pouvez pas supprimer le compte avec lequel vous êtes connecté.";
+            header('Location: '.$_SERVER['HTTP_REFERER']);
+            die();
+        }
+
         $user = new usersModel();
         $user->user_id = $_POST['id'];
         $user->delete();
 
-        $_SESSION['toaster']['title'] = "Information";
+        $_SESSION['toaster'][0]['title'] = "Information";
         $_SESSION['toaster'][0]['type'] = "bg-success";
-        $_SESSION['toaster']['body'] = "Le compte a bien été supprimé";
+        $_SESSION['toaster'][0]['body'] = "Le compte a bien été supprimé";
         header("location: ../");
         die();
     }
