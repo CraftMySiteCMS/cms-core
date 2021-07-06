@@ -5,7 +5,7 @@ namespace CMS\Model;
 class menusModel extends Manager {
     var $menu;
 
-    /* Récupère le menu
+    /* Get the menu
      *
      */
     public function fetchMenu() {
