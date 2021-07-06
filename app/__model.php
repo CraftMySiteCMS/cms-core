@@ -9,5 +9,4 @@ foreach ($scanned_directory as $package) :
     foreach ($scanned_subdirectory as $model) :
         require("package/$package/Models/$model");
     endforeach;
-
 endforeach;
