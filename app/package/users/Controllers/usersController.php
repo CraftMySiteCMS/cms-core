@@ -144,6 +144,14 @@ class usersController extends coreController {
     public function admin_user_state() {
         $this->is_admin_logged();
 
+        if(usersModel::getLogedUser() == $_POST['id']) {
+            $_SESSION['toaster'][0]['title'] = "Attention";
+            $_SESSION['toaster'][0]['type'] = "bg-danger";
+            $_SESSION['toaster'][0]['body'] = "Vous ne pouvez pas désactiver le compte avec lequel vous êtes connecté.";
+            header('Location: '.$_SERVER['HTTP_REFERER']);
+            die();
+        }
+
         $state = ($_POST['actual_state']) ? 0 : 1;
 
         $user = new usersModel();
