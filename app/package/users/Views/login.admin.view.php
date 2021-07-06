@@ -19,7 +19,7 @@ $description = _Users_login_DESC; ?>
 
                 <form action="" method="post" class="mb-4">
                     <div class="input-group mb-3">
-                        <input name="login_email" type="email" class="form-control" placeholder="<?=_Users_login_email?>">
+                        <input name="login_email" type="email" class="form-control" placeholder="<?=_Users_mail?>">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -27,7 +27,7 @@ $description = _Users_login_DESC; ?>
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input name="login_password" type="password" class="form-control" placeholder="<?=_Users_login_password?>">
+                        <input name="login_password" type="password" class="form-control" placeholder="<?=_Users_pass?>">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>

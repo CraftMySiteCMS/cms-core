@@ -8,8 +8,8 @@ class usersModel extends Manager {
     public $user_id;
     public $user_email;
     public $user_pseudo;
-    public $user_firstname; // Prénom
-    public $user_lastname; // Nom
+    public $user_firstname;
+    public $user_lastname;
     private $user_password;
     public $user_state;
     public $role_id;
@@ -110,13 +110,13 @@ class usersModel extends Manager {
                     }
                     return $id;
                 } else {
-                    return -1; // Mot de passe ne corresponds pas
+                    return -1; // Password does not match
                 }
             } else {
-                return -2; // Utilisateur inexistant
+                return -2; // Non-existent user
             }
         } else {
-            return -3; // Erreur SQL
+            return -3; // SQL error
         }
     }
     public function update() {

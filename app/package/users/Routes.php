@@ -2,7 +2,7 @@
 
 use CMS\Controller\users\usersController;
 
-require_once('Lang/fr.php');
+require_once('Lang/'.getenv("LOCALE").'.php');
 
 /* Fronts pages of CMS */
 $router->scope('/utilisateurs', function($router) {

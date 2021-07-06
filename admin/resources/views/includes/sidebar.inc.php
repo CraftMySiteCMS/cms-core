@@ -27,14 +27,20 @@
                 foreach ($scanned_directory as $package) :
                     $strJsonFileContents = file_get_contents("app/package/$package/infos.json");
                     $package_infos = json_decode($strJsonFileContents, true);
-                    if(isset($package_infos["urls_submenu"])) : ?>
+
+                    $name_menu = $package_infos['name_menu_' . getenv("LOCALE")] ?? $package_infos['name_menu'];
+
+
+
+                    if(isset($package_infos["urls_submenu"])) :
+                        $urls_submenu = $package_infos["urls_submenu_" . getenv("LOCALE")] ?? $package_infos["urls_submenu"]; ?>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon <?=$package_infos['icon_menu']?>"></i>
-                                <p><?=$package_infos['name_menu']?><i class="right fas fa-angle-left"></i></p>
+                                <p><?=$name_menu?><i class="right fas fa-angle-left"></i></p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <?php foreach ($package_infos['urls_submenu'] as $sub_menu_name => $submenu_url) : ?>
+                                <?php foreach ($urls_submenu as $sub_menu_name => $submenu_url) : ?>
                                     <li class="nav-item">
                                         <a href="<?=getenv("PATH_SUBFOLDER")?>cms-admin/<?=$submenu_url?>" class="nav-link">
                                             <p><?=$sub_menu_name?></p>
@@ -48,7 +54,7 @@
                         <li class="nav-item">
                             <a href="<?=getenv("PATH_SUBFOLDER")?>cms-admin/<?=$package_infos['url_menu']?>" class="nav-link">
                                 <i class="nav-icon <?=$package_infos['icon_menu']?>"></i>
-                                <p><?=$package_infos['name_menu']?></p>
+                                <p><?=$name_menu?></p>
                             </a>
                         </li>
                 <?php endif; ?>

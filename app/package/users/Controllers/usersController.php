@@ -97,9 +97,9 @@ class usersController extends coreController {
         $user->role_id = $_POST['role'];
         $user->update();
 
-        $_SESSION['toaster'][0]['title'] = "Information";
+        $_SESSION['toaster'][0]['title'] = _Users_toaster_title;
         $_SESSION['toaster'][0]['type'] = "bg-success";
-        $_SESSION['toaster'][0]['body'] = "Le compte a bien été mis à jours !";
+        $_SESSION['toaster'][0]['body'] = _Users_edit_toaster_success;
 
         if(!empty($_POST['pass'])) {
             if($_POST['pass'] === $_POST['pass_verif']) {
@@ -107,9 +107,9 @@ class usersController extends coreController {
                 $user->update_pass();
             }
             else {
-                $_SESSION['toaster'][1]['title'] = "Attention";
+                $_SESSION['toaster'][1]['title'] = _Users_toaster_title_error;
                 $_SESSION['toaster'][1]['type'] = "bg-danger";
-                $_SESSION['toaster'][1]['body'] = "Une erreur est survenue dans la modification du mot de passe.<br>Les mots de passes ne correspondent pas.";
+                $_SESSION['toaster'][1]['body'] = _Users_edit_toaster_pass_error;
             }
 
         }
@@ -145,9 +145,9 @@ class usersController extends coreController {
         $this->is_admin_logged();
 
         if(usersModel::getLogedUser() == $_POST['id']) {
-            $_SESSION['toaster'][0]['title'] = "Attention";
+            $_SESSION['toaster'][0]['title'] = _Users_toaster_title_error;
             $_SESSION['toaster'][0]['type'] = "bg-danger";
-            $_SESSION['toaster'][0]['body'] = "Vous ne pouvez pas désactiver le compte avec lequel vous êtes connecté.";
+            $_SESSION['toaster'][0]['body'] = _Users_state_toaster_error;
             header('Location: '.$_SERVER['HTTP_REFERER']);
             die();
         }
@@ -159,9 +159,9 @@ class usersController extends coreController {
         $user->user_state = $state;
         $user->changeState();
 
-        $_SESSION['toaster'][0]['title'] = "Information";
+        $_SESSION['toaster'][0]['title'] = _Users_toaster_title;
         $_SESSION['toaster'][0]['type'] = "bg-success";
-        $_SESSION['toaster'][0]['body'] = "Le compte a bien été modifié";
+        $_SESSION['toaster'][0]['body'] = _Users_state_toaster_success;
 
         header("location: ".$_SERVER['HTTP_REFERER']);
         die();
@@ -170,9 +170,9 @@ class usersController extends coreController {
         $this->is_admin_logged();
 
         if(usersModel::getLogedUser() == $_POST['id']) {
-            $_SESSION['toaster'][0]['title'] = "Attention";
+            $_SESSION['toaster'][0]['title'] = _Users_toaster_title_error;
             $_SESSION['toaster'][0]['type'] = "bg-danger";
-            $_SESSION['toaster'][0]['body'] = "Vous ne pouvez pas supprimer le compte avec lequel vous êtes connecté.";
+            $_SESSION['toaster'][0]['body'] = _Users_delete_toaster_error;
             header('Location: '.$_SERVER['HTTP_REFERER']);
             die();
         }
@@ -181,9 +181,9 @@ class usersController extends coreController {
         $user->user_id = $_POST['id'];
         $user->delete();
 
-        $_SESSION['toaster'][0]['title'] = "Information";
+        $_SESSION['toaster'][0]['title'] = _Users_toaster_title;
         $_SESSION['toaster'][0]['type'] = "bg-success";
-        $_SESSION['toaster'][0]['body'] = "Le compte a bien été supprimé";
+        $_SESSION['toaster'][0]['body'] = _Users_delete_toaster_success;
         header("location: ../");
         die();
     }

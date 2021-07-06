@@ -41,7 +41,7 @@ class coreController {
 
     /* //////////////////////////////////////////////////////////////////////////// */
     /*
-     * Useful toast generation
+     * Toast generation
      */
     function toaster(): string
     {

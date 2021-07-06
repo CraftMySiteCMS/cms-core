@@ -3580,7 +3580,7 @@
 			settings._iDisplayStart = 0;
 		}
 	
-		// Let any package know about the draw hold position state (used by
+		// Let any modules know about the draw hold position state (used by
 		// scrolling internally)
 		settings._drawHold = holdPosition;
 	
@@ -11462,7 +11462,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sNext": "Suivant",
+				"sNext": "Next",
 	
 	
 				/**
@@ -11485,7 +11485,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sPrevious": "Précédent"
+				"sPrevious": "Previous"
 			},
 	
 			/**
@@ -11540,7 +11540,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfo": "Affiche de _START_ à _END_ sur _TOTAL_ entrées",
+			"sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
 	
 	
 			/**
