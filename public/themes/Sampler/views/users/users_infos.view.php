@@ -3,7 +3,7 @@ $description = "Coucou"; ?>
 
 <?php ob_start(); ?>
 
-COUCOU
+Contenu à venir
 
 <?php $content = ob_get_clean(); ?>
 

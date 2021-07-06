@@ -2,7 +2,6 @@
 namespace CMS\Controller;
 
 use CMS\Controller\menus\menusController;
-use CMS\Controller\posts\postsController;
 use CMS\Controller\users\usersController;
 
 use CMS\Model\coreModel;
@@ -25,7 +24,6 @@ class coreController {
     public function front_home() {
         $core = new coreController();
         $menu = new menusController();
-        $posts = new postsController();
 
         require(self::$theme_path."/Views/home.view.php");
     }
