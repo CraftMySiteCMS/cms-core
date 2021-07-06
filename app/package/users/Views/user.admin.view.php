@@ -80,6 +80,7 @@ $description = _Users_edit_desc; ?>
                         <div class="card-body">
                             <p><b>Date de création :</b> <?=$user->user_created?></p>
                             <p><b>Dernière modification :</b> <?=$user->user_updated?></p>
+                            <p><b>Dernière connexion au site :</b> <?=$user->user_logged?></p>
                             <div>
                                 <form action="../edit-state" method="post" class="d-inline-block">
                                     <input type="hidden" value="<?=$user->user_id?>" name="id">

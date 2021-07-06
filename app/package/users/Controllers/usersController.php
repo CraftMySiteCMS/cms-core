@@ -51,6 +51,9 @@ class usersController extends coreController {
         }
         $userId = usersModel::logIn($infos, $cookie);
         if($userId>0 && $userId != "ERROR"){
+            $user = new usersModel();
+            $user->user_id = $userId;
+            $user->update_logged_time();
             header('Location: '.getenv('PATH_SUBFOLDER').'cms-admin/dashboard');
         } else {
             coreController::cms_errors(2);

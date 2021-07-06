@@ -17,6 +17,7 @@ class usersModel extends Manager {
     private $user_key;
     public $user_created;
     public $user_updated;
+    public $user_logged;
 
     public function __construct($user_id = null) {
 
@@ -47,7 +48,7 @@ class usersModel extends Manager {
             "user_id" => $user_id
         );
 
-        $sql = "SELECT user_id, user_email, user_pseudo, user_firstname, user_lastname, user_state, cms_users.role_id, DATE_FORMAT(user_created, '%d/%m/%Y à %H:%i:%s') AS 'user_created', DATE_FORMAT(user_updated, '%d/%m/%Y à %H:%i:%s') AS 'user_updated', cr.role_name as user_role_name FROM cms_users INNER JOIN cms_roles cr on cms_users.role_id = cr.role_id WHERE user_id=:user_id";
+        $sql = "SELECT user_id, user_email, user_pseudo, user_firstname, user_lastname, user_state, cms_users.role_id, DATE_FORMAT(user_created, '%d/%m/%Y à %H:%i:%s') AS 'user_created', DATE_FORMAT(user_updated, '%d/%m/%Y à %H:%i:%s') AS 'user_updated', DATE_FORMAT(user_logged, '%d/%m/%Y à %H:%i:%s') AS 'user_logged', cr.role_name as user_role_name FROM cms_users INNER JOIN cms_roles cr on cms_users.role_id = cr.role_id WHERE user_id=:user_id";
 
         $db = Manager::db_connect();
         $req = $db->prepare($sql);
@@ -63,7 +64,7 @@ class usersModel extends Manager {
         }
     }
     public function fetchAll() {
-        $sql = "SELECT user_id, user_email, user_pseudo, user_firstname, user_lastname, user_state, DATE_FORMAT(user_created, '%d/%m/%Y à %H:%i:%s') AS 'user_created', DATE_FORMAT(user_updated, '%d/%m/%Y à %H:%i:%s') AS 'user_updated', cr.role_name as user_role_name FROM cms_users INNER JOIN cms_roles cr on cms_users.role_id = cr.role_id";
+        $sql = "SELECT user_id, user_email, user_pseudo, user_firstname, user_lastname, user_state, DATE_FORMAT(user_created, '%d/%m/%Y à %H:%i:%s') AS 'user_created', DATE_FORMAT(user_updated, '%d/%m/%Y à %H:%i:%s') AS 'user_updated', DATE_FORMAT(user_logged, '%d/%m/%Y à %H:%i:%s') AS 'user_logged', cr.role_name as user_role_name FROM cms_users INNER JOIN cms_roles cr on cms_users.role_id = cr.role_id";
         $db = Manager::db_connect();
         $req = $db->prepare($sql);
         $req->execute();
@@ -198,6 +199,19 @@ class usersModel extends Manager {
 
         $sql = "UPDATE cms_users SET "
             ."user_updated"."=CURRENT_TIMESTAMP"
+            ." WHERE "."user_id"."=:user_id";
+
+        $db = Manager::db_connect();
+        $req = $db->prepare($sql);
+        $req->execute($info);
+    }
+    public function update_logged_time() {
+        $info = array(
+            "user_id" => $this->user_id,
+        );
+
+        $sql = "UPDATE cms_users SET "
+            ."user_logged"."=CURRENT_TIMESTAMP"
             ." WHERE "."user_id"."=:user_id";
 
         $db = Manager::db_connect();
