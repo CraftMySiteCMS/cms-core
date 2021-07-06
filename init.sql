@@ -8,8 +8,6 @@ CREATE TABLE IF NOT EXISTS `cms_core_options` (
     UNIQUE KEY `option_name` (`option_name`)
     ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- Les données exportées n'étaient pas sélectionnées.
-
 -- Listage de la structure de la table cms. cms_menus
 CREATE TABLE IF NOT EXISTS `cms_menus` (
     `menu_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -19,22 +17,6 @@ CREATE TABLE IF NOT EXISTS `cms_menus` (
     `menu_parent_id` int(11) NOT NULL,
     PRIMARY KEY (`menu_id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- Les données exportées n'étaient pas sélectionnées.
-
--- Listage de la structure de la table cms. cms_pages
-CREATE TABLE IF NOT EXISTS `cms_pages` (
-    `page_id` int(11) NOT NULL AUTO_INCREMENT,
-    `user_id` int(11) DEFAULT NULL,
-    `page_slug` varchar(255) NOT NULL,
-    `page_content` longtext NOT NULL,
-    `page_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `page_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `page_state` tinyint(1) NOT NULL DEFAULT '0',
-    PRIMARY KEY (`page_id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- Les données exportées n'étaient pas sélectionnées.
 
 -- Listage de la structure de la table cms. cms_users
 CREATE TABLE IF NOT EXISTS `cms_users` (
@@ -56,4 +38,4 @@ CREATE TABLE IF NOT EXISTS `cms_users` (
 
 
 INSERT INTO `cms_core_options` (`option_id`, `option_value`, `option_name`, `option_updated`) VALUES
-(1, 'Sampler', 'theme', '2021-01-14 11:37:36');
+(1, 'Sampler', 'theme', NOW());
