@@ -1,7 +1,3 @@
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
 CREATE TABLE `cms_core_options`
 (
     `option_id`      int(11)      NOT NULL,
@@ -9,7 +5,7 @@ CREATE TABLE `cms_core_options`
     `option_name`    varchar(255) NOT NULL,
     `option_updated` timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 CREATE TABLE `cms_menus`
 (
@@ -19,14 +15,14 @@ CREATE TABLE `cms_menus`
     `menu_level`     tinyint(1)   NOT NULL,
     `menu_parent_id` int(11)      NOT NULL
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 CREATE TABLE `cms_roles`
 (
     `role_id`   int(11) DEFAULT NULL,
     `role_name` tinytext NOT NULL
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT ='Roles des utilisateurs';
+  DEFAULT CHARSET = utf8mb4;
 
 CREATE TABLE `cms_users`
 (
@@ -42,7 +38,7 @@ CREATE TABLE `cms_users`
     `user_created`   timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `user_updated`   timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET = utf8mb4;
 
 
 ALTER TABLE `cms_core_options`
@@ -80,3 +76,10 @@ COMMIT;
 
 INSERT INTO `cms_core_options` (`option_id`, `option_value`, `option_name`, `option_updated`)
 VALUES (1, 'Sampler', 'theme', NOW());
+
+INSERT INTO `cms_roles` (`role_id`, `role_name`) VALUES
+(0, 'Visiteur'),
+(1, 'Utilisateur'),
+(2, 'Editeur'),
+(3, 'Modérateur'),
+(10, 'Administrateur');
