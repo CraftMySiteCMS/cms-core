@@ -46,7 +46,7 @@ const _Users_edit_toaster_success = "Le compte a bien été mis à jours !";
 const _Users_edit_toaster_pass_error = "Une erreur est survenue dans la modification du mot de passe.<br>Les mots de passes ne correspondent pas.";
 
 /* USER ADD */
-const _Users_add_TITLE = "Utilisateurs | Créer";
+const _Users_add_TITLE = "Utilisateurs | Ajouter";
 const _Users_add_DESC = "Créer un nouveal utilisateur sur le site";
 const _Users_add_card_title = "Ajouter un utilisateur";
 
