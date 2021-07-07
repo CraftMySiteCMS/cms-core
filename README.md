@@ -46,6 +46,8 @@ DB_PASSWORD=
 DB_NAME=
 PATH_SUBFOLDER=
 DEV_MODE=
+LOCALE=fr
+TIMEZONE=UTC
 ```
 * `DB_HOST` : Adresse du serveur SQL (Généralement localhost)
 * `DB_USERNAME` : Utilisateur SQL
