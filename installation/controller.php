@@ -27,6 +27,7 @@ if (isset($_POST['update_env'])):
     $db = $_POST['bdd_name'];
     $subfolder = $_POST['install_folder'];
     $locale = "fr";
+    $timezone = date_default_timezone_get();
 
 
     if(file_exists($path)) {
@@ -37,6 +38,7 @@ if (isset($_POST['update_env'])):
 
         changeEnvironmentVariable("PATH_SUBFOLDER", $subfolder, $path);
         changeEnvironmentVariable("LOCALE", $locale, $path);
+        changeEnvironmentVariable("TIMEZONE", $timezone, $path);
     }
     else {
         $env_file = fopen($path, "w") or die("Unable to open file!");
@@ -49,6 +51,7 @@ if (isset($_POST['update_env'])):
         $txt = "PATH_SUBFOLDER=$subfolder\n";fwrite($env_file, $txt);
         $txt = "DEV_MODE=1\n";fwrite($env_file, $txt);
         $txt = "LOCALE=$locale\n";fwrite($env_file, $txt);
+        $txt = "TIMEZONE=$timezone\n";fwrite($env_file, $txt);
         fclose($env_file);
     }
 
