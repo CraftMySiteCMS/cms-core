@@ -3,7 +3,7 @@
 namespace CMS\Controller\menus;
 
 use CMS\Controller\coreController;
-use CMS\Model\menusModel;
+use CMS\Model\menus\menusModel;
 
 class menusController extends coreController {
     /* //////////////////////////////////////////////////////////////////////////// */
