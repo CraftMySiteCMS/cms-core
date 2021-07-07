@@ -60,9 +60,8 @@ class usersModel extends Manager {
 
         $db = Manager::db_connect();
         $req = $db->prepare($sql);
-        $req->execute($var);
 
-        if($req) {
+        if($req->execute($var)) {
             $result = $req->fetch();
             foreach ($result as $key => $property) {
                 if(property_exists(usersModel::class, $key)) {
@@ -71,7 +70,8 @@ class usersModel extends Manager {
             }
         }
     }
-    public function fetchAll() {
+    public function fetchAll(): array
+    {
         $sql = "SELECT user_id, user_email, user_pseudo, user_firstname, user_lastname, user_state, DATE_FORMAT(user_created, '%d/%m/%Y à %H:%i:%s') AS 'user_created', DATE_FORMAT(user_updated, '%d/%m/%Y à %H:%i:%s') AS 'user_updated', DATE_FORMAT(user_logged, '%d/%m/%Y à %H:%i:%s') AS 'user_logged', cr.role_name as user_role_name FROM cms_users INNER JOIN cms_roles cr on cms_users.role_id = cr.role_id";
         $db = Manager::db_connect();
         $req = $db->prepare($sql);
