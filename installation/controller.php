@@ -59,10 +59,24 @@ if (isset($_POST['update_env'])):
     $db->query("CREATE DATABASE IF NOT EXISTS ".$_POST['bdd_name'].";");
     $db->query("USE ".$_POST['bdd_name'].";");
 
+
+
     $query = file_get_contents("init.sql");
     $stmt = $db->prepare($query);
-
     $stmt->execute();
+
+    /* IMPORT PACKAGE SQL */
+    $packages_folder = '../app/package/';
+    $scanned_directory = array_diff(scandir($packages_folder), array('..', '.'));
+
+    foreach ($scanned_directory as $package) :
+        $package_path = "../app/package/$package/init.sql";
+        if(file_exists($package_path)) {
+            $query = file_get_contents($package_path);
+            $stmt = $db->prepare($query);
+            $stmt->execute();
+        }
+    endforeach;
 
     $db = null;
 

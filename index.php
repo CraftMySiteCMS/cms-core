@@ -9,6 +9,11 @@ if(!file_exists(".env")) {
     header('Location: installation/index.php');
     die();
 }
+elseif(is_dir("installation")) {
+    /* TODO : A remettre en prod */
+    /*array_map('unlink', glob("installation/*.*"));
+    rmdir("installation");*/
+}
 require_once("app/EnvBuilder.php");
 (new Env('.env'))->load();
 
