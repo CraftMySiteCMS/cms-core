@@ -1,6 +1,8 @@
 <?php
 
-namespace CMS\Model;
+namespace CMS\Model\menus;
+
+use CMS\Model\Manager;
 
 class menusModel extends Manager {
     var $menu;

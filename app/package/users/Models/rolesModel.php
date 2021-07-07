@@ -12,9 +12,8 @@ class rolesModel extends Manager {
         $sql = "SELECT role_id, role_name FROM cms_roles";
         $db = Manager::db_connect();
         $req = $db->prepare($sql);
-        $res = $req->execute();
 
-        if($res) {
+        if($req->execute()) {
             return $req->fetchAll();
         }
     }

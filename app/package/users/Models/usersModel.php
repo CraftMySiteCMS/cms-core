@@ -46,9 +46,13 @@ class usersModel extends Manager {
 
         $db = Manager::db_connect();
         $req = $db->prepare($sql);
-        $req->execute($var);
 
-        $this->user_id = $db->lastInsertId();
+        if($req->execute($var)){
+            $this->user_id = $db->lastInsertId();
+            return $this->user_id;
+        } else {
+            return -1;
+        }
     }
 
     public function fetch($user_id) {
@@ -75,9 +79,8 @@ class usersModel extends Manager {
         $sql = "SELECT user_id, user_email, user_pseudo, user_firstname, user_lastname, user_state, DATE_FORMAT(user_created, '%d/%m/%Y à %H:%i:%s') AS 'user_created', DATE_FORMAT(user_updated, '%d/%m/%Y à %H:%i:%s') AS 'user_updated', DATE_FORMAT(user_logged, '%d/%m/%Y à %H:%i:%s') AS 'user_logged', cr.role_name as user_role_name FROM cms_users INNER JOIN cms_roles cr on cms_users.role_id = cr.role_id";
         $db = Manager::db_connect();
         $req = $db->prepare($sql);
-        $res = $req->execute();
 
-        if($res) {
+        if($req->execute()) {
             return $req->fetchAll();
         }
     }
@@ -93,9 +96,8 @@ class usersModel extends Manager {
 
         $db = Manager::db_connect();
         $req = $db->prepare($sql);
-        $res = $req->execute($var);
 
-        if($res){
+        if($req->execute($var)){
             $result = $req->fetch();
             if($result){
                 if(password_verify($password, $result["user_password"])){
@@ -120,7 +122,7 @@ class usersModel extends Manager {
         }
     }
     public function update() {
-        $info = array(
+        $var = array(
             "user_id" => $this->user_id,
             "user_email" => $this->user_email,
             "user_pseudo" =>  mb_strimwidth($this->user_pseudo ,0,255),
@@ -139,7 +141,7 @@ class usersModel extends Manager {
 
         $db = Manager::db_connect();
         $req = $db->prepare($sql);
-        $req->execute($info);
+        $req->execute($var);
 
         $this->update_edit_time();
     }
@@ -147,7 +149,7 @@ class usersModel extends Manager {
         $this->user_password = $password;
     }
     public function update_pass() {
-        $info = array(
+        $var = array(
             "user_id" => $this->user_id,
             "user_password" => $this->user_password
         );
@@ -158,12 +160,12 @@ class usersModel extends Manager {
 
         $db = Manager::db_connect();
         $req = $db->prepare($sql);
-        $req->execute($info);
+        $req->execute($var);
 
         $this->update_edit_time();
     }
     public function changeState() {
-        $info = array(
+        $var = array(
             "user_id" => $this->user_id,
             "user_state" => $this->user_state,
         );
@@ -174,12 +176,12 @@ class usersModel extends Manager {
 
         $db = Manager::db_connect();
         $req = $db->prepare($sql);
-        $req->execute($info);
+        $req->execute($var);
 
         $this->update_edit_time();
     }
     public function delete() {
-        $info = array(
+        $var = array(
             "user_id" => $this->user_id,
         );
         $sql = "DELETE"
@@ -188,7 +190,7 @@ class usersModel extends Manager {
 
         $db = Manager::db_connect();
         $req = $db->prepare($sql);
-        $req->execute($info);
+        $req->execute($var);
     }
     public static function logout() {
         $_SESSION = array();
@@ -201,7 +203,7 @@ class usersModel extends Manager {
     }
 
     public function update_edit_time() {
-        $info = array(
+        $var = array(
             "user_id" => $this->user_id,
         );
 
@@ -211,10 +213,10 @@ class usersModel extends Manager {
 
         $db = Manager::db_connect();
         $req = $db->prepare($sql);
-        $req->execute($info);
+        $req->execute($var);
     }
     public function update_logged_time() {
-        $info = array(
+        $var = array(
             "user_id" => $this->user_id,
         );
 
@@ -224,6 +226,6 @@ class usersModel extends Manager {
 
         $db = Manager::db_connect();
         $req = $db->prepare($sql);
-        $req->execute($info);
+        $req->execute($var);
     }
 }
