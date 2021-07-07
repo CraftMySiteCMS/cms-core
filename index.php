@@ -5,6 +5,10 @@
  */
 
 /* Loading environment variables */
+if(!file_exists(".env")) {
+    header('Location: installation/index.php');
+    die();
+}
 require_once("app/EnvBuilder.php");
 (new Env('.env'))->load();
 

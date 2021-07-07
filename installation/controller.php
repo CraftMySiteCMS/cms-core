@@ -3,30 +3,54 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+$path ='../.env';
+
 require_once("../app/EnvBuilder.php");
-(new Env('../.env'))->load();
+if(file_exists($path)) {
+    (new Env($path))->load();
+}
 
 /* UPDATE DATABASE */
 if (isset($_POST['update_env'])):
-    function changeEnvironmentVariable($key,$value) {
-        $path ='../.env';
+    function changeEnvironmentVariable($key,$value,$path) {
         $old = getenv($key);
-        if (file_exists($path)) {
-            file_put_contents($path, str_replace(
-                "$key=".$old,
-                "$key=".$value,
-                file_get_contents($path)
-            ));
-        }
+        file_put_contents($path, str_replace(
+            "$key=".$old,
+            "$key=".$value,
+            file_get_contents($path)
+        ));
     }
 
-    changeEnvironmentVariable("DB_HOST", $_POST['bdd_address']);
-    changeEnvironmentVariable("DB_USERNAME", $_POST['bdd_login']);
-    changeEnvironmentVariable("DB_PASSWORD", $_POST['bdd_pass']);
-    changeEnvironmentVariable("DB_NAME", $_POST['bdd_name']);
+    $host = $_POST['bdd_address'];
+    $username = $_POST['bdd_login'];
+    $password= $_POST['bdd_pass'];
+    $db = $_POST['bdd_name'];
+    $subfolder = $_POST['install_folder'];
+    $locale = "fr";
 
-    changeEnvironmentVariable("PATH_SUBFOLDER", $_POST['install_folder']);
 
+    if(file_exists($path)) {
+        changeEnvironmentVariable("DB_HOST", $host, $path);
+        changeEnvironmentVariable("DB_USERNAME", $username, $path);
+        changeEnvironmentVariable("DB_PASSWORD", $password, $path);
+        changeEnvironmentVariable("DB_NAME", $db, $path);
+
+        changeEnvironmentVariable("PATH_SUBFOLDER", $subfolder, $path);
+        changeEnvironmentVariable("LOCALE", $locale, $path);
+    }
+    else {
+        $env_file = fopen($path, "w") or die("Unable to open file!");
+
+        $txt = "DB_HOST=$host\n";fwrite($env_file, $txt);
+        $txt = "DB_USERNAME=$username\n";fwrite($env_file, $txt);
+        $txt = "DB_PASSWORD=$password\n";fwrite($env_file, $txt);
+        $txt = "DB_NAME=$db\n";fwrite($env_file, $txt);
+        $txt = "PATH_ADMIN_VIEW=admin/resources/views/\n";fwrite($env_file, $txt);
+        $txt = "PATH_SUBFOLDER=$subfolder\n";fwrite($env_file, $txt);
+        $txt = "DEV_MODE=1\n";fwrite($env_file, $txt);
+        $txt = "LOCALE=$locale\n";fwrite($env_file, $txt);
+        fclose($env_file);
+    }
 
     $db = new PDO("mysql:host=".$_POST['bdd_address'],$_POST['bdd_login'],$_POST['bdd_pass']);
     $db->query("CREATE DATABASE IF NOT EXISTS ".$_POST['bdd_name'].";");

@@ -37,7 +37,7 @@ CREATE TABLE `cms_users`
     `user_key`       varchar(255) NOT NULL,
     `user_created`   timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `user_updated`   timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `user_logged`    timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `user_logged`    timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 

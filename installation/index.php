@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<?php session_start(); ?>
+<?php session_start();
+require_once("../app/EnvBuilder.php");
+if(file_exists("../.env")) {
+    (new Env("../.env"))->load();
+}?>
 <html lang="fr-FR">
 <head>
     <meta charset="utf-8" />
@@ -192,13 +196,27 @@
                                 <h3 class="card-title">A propos de votre installation</h3>
                             </div>
                             <div class="card-body">
-                                <?php $permissions = fileperms('../.env');
-                                if((int)substr(sprintf('%o', $permissions), -4) < 666) :
-                                    echo "<p class='text-danger'>Droit du fichier .env : ". substr(sprintf('%o', $permissions), -4)."</p>";
-                                else :
-                                    echo "<p class='text-success'>Droit du fichier .env : ". substr(sprintf('%o', $permissions), -4)."</p>";
-                                endif;
-                                ?>
+                                <?php if(file_exists("../.env")) : ?>
+                                    <div class="info-box bg-success">
+                                        <span class="info-box-icon"><i class="fas fa-server"></i></span>
+
+                                        <div class="info-box-content">
+                                            <span class="info-box-text font-weight-bold">Félicitation</span>
+                                            <span class="progress-description">Votre base a été créée</span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+
+                                    <?php $DB_HOST = getenv("DB_HOST") ?? "<span class='text-danger'>erreur</span>";
+                                    $DB_USERNAME = getenv("DB_USERNAME") ?? "<span class='text-danger'>erreur</span>";
+                                    $DB_PASSWORD = !empty(getenv("DB_PASSWORD")) ? "*****" : "<span class='text-danger'>erreur</span>";
+                                    $DB_NAME = getenv("DB_NAME") ?? "<span class='text-danger'>erreur</span>";?>
+                                    <p><b>Adresse de la base de données :</b> <?=$DB_HOST?><br>
+                                    <b>Identifiant de la base de données :</b> <?=$DB_USERNAME?><br>
+                                    <b>Mot de passe de la base de données :</b> <?=$DB_PASSWORD?><br>
+                                    <b>Nom de la base de données :</b> <?=$DB_NAME?></p>
+                                <?php endif ?>
+
                             </div>
                         </div>
                     </div>
