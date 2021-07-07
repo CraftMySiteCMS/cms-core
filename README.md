@@ -22,7 +22,7 @@ A ce stade du projet, seul le jeu Minecraft sera utilisable avec le CMS.
 Installation
 ------------
 
-Attention, sur Nginx uniquement, la configuration suivante du serveur est nécéssaire :
+Attention, sur Nginx uniquement, la configuration suivante du serveur est nécessaire :
 
 ```bash
 autoindex off;
@@ -36,25 +36,8 @@ location / {
   }
 ```
 
-Configuration des variables d'environnement, à mettre dans le fichier `.env` à la racine du projet :
-
-```bash
-PATH_ADMIN_VIEW=admin/resources/views/
-DB_HOST=
-DB_USERNAME=
-DB_PASSWORD=
-DB_NAME=
-PATH_SUBFOLDER=
-DEV_MODE=
-LOCALE=fr
-TIMEZONE=UTC
-```
-* `DB_HOST` : Adresse du serveur SQL (Généralement localhost)
-* `DB_USERNAME` : Utilisateur SQL
-* `DB_PASSWORD` : Mot de passe utilisateur SQL
-* `DB_NAME` : Nom de la base de données
-* `PATH_SUBFOLDER` : Sous-dossier d'installation. Si le CMS est installé à la racine, mettre un `/`
-* `DEV_MODE` : `1` active le mode debug (affiche les erreurs PHP), sinon mettre `0`
+Une fois les fichiers du site téléchargés, accédez à votre site. Vous serez automatiquement redirigé vers l'installateur de CraftMySite.
+Pensez à supprimer le dossier `/installation` une fois le CMS configuré.
 
 Nous aider dans le développement
 ------------
