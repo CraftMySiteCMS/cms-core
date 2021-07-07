@@ -26,6 +26,7 @@ if (isset($_POST['update_env'])):
     $password= $_POST['bdd_pass'];
     $db = $_POST['bdd_name'];
     $subfolder = $_POST['install_folder'];
+    $dev_mode = 1;
     $locale = "fr";
     $timezone = date_default_timezone_get();
 
@@ -49,7 +50,7 @@ if (isset($_POST['update_env'])):
         $txt = "DB_NAME=$db\n";fwrite($env_file, $txt);
         $txt = "PATH_ADMIN_VIEW=admin/resources/views/\n";fwrite($env_file, $txt);
         $txt = "PATH_SUBFOLDER=$subfolder\n";fwrite($env_file, $txt);
-        $txt = "DEV_MODE=1\n";fwrite($env_file, $txt);
+        $txt = "DEV_MODE=$dev_mode\n";fwrite($env_file, $txt);
         $txt = "LOCALE=$locale\n";fwrite($env_file, $txt);
         $txt = "TIMEZONE=$timezone\n";fwrite($env_file, $txt);
         fclose($env_file);
@@ -70,11 +71,15 @@ if (isset($_POST['update_env'])):
     $scanned_directory = array_diff(scandir($packages_folder), array('..', '.'));
 
     foreach ($scanned_directory as $package) :
-        $package_path = "../app/package/$package/init.sql";
-        if(file_exists($package_path)) {
-            $query = file_get_contents($package_path);
+        $package_sql_file = "../app/package/$package/init.sql";
+        if(file_exists($package_sql_file)) {
+            $query = file_get_contents($package_sql_file);
             $stmt = $db->prepare($query);
             $stmt->execute();
+
+            if($dev_mode == 0) {
+                unlink($package_sql_file);
+            }
         }
     endforeach;
 
