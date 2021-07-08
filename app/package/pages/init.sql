@@ -12,6 +12,7 @@ CREATE TABLE `cms_pages` (
 
 ALTER TABLE `cms_pages`
     ADD PRIMARY KEY (`page_id`),
+    ADD UNIQUE KEY `page_slug` (`page_slug`),
     ADD KEY `fk_pages_users` (`user_id`);
 
 
