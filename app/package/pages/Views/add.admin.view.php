@@ -76,7 +76,6 @@ $description = _Pages_add_DESC; ?>
             warning: Warning,
             code: CodeTool,
             delimiter: Delimiter,
-            linkTool: LinkTool,
             table: Table,
             embed: {
                 class: Embed,
@@ -116,21 +115,52 @@ $description = _Pages_add_DESC; ?>
         
         editor.save()
         .then((savedData) => {
-            $.ajax({
-                url : "'.getenv("PATH_SUBFOLDER").'cms-admin/pages/add",
-                type : "POST",
-                data : {
-                    "news_title" : "TEST TITRE",
-                    "news_slug" : "test_titre",
-                    "news_content" : JSON.stringify(savedData)
-                },
-                success: function (data) {
-                    alert("L\'actualité a bien été sauvegardée !");
-                }
-            });
+            if(jQuery("#page_id").val()) {
+                $.ajax({
+                    url : "'.getenv("PATH_SUBFOLDER").'cms-admin/pages/edit",
+                    type : "POST",
+                    data : {
+                        "news_id" : jQuery("#page_id").val(),
+                        "news_title" : jQuery("#title").val(),
+                        "news_slug" : jQuery("#slug").val(),
+                        "news_content" : JSON.stringify(savedData)
+                    },
+                    success: function (data) {
+                        console.log(data)
+                        $(document).Toasts("create", {
+                              title: "Page mise à jour !",
+                              body: "Votre contenu a bien été enregistré.",
+                              class: "body-success"
+                        })
+                    }
+                });
+            }
+            else {
+                $.ajax({
+                    url : "'.getenv("PATH_SUBFOLDER").'cms-admin/pages/add",
+                    type : "POST",
+                    data : {
+                        "news_title" : jQuery("#title").val(),
+                        "news_slug" : jQuery("#slug").val(),
+                        "news_content" : JSON.stringify(savedData)
+                    },
+                    success: function (data) {
+                        jQuery("#page_id").val(data);
+                        $(document).Toasts("create", {
+                              title: "Page enregistrée !",
+                              body: "Votre page a bien été enregistrée.",
+                              class: "body-success"
+                        })
+                    }
+                });
+            }
         })
         .catch((error) => {
-            console.error("Saving error", error);
+            $(document).Toasts("create", {
+                  title: "Erreur",
+                  body: "Une erreur est survenue, veuillez re-essayer",
+                  class: "body-danger"
+            })
         });
     });
     </script>'; ?>
@@ -145,7 +175,13 @@ $description = _Pages_add_DESC; ?>
         margin: 0 10%;
         font-size: 30px;
         border: 0;
-        margin-bottom: 10px;
+    }
+    .page-slug {
+        width: 80%;
+        margin: 0 10%;
+    }
+    input:focus{
+        outline: none;
     }
 </style>
     <!-- main-content -->
@@ -155,17 +191,25 @@ $description = _Pages_add_DESC; ?>
                 <div class="col-9">
                     <div class="card card-primary">
                         <div class="card-body">
+                            <input type="hidden" id="page_id" name="page_id">
                             <input class="page-title" type="text" id="title" placeholder="Titre de la page">
-                            <p class="page-slug"><?php echo "http://" . $_SERVER['SERVER_NAME'] . '/'; ?> <input class="border-0" type="text" id="slug"></p>
-                            <div class="ce-example__content _ce-example__content--small">
+                            <p class="page-slug text-blue mb-3 d-flex"><?php echo "http://" . $_SERVER['SERVER_NAME'] . '/'; ?> <input class="border-0 text-blue p-0 w-100" type="text" id="slug"></p>
+                            <div>
                                 <div id="editorjs"></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-3">
-                    <div class="card card-primary">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Publication de la page</h3>
+                        </div>
                         <div class="card-body">
+                            <div class="custom-control custom-switch mb-2">
+                                <input type="checkbox" class="custom-control-input" id="draft" name="draft">
+                                <label class="custom-control-label" for="draft">Brouillon</label>
+                            </div>
                             <div class="btn btn-block btn-primary" id="saveButton">
                                 <?=_Pages_button_save?>
                             </div>
@@ -176,6 +220,16 @@ $description = _Pages_add_DESC; ?>
             <!-- /.row -->
         </div>
     </div>
+    <script>
+        $('#title').on('keyup', function() {
+            let val = $(this).val();
+            val=val.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            val=val.replace(/[^\w\s]/gi, '');
+            val=val.replace(/ /g,"-");
+            $('#slug').val(val);
+        });
+    </script>
+
     <!-- /.main-content -->
 <?php $content = ob_get_clean(); ?>
 

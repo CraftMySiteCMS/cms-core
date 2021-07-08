@@ -13,9 +13,7 @@ $router->scope('/cms-admin/pages', function($router) {
     $router->get('/edit/:id', function($id) {
         (new CMS\Controller\pages\pagesController)->admin_pages_edit($id);
     })->with('id', '[0-9]+');
-    $router->post('/edit/:id', function($id) {
-        (new CMS\Controller\pages\pagesController)->admin_pages_edit_post($id);
-    })->with('id', '[0-9]+');
+    $router->post('/edit', "pages#admin_pages_edit_post");
 
     $router->get('/add', "pages#admin_pages_add");
     $router->post('/add', "pages#admin_pages_add_post");

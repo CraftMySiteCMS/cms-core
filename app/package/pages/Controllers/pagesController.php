@@ -35,7 +35,22 @@ class pagesController extends coreController {
 
         $page->create();
 
-        echo 1;
+        echo $page->page_id;
+    }
+    public function admin_pages_edit_post() {
+        usersController::is_admin_logged();
+
+        $user = new usersModel();
+
+        $page = new pagesModel();
+        $page->page_id = $_POST["news_id"];
+        $page->page_title = $_POST["news_title"];
+        $page->page_slug = $_POST["news_slug"];
+        $page->page_content = $_POST["news_content"];
+
+        $page->update();
+
+        echo $page->page_id;
     }
 
 }
