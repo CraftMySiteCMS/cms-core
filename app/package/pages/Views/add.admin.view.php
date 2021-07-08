@@ -26,6 +26,7 @@ $description = _Pages_add_DESC; ?>
     <!-- Initialization -->
     <script>
     let editor = new EditorJS({
+        placeholder: "Commencez à taper ou cliquez sur le \"+\" pour choisir un bloc à ajouter...",
         logLevel: "ERROR",
         readOnly: false,
         holder: "editorjs",
@@ -139,6 +140,13 @@ $description = _Pages_add_DESC; ?>
     .ce-block__content, .ce-toolbar__content {
         max-width: 80%!important;
     }
+    .page-title {
+        width: 80%;
+        margin: 0 10%;
+        font-size: 30px;
+        border: 0;
+        margin-bottom: 10px;
+    }
 </style>
     <!-- main-content -->
     <div class="content">
@@ -147,6 +155,8 @@ $description = _Pages_add_DESC; ?>
                 <div class="col-9">
                     <div class="card card-primary">
                         <div class="card-body">
+                            <input class="page-title" type="text" id="title" placeholder="Titre de la page">
+                            <p class="page-slug"><?php echo "http://" . $_SERVER['SERVER_NAME'] . '/'; ?> <input class="border-0" type="text" id="slug"></p>
                             <div class="ce-example__content _ce-example__content--small">
                                 <div id="editorjs"></div>
                             </div>
