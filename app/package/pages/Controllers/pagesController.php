@@ -14,6 +14,10 @@ class pagesController extends coreController {
         parent::__construct($theme_path);
     }
 
+    public function admin_pages_list() {
+        require('app/package/pages/views/list.admin.view.php');
+    }
+
     public function admin_pages_add() {
         usersController::is_admin_logged();
 

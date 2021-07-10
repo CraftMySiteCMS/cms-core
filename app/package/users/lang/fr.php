@@ -14,26 +14,6 @@ const _Users_list_TITLE = "Utilisateurs | Liste";
 const _Users_list_DESC = "Liste des utilisateurs inscrits sur le site";
 const _Users_list_card_title = "Liste des utilisateurs inscrits";
 
-/* USER LIST DATATABLE */
-
-const _Users_list_processing = "Traitement en cours...";
-const _Users_list_search = "Rechercher&nbsp;:";
-const _Users_list_lengthMenu = "Afficher _MENU_ &eacute;l&eacute;ments";
-const _Users_list_info = "Affichage de l\'&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments";
-const _Users_list_infoEmpty = "Affichage de l\'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments";
-const _Users_list_infoFiltered = "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)";
-const _Users_list_infoPostFix = "";
-const _Users_list_loadingRecords = "Chargement en cours...";
-const _Users_list_zeroRecords = "Aucun &eacute;l&eacute;ment &agrave; afficher";
-const _Users_list_emptyTable = "Aucune donnée disponible dans le tableau";
-const _Users_list_first = "Premier";
-const _Users_list_previous = "Pr&eacute;c&eacute;dent";
-const _Users_list_next = "Suivant";
-const _Users_list_last = "Dernier";
-const _Users_list_sortAscending = ": activer pour trier la colonne par ordre croissant";
-const _Users_list_sortDescending = ": activer pour trier la colonne par ordre décroissant";
-
-
 /* USER EDIT */
 const _Users_edit_TITLE = "Utilisateurs | Edition";
 const _Users_edit_DESC = "Editez les comptes de vos utilisateurs";

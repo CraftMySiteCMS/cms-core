@@ -14,25 +14,6 @@ const _Users_list_TITLE = "Users | List";
 const _Users_list_DESC = "List of users registered on the site";
 const _Users_list_card_title = "List of registered users";
 
-/* USER LIST DATATABLE */
-
-const _Users_list_processing = "Treatment in progress...";
-const _Users_list_search = "Search&nbsp;:";
-const _Users_list_lengthMenu = "Showing _MENU_ entries";
-const _Users_list_info = "Showing _START_ to _END_ of _TOTAL_ entries";
-const _Users_list_infoEmpty = "Showing 0 to 0 of 0 entries";
-const _Users_list_infoFiltered = "(Filtered of _MAX_ entries)";
-const _Users_list_infoPostFix = "";
-const _Users_list_loadingRecords = "Loading in progress...";
-const _Users_list_zeroRecords = "No elements to display";
-const _Users_list_emptyTable = "No data available in the table";
-const _Users_list_first = "First";
-const _Users_list_previous = "Previous";
-const _Users_list_next = "Next";
-const _Users_list_last = "Last";
-const _Users_list_sortAscending = ": activate to sort the column in ascending order";
-const _Users_list_sortDescending = ": activate to sort the column in descending order";
-
 /* USER EDIT */
 const _Users_edit_TITLE = "Users | Edition";
 const _Users_edit_DESC = "Edit the accounts of your users";

@@ -54,7 +54,6 @@ ALTER TABLE `cms_users`
 
 ALTER TABLE `cms_users`
     ADD CONSTRAINT `fk_users_roles` FOREIGN KEY (`role_id`) REFERENCES `cms_roles` (`role_id`);
-COMMIT;
 
 INSERT INTO `cms_core_options` (`option_id`, `option_value`, `option_name`, `option_updated`)
 VALUES (1, 'Sampler', 'theme', NOW());

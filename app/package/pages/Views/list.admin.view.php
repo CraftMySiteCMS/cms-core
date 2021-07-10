@@ -56,16 +56,16 @@ $description = _Users_list_DESC; ?>
                         <div class="card-body">
                             <table id="users_table" class="table table-bordered table-striped">
                                 <thead>
-                                    <tr>
-                                        <th><?=_Users_mail?></th>
-                                        <th><?=_Users_pseudo?></th>
-                                        <th><?=_Users_firstname?></th>
-                                        <th><?=_Users_surname?></th>
-                                        <th><?=_Users_role?></th>
-                                        <th><?=_Users_creation?></th>
-                                        <th><?=_Users_last_edit?></th>
-                                        <th></th>
-                                    </tr>
+                                <tr>
+                                    <th><?=_Users_mail?></th>
+                                    <th><?=_Users_pseudo?></th>
+                                    <th><?=_Users_firstname?></th>
+                                    <th><?=_Users_surname?></th>
+                                    <th><?=_Users_role?></th>
+                                    <th><?=_Users_creation?></th>
+                                    <th><?=_Users_last_edit?></th>
+                                    <th></th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 <?php foreach ($users_list as $user) : ?>
@@ -82,16 +82,16 @@ $description = _Users_list_DESC; ?>
                                 <?php endforeach; ?>
                                 </tbody>
                                 <tfoot>
-                                    <tr>
-                                        <th><?=_Users_mail?></th>
-                                        <th><?=_Users_pseudo?></th>
-                                        <th><?=_Users_firstname?></th>
-                                        <th><?=_Users_surname?></th>
-                                        <th><?=_Users_role?></th>
-                                        <th><?=_Users_creation?></th>
-                                        <th><?=_Users_last_edit?></th>
-                                        <th></th>
-                                    </tr>
+                                <tr>
+                                    <th><?=_Users_mail?></th>
+                                    <th><?=_Users_pseudo?></th>
+                                    <th><?=_Users_firstname?></th>
+                                    <th><?=_Users_surname?></th>
+                                    <th><?=_Users_role?></th>
+                                    <th><?=_Users_creation?></th>
+                                    <th><?=_Users_last_edit?></th>
+                                    <th></th>
+                                </tr>
                                 </tfoot>
                             </table>
                         </div>
