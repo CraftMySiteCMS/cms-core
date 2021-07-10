@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<?php include_once("admin/resources/lang/".getenv("LOCALE").".php"); ?>
 <html lang="fr-FR">
 <?php include_once("includes/head.inc.php");?>
 <?php if(!isset($no_body) || !$no_body) : ?>

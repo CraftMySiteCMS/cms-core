@@ -17,6 +17,8 @@ if(is_dir("installation") && getenv("DEV_MODE") == 0) {
     rmdir("installation");
 }
 
+require_once("admin/resources/lang/" . getenv("LOCALE") . ".php");
+
 if(getenv("DEV_MODE")) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
