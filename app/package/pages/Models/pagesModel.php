@@ -15,6 +15,7 @@ class pagesModel extends Manager {
     public $page_created;
     public $page_updated;
     public $page_state;
+    public $page_content_translated;
 
     public static function exist($var, $is_slug = null) {
         if($is_slug) $var = array("page_slug" => $var);
@@ -57,7 +58,7 @@ class pagesModel extends Manager {
         if($is_slug) $var = array("page_slug" => $this->page_slug);
         else $var = array("page_id" => $this->page_id);
 
-        $sql = "SELECT page_id, page_slug, user_id, page_content, DATE_FORMAT(page_created, '%d/%m/%Y à %H:%i:%s') AS 'page_created', DATE_FORMAT(page_updated, '%d/%m/%Y à %H:%i:%s') AS 'page_updated'"
+        $sql = "SELECT page_id, page_title, page_slug, user_id, page_content, DATE_FORMAT(page_created, '%d/%m/%Y à %H:%i:%s') AS 'page_created', DATE_FORMAT(page_updated, '%d/%m/%Y à %H:%i:%s') AS 'page_updated'"
             ." FROM cms_pages"
             ." WHERE page_state = 1";
         if($is_slug) $sql .= " AND page_slug=:page_slug";
@@ -72,18 +73,19 @@ class pagesModel extends Manager {
                 if(property_exists(pagesModel::class, $key)) :
                     $this->$key = $property;
                 endif;
-                $this->TranslatePage();
-                
-                $user = new usersModel();
-                $user->fetch($result['user_id']);
-                $this->user = $user;
             endforeach;
+
+            $this->TranslatePage();
+
+            $user = new usersModel();
+            $user->fetch($result['user_id']);
+            $this->user = $user;
         endif;
     }
     public static function fetchAll(): array {
         $return = [];
 
-        $sql = "SELECT page_id, page_slug, user_id, page_content, page_state, DATE_FORMAT(page_created, '%d/%m/%Y à %H:%i:%s') AS 'page_created', DATE_FORMAT(page_updated, '%d/%m/%Y à %H:%i:%s') AS 'page_updated'"
+        $sql = "SELECT page_id, page_title, page_slug, user_id, page_content, page_state, DATE_FORMAT(page_created, '%d/%m/%Y à %H:%i:%s') AS 'page_created', DATE_FORMAT(page_updated, '%d/%m/%Y à %H:%i:%s') AS 'page_updated'"
             ." FROM cms_pages ";
 
         $db = Manager::db_connect();
@@ -249,6 +251,6 @@ class pagesModel extends Manager {
             endswitch;
         endforeach;
 
-        $this->page_content = $convertedHtml;
+        $this->page_content_translated = $convertedHtml;
     }
 }

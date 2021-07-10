@@ -1,5 +1,5 @@
-<?php $title = _Users_list_TITLE;
-$description = _Users_list_DESC; ?>
+<?php $title = _Pages_list_TITLE;
+$description = _Pages_list_DESC; ?>
 
 <?php $styles = '<link rel="stylesheet" href="'.getenv("PATH_SUBFOLDER").'admin/resources/vendors/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="'.getenv("PATH_SUBFOLDER").'admin/resources/vendors/datatables-responsive/css/responsive.bootstrap4.min.css">';?>
@@ -57,39 +57,27 @@ $description = _Users_list_DESC; ?>
                             <table id="users_table" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th><?=_Users_mail?></th>
-                                    <th><?=_Users_pseudo?></th>
-                                    <th><?=_Users_firstname?></th>
-                                    <th><?=_Users_surname?></th>
-                                    <th><?=_Users_role?></th>
-                                    <th><?=_Users_creation?></th>
-                                    <th><?=_Users_last_edit?></th>
+                                    <th>Titre</th>
+                                    <th>Auteur</th>
+                                    <th>Date de création</th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <?php foreach ($users_list as $user) : ?>
+                                <?php foreach ($pages_list as $page) : ?>
                                     <tr>
-                                        <td><?=$user['user_email']?></td>
-                                        <td><?=$user['user_pseudo']?></td>
-                                        <td><?=$user['user_firstname']?></td>
-                                        <td><?=$user['user_lastname']?></td>
-                                        <td><?=$user['user_role_name']?></td>
-                                        <td><?=$user['user_created']?></td>
-                                        <td><?=$user['user_updated']?></td>
-                                        <td><a href="../users/edit/<?=$user['user_id']?>" target="_blank"><i class="fa fa-cog"></i></a></td>
+                                        <td><?=$page->page_title?></td>
+                                        <td><?=$page->user->user_pseudo?></td>
+                                        <td><?=$page->page_created?></td>
+                                        <td><a href="../pages/edit/<?=$page->page_id?>" target="_blank"><i class="fa fa-cog"></i></a></td>
                                     </tr>
                                 <?php endforeach; ?>
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th><?=_Users_mail?></th>
-                                    <th><?=_Users_pseudo?></th>
-                                    <th><?=_Users_firstname?></th>
-                                    <th><?=_Users_surname?></th>
-                                    <th><?=_Users_role?></th>
-                                    <th><?=_Users_creation?></th>
-                                    <th><?=_Users_last_edit?></th>
+                                    <th>Titre</th>
+                                    <th>Auteur</th>
+                                    <th>Date de création</th>
                                     <th></th>
                                 </tr>
                                 </tfoot>

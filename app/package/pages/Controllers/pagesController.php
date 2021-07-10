@@ -15,6 +15,9 @@ class pagesController extends coreController {
     }
 
     public function admin_pages_list() {
+        $pagesModel = new pagesModel();
+        $pages_list = $pagesModel->fetchAll();
+
         require('app/package/pages/views/list.admin.view.php');
     }
 
@@ -23,7 +26,6 @@ class pagesController extends coreController {
 
         require('app/package/pages/views/add.admin.view.php');
     }
-    
     public function admin_pages_add_post() {
         usersController::is_admin_logged();
 
@@ -41,6 +43,17 @@ class pagesController extends coreController {
 
         echo $page->page_id;
     }
+
+    public function admin_pages_edit($id) {
+        usersController::is_admin_logged();
+
+        $page = new pagesModel();
+        $page->page_id = $id;
+        $page->fetch();
+
+        $page_content = $page->page_content;
+        require('app/package/pages/views/edit.admin.view.php');
+    }
     public function admin_pages_edit_post() {
         usersController::is_admin_logged();
 
@@ -56,5 +69,7 @@ class pagesController extends coreController {
 
         echo $page->page_id;
     }
+
+
 
 }
