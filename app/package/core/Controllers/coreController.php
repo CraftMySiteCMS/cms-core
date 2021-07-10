@@ -38,6 +38,35 @@ class coreController {
 
         return 'public/themes/'.$coreModel->theme;
     }
+    
+    /* //////////////////////////////////////////////////////////////////////////// */
+    /*
+     * Get packages of active theme
+     */
+    public function cms_theme_available_packages(): array
+    {
+        $jsonFile = file_get_contents($this->cms_theme_path() . "/infos.json");
+        return json_decode($jsonFile, true)["packages"];
+    }
+
+    /* //////////////////////////////////////////////////////////////////////////// */
+    /*
+     * Verify if package is avalaible of active theme
+     */
+    public function cms_package_available_theme(string $package): bool
+    {
+        return in_array($package, $this->cms_theme_available_packages());
+    }
+
+    /* //////////////////////////////////////////////////////////////////////////// */
+    /*
+     * Get package info
+     */
+    public function cms_package_info(string $package): array
+    {
+        $jsonFile = file_get_contents("app/package/$package/infos.json");
+        return json_decode($jsonFile, true);
+    }
 
     /* //////////////////////////////////////////////////////////////////////////// */
     /*
