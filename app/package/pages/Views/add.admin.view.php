@@ -1,5 +1,5 @@
-<?php $title = _Pages_add_TITLE;
-$description = _Pages_add_DESC; ?>
+<?php $title = PAGES_ADD_TITLE;
+$description = PAGES_ADD_DESC; ?>
 
 <?php $scripts = '<script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script><!-- Header -->
 
@@ -211,7 +211,7 @@ $description = _Pages_add_DESC; ?>
                                 <label class="custom-control-label" for="draft">Brouillon</label>
                             </div>
                             <div class="btn btn-block btn-primary" id="saveButton">
-                                <?=_Pages_button_save?>
+                                <?=PAGES_BUTTON_SAVE?>
                             </div>
                         </div>
                     </div>

@@ -1,5 +1,7 @@
-<?php $title = _Users_list_TITLE;
-$description = _Users_list_DESC; ?>
+<?php use CMS\Model\Users\UsersModel;
+
+$title = USERS_LIST_TITLE;
+$description = USERS_LIST_DESC; ?>
 
 <?php $styles = '<link rel="stylesheet" href="'.getenv("PATH_SUBFOLDER").'admin/resources/vendors/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="'.getenv("PATH_SUBFOLDER").'admin/resources/vendors/datatables-responsive/css/responsive.bootstrap4.min.css">';?>
@@ -16,25 +18,25 @@ $description = _Users_list_DESC; ?>
             "lengthChange": false, 
             "autoWidth": false,
             language: {
-                processing:     "'._Datatables_list_processing.'",
-                search:         "'._Datatables_list_search.'",
-                lengthMenu:    "'._Datatables_list_lengthMenu.'",
-                info:           "'._Datatables_list_info.'",
-                infoEmpty:      "'._Datatables_list_infoEmpty.'",
-                infoFiltered:   "'._Datatables_list_infoFiltered.'",
-                infoPostFix:    "'._Datatables_list_infoPostFix.'",
-                loadingRecords: "'._Datatables_list_loadingRecords.'",
-                zeroRecords:    "'._Datatables_list_zeroRecords.'",
-                emptyTable:     "'._Datatables_list_emptyTable.'",
+                processing:     "'.DATATABLES_LIST_PROCESSING.'",
+                search:         "'.DATATABLES_LIST_SEARCH.'",
+                lengthMenu:    "'.DATATABLES_LIST_LENGTHMENU.'",
+                info:           "'.DATATABLES_LIST_INFO.'",
+                infoEmpty:      "'.DATATABLES_LIST_INFOEMPTY.'",
+                infoFiltered:   "'.DATATABLES_LIST_INFOFILTERED.'",
+                infoPostFix:    "'.DATATABLES_LIST_INFOPOSTFIX.'",
+                loadingRecords: "'.DATATABLES_LIST_LOADINGRECORDS.'",
+                zeroRecords:    "'.DATATABLES_LIST_ZERORECORDS.'",
+                emptyTable:     "'.DATATABLES_LIST_EMPTYTABLE.'",
                 paginate: {
-                    first:      "'._Datatables_list_first.'",
-                    previous:   "'._Datatables_list_previous.'",
-                    next:       "'._Datatables_list_next.'",
-                    last:       "'._Datatables_list_last.'"
+                    first:      "'.DATATABLES_LIST_FIRST.'",
+                    previous:   "'.DATATABLES_LIST_PREVIOUS.'",
+                    next:       "'.DATATABLES_LIST_NEXT.'",
+                    last:       "'.DATATABLES_LIST_LAST.'"
                 },
                 aria: {
-                    sortAscending:  "'._Datatables_list_sortAscending.'",
-                    sortDescending: "'._Datatables_list_sortDescending.'"
+                    sortAscending:  "'.DATATABLES_LIST_SORTASCENDING.'",
+                    sortDescending: "'.DATATABLES_LIST_SORTDESCENDING.'"
                 }
             },
         });
@@ -50,25 +52,26 @@ $description = _Users_list_DESC; ?>
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title"><?=_Users_list_card_title?></h3>
+                            <h3 class="card-title"><?=USERS_LIST_CARD_TITLE?></h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="users_table" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th><?=_Users_mail?></th>
-                                        <th><?=_Users_pseudo?></th>
-                                        <th><?=_Users_firstname?></th>
-                                        <th><?=_Users_surname?></th>
-                                        <th><?=_Users_role?></th>
-                                        <th><?=_Users_creation?></th>
-                                        <th><?=_Users_last_edit?></th>
+                                        <th><?=USERS_MAIL?></th>
+                                        <th><?=USERS_PSEUDO?></th>
+                                        <th><?=USERS_FIRSTNAME?></th>
+                                        <th><?=USERS_SURNAME?></th>
+                                        <th><?=USERS_ROLE?></th>
+                                        <th><?=USERS_CREATION?></th>
+                                        <th><?=USERS_LAST_EDIT?></th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <?php foreach ($users_list as $user) : ?>
+                                <?php /** @var UsersModel[] $userList */
+                                foreach ($userList as $user) : ?>
                                     <tr>
                                         <td><?=$user['user_email']?></td>
                                         <td><?=$user['user_pseudo']?></td>
@@ -83,13 +86,13 @@ $description = _Users_list_DESC; ?>
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th><?=_Users_mail?></th>
-                                        <th><?=_Users_pseudo?></th>
-                                        <th><?=_Users_firstname?></th>
-                                        <th><?=_Users_surname?></th>
-                                        <th><?=_Users_role?></th>
-                                        <th><?=_Users_creation?></th>
-                                        <th><?=_Users_last_edit?></th>
+                                        <th><?=USERS_MAIL?></th>
+                                        <th><?=USERS_PSEUDO?></th>
+                                        <th><?=USERS_FIRSTNAME?></th>
+                                        <th><?=USERS_SURNAME?></th>
+                                        <th><?=USERS_ROLE?></th>
+                                        <th><?=USERS_CREATION?></th>
+                                        <th><?=USERS_LAST_EDIT?></th>
                                         <th></th>
                                     </tr>
                                 </tfoot>

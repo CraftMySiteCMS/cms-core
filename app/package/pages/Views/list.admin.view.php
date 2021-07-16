@@ -1,5 +1,7 @@
-<?php $title = _Pages_list_TITLE;
-$description = _Pages_list_DESC; ?>
+<?php use CMS\Model\Pages\PagesModel;
+
+$title = PAGES_LIST_TITLE;
+$description = PAGES_LIST_DESC; ?>
 
 <?php $styles = '<link rel="stylesheet" href="'.getenv("PATH_SUBFOLDER").'admin/resources/vendors/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="'.getenv("PATH_SUBFOLDER").'admin/resources/vendors/datatables-responsive/css/responsive.bootstrap4.min.css">';?>
@@ -16,25 +18,25 @@ $description = _Pages_list_DESC; ?>
             "lengthChange": false, 
             "autoWidth": false,
             language: {
-                processing:     "'._Datatables_list_processing.'",
-                search:         "'._Datatables_list_search.'",
-                lengthMenu:    "'._Datatables_list_lengthMenu.'",
-                info:           "'._Datatables_list_info.'",
-                infoEmpty:      "'._Datatables_list_infoEmpty.'",
-                infoFiltered:   "'._Datatables_list_infoFiltered.'",
-                infoPostFix:    "'._Datatables_list_infoPostFix.'",
-                loadingRecords: "'._Datatables_list_loadingRecords.'",
-                zeroRecords:    "'._Datatables_list_zeroRecords.'",
-                emptyTable:     "'._Datatables_list_emptyTable.'",
+                processing:     "'.DATATABLES_LIST_PROCESSING.'",
+                search:         "'.DATATABLES_LIST_SEARCH.'",
+                lengthMenu:    "'.DATATABLES_LIST_LENGTHMENU.'",
+                info:           "'.DATATABLES_LIST_INFO.'",
+                infoEmpty:      "'.DATATABLES_LIST_INFOEMPTY.'",
+                infoFiltered:   "'.DATATABLES_LIST_INFOFILTERED.'",
+                infoPostFix:    "'.DATATABLES_LIST_INFOPOSTFIX.'",
+                loadingRecords: "'.DATATABLES_LIST_LOADINGRECORDS.'",
+                zeroRecords:    "'.DATATABLES_LIST_ZERORECORDS.'",
+                emptyTable:     "'.DATATABLES_LIST_EMPTYTABLE.'",
                 paginate: {
-                    first:      "'._Datatables_list_first.'",
-                    previous:   "'._Datatables_list_previous.'",
-                    next:       "'._Datatables_list_next.'",
-                    last:       "'._Datatables_list_last.'"
+                    first:      "'.DATATABLES_LIST_FIRST.'",
+                    previous:   "'.DATATABLES_LIST_PREVIOUS.'",
+                    next:       "'.DATATABLES_LIST_NEXT.'",
+                    last:       "'.DATATABLES_LIST_LAST.'"
                 },
                 aria: {
-                    sortAscending:  "'._Datatables_list_sortAscending.'",
-                    sortDescending: "'._Datatables_list_sortDescending.'"
+                    sortAscending:  "'.DATATABLES_LIST_SORTASCENDING.'",
+                    sortDescending: "'.DATATABLES_LIST_SORTDESCENDING.'"
                 }
             },
         });
@@ -50,7 +52,7 @@ $description = _Pages_list_DESC; ?>
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title"><?=_Users_list_card_title?></h3>
+                            <h3 class="card-title"><?=USERS_LIST_CARD_TITLE?></h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -64,12 +66,13 @@ $description = _Pages_list_DESC; ?>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <?php foreach ($pages_list as $page) : ?>
+                                <?php /** @var PagesModel[] $pagesList */
+                                foreach ($pagesList as $page) : ?>
                                     <tr>
-                                        <td><?=$page->page_title?></td>
-                                        <td><?=$page->user->user_pseudo?></td>
-                                        <td><?=$page->page_created?></td>
-                                        <td><a href="../pages/edit/<?=$page->page_id?>" target="_blank"><i class="fa fa-cog"></i></a></td>
+                                        <td><?=$page->pageTitle?></td>
+                                        <td><?=$page->user->userPseudo?></td>
+                                        <td><?=$page->pageCreated?></td>
+                                        <td><a href="../pages/edit/<?=$page->pageId?>" target="_blank"><i class="fa fa-cog"></i></a></td>
                                     </tr>
                                 <?php endforeach; ?>
                                 </tbody>

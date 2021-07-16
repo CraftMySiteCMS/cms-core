@@ -1,12 +1,12 @@
 <?php
 
-$packages_folder = 'app/package/';
-$scanned_directory = array_diff(scandir($packages_folder), array('..', '.'));
+$packageFolder = 'app/package/';
+$scannedDirectory = array_diff(scandir($packageFolder), array('..', '.'));
 
-foreach ($scanned_directory as $package) :
-    $packages_subfolder = "app/package/$package/Models/";
-    $scanned_subdirectory = array_diff(scandir($packages_subfolder), array('..', '.'));
-    foreach ($scanned_subdirectory as $model) :
+foreach ($scannedDirectory as $package) {
+    $packageSubFolder = "app/package/$package/Models/";
+    $scannedSubDirectory = array_diff(scandir($packageSubFolder), array('..', '.'));
+    foreach ($scannedSubDirectory as $model) {
         require("package/$package/Models/$model");
-    endforeach;
-endforeach;
+    }
+}

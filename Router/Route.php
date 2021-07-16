@@ -2,19 +2,28 @@
 
 namespace CMS\Router;
 
-class Route {
+/**
+ * Class: @Route
+ * @package Core
+ * @author CraftMySite <contact@craftmysite.fr>
+ * @version 1.0
+ */
+class Route
+{
 
-    private $path;
+    private string $path;
     private $callable;
-    private $matches = [];
-    private $params = [];
+    private array $matches = [];
+    private array $params = [];
 
-    public function __construct($path, $callable){
+    public function __construct($path, $callable)
+    {
         $this->path = trim($path, '/');  // On retire les / inutiles
         $this->callable = $callable;
     }
 
-    public function with($param, $regex){
+    public function with($param, $regex): Route
+    {
         $this->params[$param] = str_replace('(', '(?:', $regex);
         return $this; // On retourne tjrs l'objet pour enchainer les arguments
     }
@@ -25,12 +34,13 @@ class Route {
      * @param $url
      * @return bool
      */
-    public function match($url){
+    public function match($url): bool
+    {
         $url = trim($url, '/');
         $path = preg_replace_callback('#:([\w]+)#', [$this, 'paramMatch'], $this->path);
         $regex = "#^$path$#i";
 
-        if(!preg_match($regex, $url, $matches)){
+        if (!preg_match($regex, $url, $matches)) {
             return false;
         }
         array_shift($matches);
@@ -38,33 +48,35 @@ class Route {
         return true;
     }
 
-    private function paramMatch($match){
-        if(isset($this->params[$match[1]])){
+    private function paramMatch($match): string
+    {
+        if (isset($this->params[$match[1]])) {
             return '(' . $this->params[$match[1]] . ')';
         }
         return '([^/]+)';
     }
 
-    public function call(){
-        if(is_string($this->callable)){
+    public function call()
+    {
+        if (is_string($this->callable)) {
             $params = explode('#', $this->callable);
-            if($params[0] == "core") {
+            if ($params[0] === "core") {
                 $controller = "CMS\\Controller\\" . $params[0] . "Controller";
-            }
-            else {
+            } else {
                 $controller = "CMS\\Controller\\" . $params[0] . "\\" . $params[0] . "Controller";
             }
 
             $controller = new $controller();
             return call_user_func_array([$controller, $params[1]], $this->matches);
-        } else {
-            return call_user_func_array($this->callable, $this->matches);
         }
+
+        return call_user_func_array($this->callable, $this->matches);
     }
 
-    public function getUrl($params){
+    public function getUrl($params)
+    {
         $path = $this->path;
-        foreach($params as $k => $v){
+        foreach ($params as $k => $v) {
             $path = str_replace(":$k", $v, $path);
         }
         return $path;

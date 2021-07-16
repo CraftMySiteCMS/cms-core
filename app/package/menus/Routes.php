@@ -1,2 +1,2 @@
 <?php
-require_once('Lang/fr.php');
+require_once('Lang/'.getenv("LOCALE").'.php');

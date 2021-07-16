@@ -1,4 +1,6 @@
-<?php $title = $page_name;
-$description = $page_description; ?>
+<?php /** @var string $pageName */
+$title = $pageName ?? "Title";
+/** @var string $pageDescription */
+$description = $pageDescription ?? "Description"; ?>
 
 <?php require('template.php'); ?>

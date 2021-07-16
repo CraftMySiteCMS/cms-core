@@ -1,5 +1,5 @@
-<?php $title = _Core_dashboard_TITLE;
-$description = _Core_dashboard_DESC; ?>
+<?php $title = CORE_DASHBOARD_TITLE;
+$description = CORE_DASHBOARD_DESC; ?>
 
 <?php ob_start(); ?>
         <!-- main-content -->

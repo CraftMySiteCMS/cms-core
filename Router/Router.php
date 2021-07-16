@@ -2,28 +2,39 @@
 
 namespace CMS\Router;
 
+use Closure;
+
+/**
+ * Class: @Router
+ * @package Core
+ * @author CraftMySite <contact@craftmysite.fr>
+ * @version 1.0
+ */
 class Router {
 
-    private $url;
-    private $routes = [];
-    private $namedRoutes = [];
-    private $GroupPattern;
+    private string $url;
+    private array $routes = [];
+    private array $namedRoutes = [];
+    private string $groupPattern;
 
     public function __construct($url){
         $this->url = $url;
     }
 
-    public function get($path, $callable, $name = null){
+    public function get($path, $callable, $name = null): Route
+    {
         return $this->add($path, $callable, $name, 'GET');
     }
 
-    public function post($path, $callable, $name = null){
+    public function post($path, $callable, $name = null): Route
+    {
         return $this->add($path, $callable, $name, 'POST');
     }
 
-    private function add($path, $callable, $name, $method){
-        if(!empty($this->GroupPattern)){
-            $path = $this->GroupPattern.$path;
+    private function add($path, $callable, $name, $method): Route
+    {
+        if(!empty($this->groupPattern)){
+            $path = $this->groupPattern.$path;
         }
         $route = new Route($path, $callable);
         $this->routes[$method][] = $route;
@@ -36,12 +47,16 @@ class Router {
         return $route;
     }
 
-    public function scope($GroupPattern, \Closure $routes){
-        $this->GroupPattern = $GroupPattern;
+    public function scope($GroupPattern, Closure $routes): void
+    {
+        $this->groupPattern = $GroupPattern;
         $routes($this);
-        unset($this->GroupPattern);
+        unset($this->groupPattern);
     }
 
+    /**
+     * @throws \CMS\Router\RouterException
+     */
     public function listen(){
         if(!isset($this->routes[$_SERVER['REQUEST_METHOD']])){
             throw new RouterException('REQUEST_METHOD does not exist');
@@ -54,6 +69,9 @@ class Router {
         throw new RouterException('No matching routes');
     }
 
+    /**
+     * @throws \CMS\Router\RouterException
+     */
     public function url($name, $params = []){
         if(!isset($this->namedRoutes[$name])){
             throw new RouterException('No route matches this name');

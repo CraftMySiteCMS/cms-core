@@ -25,8 +25,8 @@ if (isset($_POST['update_env'])):
     $username = $_POST['bdd_login'];
     $password= $_POST['bdd_pass'];
     $db = $_POST['bdd_name'];
-    $subfolder = $_POST['install_folder'];
-    $dev_mode = 1;
+    $subFolder = $_POST['install_folder'];
+    $devMode = 1;
     $locale = "fr";
     $timezone = date_default_timezone_get();
 
@@ -37,48 +37,46 @@ if (isset($_POST['update_env'])):
         changeEnvironmentVariable("DB_PASSWORD", $password, $path);
         changeEnvironmentVariable("DB_NAME", $db, $path);
 
-        changeEnvironmentVariable("PATH_SUBFOLDER", $subfolder, $path);
+        changeEnvironmentVariable("PATH_SUBFOLDER", $subFolder, $path);
         changeEnvironmentVariable("LOCALE", $locale, $path);
         changeEnvironmentVariable("TIMEZONE", $timezone, $path);
     }
     else {
-        $env_file = fopen($path, "w") or die("Unable to open file!");
+        $envFile = fopen($path, 'wb') or die("Unable to open file!");
 
-        $txt = "DB_HOST=$host\n";fwrite($env_file, $txt);
-        $txt = "DB_USERNAME=$username\n";fwrite($env_file, $txt);
-        $txt = "DB_PASSWORD=$password\n";fwrite($env_file, $txt);
-        $txt = "DB_NAME=$db\n";fwrite($env_file, $txt);
-        $txt = "PATH_ADMIN_VIEW=admin/resources/views/\n";fwrite($env_file, $txt);
-        $txt = "PATH_SUBFOLDER=$subfolder\n";fwrite($env_file, $txt);
-        $txt = "DEV_MODE=$dev_mode\n";fwrite($env_file, $txt);
-        $txt = "LOCALE=$locale\n";fwrite($env_file, $txt);
-        $txt = "TIMEZONE=$timezone\n";fwrite($env_file, $txt);
-        fclose($env_file);
+        $txt = "DB_HOST=$host\n";fwrite($envFile, $txt);
+        $txt = "DB_USERNAME=$username\n";fwrite($envFile, $txt);
+        $txt = "DB_PASSWORD=$password\n";fwrite($envFile, $txt);
+        $txt = "DB_NAME=$db\n";fwrite($envFile, $txt);
+        $txt = "PATH_ADMIN_VIEW=admin/resources/views/\n";fwrite($envFile, $txt);
+        $txt = "PATH_SUBFOLDER=$subFolder\n";fwrite($envFile, $txt);
+        $txt = "DEV_MODE=$devMode\n";fwrite($envFile, $txt);
+        $txt = "LOCALE=$locale\n";fwrite($envFile, $txt);
+        $txt = "TIMEZONE=$timezone\n";fwrite($envFile, $txt);
+        fclose($envFile);
     }
 
     $db = new PDO("mysql:host=".$_POST['bdd_address'],$_POST['bdd_login'],$_POST['bdd_pass']);
-    $db->query("CREATE DATABASE IF NOT EXISTS ".$_POST['bdd_name'].";");
-    $db->query("USE ".$_POST['bdd_name'].";");
+    $db->exec("CREATE DATABASE IF NOT EXISTS ".$_POST['bdd_name'].";");
+    $db->exec("USE ".$_POST['bdd_name'].";");
 
 
 
     $query = file_get_contents("init.sql");
-    $stmt = $db->prepare($query);
-    $stmt->execute();
+    $stmt = $db->query($query);
 
     /* IMPORT PACKAGE SQL */
-    $packages_folder = '../app/package/';
-    $scanned_directory = array_diff(scandir($packages_folder), array('..', '.'));
+    $packageFolder = '../app/package/';
+    $scannedDirectory = array_diff(scandir($packageFolder), array('..', '.'));
 
-    foreach ($scanned_directory as $package) :
-        $package_sql_file = "../app/package/$package/init.sql";
-        if(file_exists($package_sql_file)) {
-            $query = file_get_contents($package_sql_file);
-            $stmt = $db->prepare($query);
-            $stmt->execute();
+    foreach ($scannedDirectory as $package) :
+        $packageSqlFile = "../app/package/$package/init.sql";
+        if(file_exists($packageSqlFile)) {
+            $query = file_get_contents($packageSqlFile);
+            $stmt = $db->query($query);
 
-            if($dev_mode == 0) {
-                unlink($package_sql_file);
+            if($devMode === 0) {
+                unlink($packageSqlFile);
             }
         }
     endforeach;
@@ -93,18 +91,18 @@ endif;
 if (isset($_POST['create_admin'])):
     $db = new PDO("mysql:host=".getenv('DB_HOST').";dbname=".getenv('DB_NAME')."", getenv('DB_USERNAME'), getenv('DB_PASSWORD'));
 
-    $user_email = $_POST['email'];
-    $user_pseudo = $_POST['pseudo'];
-    $user_password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+    $userEmail = $_POST['email'];
+    $userUsername = $_POST['pseudo'];
+    $userPassword = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
     $query = $db->prepare('INSERT INTO cms_users (user_email, user_pseudo, user_password, user_state, role_id, user_key, user_created, user_updated) VALUES (:user_email, :user_pseudo, :user_password, :user_state, :role_id, :user_key, NOW(), NOW())');
     $query->execute(array(
         'user_email' => $_POST['email'],
         'user_pseudo' => $_POST['pseudo'],
-        'user_password' => $user_password,
+        'user_password' => $userPassword,
         'user_state' => 1,
         'role_id' => 10,
-        'user_key' => uniqid()
+        'user_key' => uniqid('', true)
     ));
 
     $db = null;

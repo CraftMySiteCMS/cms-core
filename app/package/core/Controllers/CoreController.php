@@ -1,86 +1,85 @@
 <?php
+
 namespace CMS\Controller;
 
-use CMS\Controller\menus\menusController;
-use CMS\Controller\users\usersController;
+use CMS\Controller\Menus\MenusController;
+use CMS\Controller\Users\UsersController;
 
-use CMS\Model\coreModel;
+use CMS\Model\CoreModel;
+use JsonException;
 
-class coreController {
+/**
+ * Class: @CoreController
+ * @package Core
+ * @author CraftMySite <contact@craftmysite.fr>
+ * @version 1.0
+ */
+class CoreController
+{
 
-    public static string $theme_path;
+    public static string $themePath;
 
-    public function __construct($theme_path = null) {
-        self::$theme_path = $this->cms_theme_path();
+    public function __construct($theme_path = null)
+    {
+        self::$themePath = $this->cmsThemePath();
     }
 
     /* ADMINISTRATION */
-    public function admin_dashboard() {
-        usersController::is_admin_logged();
+    public function adminDashboard()
+    {
+        usersController::isAdminLogged();
         require('app/package/core/views/dashboard.admin.view.php');
     }
 
     /* FRONT */
-    public function front_home() {
-        $core = new coreController();
-        $menu = new menusController();
+    public function frontHome()
+    {
+        $core = new CoreController();
+        $menu = new MenusController();
 
-        require(self::$theme_path."/Views/home.view.php");
+        require(self::$themePath . "/Views/home.view.php");
     }
 
-    /* //////////////////////////////////////////////////////////////////////////// */
-    /*
-     * Get active theme
-     */
-    private function cms_theme_path(): string {
-        $coreModel = new coreModel();
+    private function cmsThemePath(): string
+    {
+        $coreModel = new CoreModel();
         $coreModel->fetchOption("theme");
 
-        return 'public/themes/'.$coreModel->theme;
-    }
-    
-    /* //////////////////////////////////////////////////////////////////////////// */
-    /*
-     * Get packages of active theme
-     */
-    public function cms_theme_available_packages(): array
-    {
-        $jsonFile = file_get_contents($this->cms_theme_path() . "/infos.json");
-        return json_decode($jsonFile, true)["packages"];
+        return 'public/themes/' . $coreModel->theme;
     }
 
-    /* //////////////////////////////////////////////////////////////////////////// */
-    /*
-     * Verify if package is avalaible of active theme
+    /**
+     * @throws JsonException
      */
-    public function cms_package_available_theme(string $package): bool
+    public function cmsThemeAvailablePackages(): array
     {
-        return in_array($package, $this->cms_theme_available_packages());
+        $jsonFile = file_get_contents($this->cmsThemePath() . "/infos.json");
+        return json_decode($jsonFile, true, 512, JSON_THROW_ON_ERROR)["packages"];
     }
 
-    /* //////////////////////////////////////////////////////////////////////////// */
-    /*
-     * Get package info
+    /**
+     * @throws JsonException
      */
-    public function cms_package_info(string $package): array
+    public function cmsPackageAvailableTheme(string $package): bool
+    {
+        return in_array($package, $this->cmsThemeAvailablePackages(), true);
+    }
+
+    public function cmsPackageInfo(string $package): array
     {
         $jsonFile = file_get_contents("app/package/$package/infos.json");
-        return json_decode($jsonFile, true);
+        return json_decode($jsonFile, true, 512, JSON_THROW_ON_ERROR);
     }
 
-    /* //////////////////////////////////////////////////////////////////////////// */
-    /*
-     * Toast generation
-     */
-    function toaster(): string
+    public function toaster(): string
     {
         $toasters = "";
-        if(isset($_SESSION['toaster'])) {
+        if (isset($_SESSION['toaster'])) {
             foreach ($_SESSION['toaster'] as $toaster) {
-                $toaster_title = $toaster['title'];
-                $toaster_body = $toaster['body'];
-                $toaster_class = $toaster['type'];
-                $toasters .= '<script>$(document).Toasts("create", {title: "'.$toaster_title.'",body: "'.$toaster_body.'",class: "'.$toaster_class.'"});</script>';
+                $toasterTitle = $toaster['title'];
+                $toasterBody = $toaster['body'];
+                $toasterClass = $toaster['type'];
+                $toasters .= '<script>$(document).Toasts("create", {title: "' . $toasterTitle . '",body: "' . $toasterBody . '",class: "' . $toasterClass . '"});</script>';
             }
             unset($_SESSION['toaster']);
         }
@@ -93,7 +92,8 @@ class coreController {
     /*
      * Head constructor
      */
-    public function cms_head($title, $description): string {
+    public function cmsHead($title, $description): string
+    {
         $head = "<meta charset='utf-8'>";
         $head .= "<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>";
         $head .= "<title>$title</title>";
@@ -105,15 +105,17 @@ class coreController {
     /*
      * Footer constructor
      */
-    public function cms_footer(): string {
+    public function cmsFooter(): string
+    {
         return "<p>Coucou je suis le footer</p>";
     }
 
     /*
      * Error management
      */
-    static function cms_errors($error = null) {
-        if($error != null) :
+    public static function cmsErrors($error = null): void
+    {
+        if ($error !== null) :
             $_SESSION["cms_errors"] = array();
             switch ($error) :
                 case 1 :
@@ -131,9 +133,11 @@ class coreController {
             $_SESSION["cms_errors"][] = "Une erreur est survenue. Veuillez contacter l'administrateur du site si l'erreur persiste.";
         endif;
     }
-    static function cms_errors_display(): string {
+
+    public static function cmsErrorsDisplay(): string
+    {
         $r = "";
-        if(isset($_SESSION["cms_errors"])) :
+        if (isset($_SESSION["cms_errors"])) :
             $r .= "<div class='alert alert-danger alert-dismissible'>";
             $r .= "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>";
             $r .= "<h5><i class='icon fas fa-info'></i> Information</h5>";

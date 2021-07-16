@@ -1,23 +1,26 @@
 <?php
 
 use CMS\Controller\pages\pagesController;
+use CMS\Router\Router;
 
-require_once('Lang/'.getenv("LOCALE").'.php');
+require_once('Lang/' . getenv("LOCALE") . '.php');
+
+/** @var $router Router Main router */
 
 /* Fronts pages of CMS */
 
 /* Administration scope of package */
-$router->scope('/cms-admin/pages', function($router) {
-    $router->get('/list', "pages#admin_pages_list");
+$router->scope('/cms-admin/pages', function ($router) {
+    $router->get('/list', "pages#adminPagesList");
 
-    $router->get('/edit/:id', function($id) {
-        (new CMS\Controller\pages\pagesController)->admin_pages_edit($id);
+    $router->get('/edit/:id', function ($id) {
+        (new pagesController)->admin_pages_edit($id);
     })->with('id', '[0-9]+');
-    $router->post('/edit', "pages#admin_pages_edit_post");
+    $router->post('/edit', "pages#adminPagesEditPost");
 
-    $router->get('/add', "pages#admin_pages_add");
-    $router->post('/add', "pages#admin_pages_add_post");
+    $router->get('/add', "pages#adminPagesAdd");
+    $router->post('/add', "pages#adminPagesAddPost");
 
-    $router->post('/edit-state', "pages#admin_user_state");
-    $router->post('/delete', "pages#admin_pages_delete");
+    $router->post('/edit-state', "pages#adminUserState");
+    $router->post('/delete', "pages#adminPagesDelete");
 });

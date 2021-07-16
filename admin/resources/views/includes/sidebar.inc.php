@@ -1,4 +1,4 @@
-<?php use CMS\Model\users\usersModel;?>
+<?php use CMS\Model\Users\UsersModel;?>
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -15,35 +15,38 @@
                 <img src="<?=getenv("PATH_SUBFOLDER")?>admin/resources/images/identity/CraftMySite_Logo.svg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block"><?php $user = new usersModel; $user->fetch($_SESSION['cms_user_id']); echo $user->user_pseudo; ?></a>
+                <a href="#" class="d-block"><?php $user = new usersModel; $user->fetch($_SESSION['cms_user_id']); echo $user->userPseudo; ?></a>
             </div>
         </div>
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <?php $packages_folder = 'app/package/';
-                $scanned_directory = array_diff(scandir($packages_folder), array('..', '.'));
-                foreach ($scanned_directory as $package) :
+                <?php $packagesFolder = 'app/package/';
+                $scannedDirectory = array_diff(scandir($packagesFolder), array('..', '.'));
+                foreach ($scannedDirectory as $package) :
                     $strJsonFileContents = file_get_contents("app/package/$package/infos.json");
-                    $package_infos = json_decode($strJsonFileContents, true);
+                    try {
+                        $packageInfos = json_decode($strJsonFileContents, true, 512, JSON_THROW_ON_ERROR);
+                    } catch (JsonException $e) {
+                    }
 
-                    $name_menu = $package_infos['name_menu_' . getenv("LOCALE")] ?? $package_infos['name_menu'];
+                    $nameMenu = $packageInfos['name_menu_' . getenv("LOCALE")] ?? $packageInfos['name_menu'];
 
 
 
-                    if(isset($package_infos["urls_submenu"])) :
-                        $urls_submenu = $package_infos["urls_submenu_" . getenv("LOCALE")] ?? $package_infos["urls_submenu"]; ?>
+                    if(isset($packageInfos["urls_submenu"])) :
+                        $urlsSubMenu = $packageInfos["urls_submenu_" . getenv("LOCALE")] ?? $packageInfos["urls_submenu"]; ?>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon <?=$package_infos['icon_menu']?>"></i>
-                                <p><?=$name_menu?><i class="right fas fa-angle-left"></i></p>
+                                <i class="nav-icon <?=$packageInfos['icon_menu']?>"></i>
+                                <p><?=$nameMenu?><i class="right fas fa-angle-left"></i></p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <?php foreach ($urls_submenu as $sub_menu_name => $submenu_url) : ?>
+                                <?php foreach ($urlsSubMenu as $subMenuName => $subMenuUrl) : ?>
                                     <li class="nav-item">
-                                        <a href="<?=getenv("PATH_SUBFOLDER")?>cms-admin/<?=$submenu_url?>" class="nav-link">
-                                            <p><?=$sub_menu_name?></p>
+                                        <a href="<?=getenv("PATH_SUBFOLDER")?>cms-admin/<?=$subMenuUrl?>" class="nav-link">
+                                            <p><?=$subMenuName?></p>
                                         </a>
                                     </li>
                                 <?php endforeach; ?>
@@ -52,9 +55,9 @@
 
                     <?php else : ?>
                         <li class="nav-item">
-                            <a href="<?=getenv("PATH_SUBFOLDER")?>cms-admin/<?=$package_infos['url_menu']?>" class="nav-link">
-                                <i class="nav-icon <?=$package_infos['icon_menu']?>"></i>
-                                <p><?=$name_menu?></p>
+                            <a href="<?=getenv("PATH_SUBFOLDER")?>cms-admin/<?=$packageInfos['url_menu']?>" class="nav-link">
+                                <i class="nav-icon <?=$packageInfos['icon_menu']?>"></i>
+                                <p><?=$nameMenu?></p>
                             </a>
                         </li>
                 <?php endif; ?>

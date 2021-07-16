@@ -1,8 +1,8 @@
 <?php
 
-$packages_folder = 'app/package/';
-$scanned_directory = array_diff(scandir($packages_folder), array('..', '.'));
+$packageFolder = 'app/package/';
+$scannedDirectory = array_diff(scandir($packageFolder), array('..', '.'));
 
-foreach ($scanned_directory as $package) :
+foreach ($scannedDirectory as $package) :
     require('package/'.$package.'/Controllers/'.$package.'Controller.php');
 endforeach;

@@ -1,5 +1,7 @@
-<?php $title = _Pages_add_TITLE;
-$description = _Pages_add_DESC; ?>
+<?php use CMS\Model\Pages\PagesModel;
+
+$title = PAGES_ADD_TITLE;
+$description = PAGES_ADD_DESC; ?>
 
 <?php $scripts = '<script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script><!-- Header -->
 
@@ -170,7 +172,8 @@ $description = _Pages_add_DESC; ?>
                 <div class="col-9">
                     <div class="card card-primary">
                         <div class="card-body">
-                            <input type="hidden" id="page_id" name="page_id" value="<?=$page->page_id?>">
+                            <input type="hidden" id="page_id" name="page_id" value="<?= /** @var PagesModel $page */
+                            $page->page_id?>">
                             <input class="page-title" type="text" id="title" placeholder="Titre de la page" value="<?=$page->page_title?>">
                             <p class="page-slug text-blue mb-3 d-flex"><?php echo "http://" . $_SERVER['SERVER_NAME'] . '/'; ?> <input class="border-0 text-blue p-0 w-100" type="text" id="slug" value="<?=$page->page_slug?>"></p>
                             <div>
@@ -190,7 +193,7 @@ $description = _Pages_add_DESC; ?>
                                 <label class="custom-control-label" for="draft">Brouillon</label>
                             </div>
                             <div class="btn btn-block btn-primary" id="saveButton">
-                                <?=_Pages_button_save?>
+                                <?=PAGES_BUTTON_SAVE?>
                             </div>
                         </div>
                     </div>

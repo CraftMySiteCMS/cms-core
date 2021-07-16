@@ -2,7 +2,15 @@
 
 namespace CMS\Router;
 
-class RouterException extends \Exception {
+use Exception;
+
+/**
+ * Class: @RouterException
+ * @package Core
+ * @author CraftMySite <contact@craftmysite.fr>
+ * @version 1.0
+ */
+class RouterException extends Exception {
 
     protected $message = 'Unknown exception';     // Exception message
     protected $code    = 500;                     // User-defined exception code

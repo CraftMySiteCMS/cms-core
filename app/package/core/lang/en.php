@@ -1,4 +1,4 @@
 <?php
 
-const _Core_dashboard_TITLE = "Dashboard";
-const _Core_dashboard_DESC = "Welcome to your administration panel!";
+const CORE_DASHBOARD_TITLE = "Dashboard";
+const CORE_DASHBOARD_DESC = "Welcome to your administration panel!";

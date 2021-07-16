@@ -1,11 +1,11 @@
 <?php
 
-const _Pages_add_TITLE = "Pages | Créer";
-const _Pages_add_DESC = "Créer une nouvelle page";
+const PAGES_ADD_TITLE = "Pages | Créer";
+const PAGES_ADD_DESC = "Créer une nouvelle page";
 
-const _Pages_add_card_title = "Contenu de la page";
+const PAGES_ADD_CARD_TITLE = "Contenu de la page";
 
-const _Pages_button_save = "Enregistrer";
+const PAGES_BUTTON_SAVE = "Enregistrer";
 
-const _Pages_list_TITLE = "Pages | Liste";
-const _Pages_list_DESC = "Liste des pages du site";
+const PAGES_LIST_TITLE = "Pages | Liste";
+const PAGES_LIST_DESC = "Liste des pages du site";

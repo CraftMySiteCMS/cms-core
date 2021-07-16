@@ -1,5 +1,11 @@
-<?php $title = _Users_edit_TITLE;
-$description = _Users_edit_DESC; ?>
+<?php use CMS\Model\Users\RolesModel;
+use CMS\Model\Users\UsersModel;
+
+$title = USERS_EDIT_TITLE;
+$description = USERS_EDIT_DESC;
+
+/** @var UsersModel $user */
+?>
 
 <?php ob_start(); ?>
     <!-- main-content -->
@@ -10,43 +16,48 @@ $description = _Users_edit_DESC; ?>
                     <form action="" method="post">
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title"><?=_Users_user?> : <?=$user->user_pseudo?></h3>
+                                <h3 class="card-title"><?= USERS_USER ?> : <?= $user->userPseudo ?></h3>
                             </div>
                             <div class="card-body">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                     </div>
-                                    <input type="email" name="email" class="form-control" placeholder="<?=_Users_mail?>" value="<?=$user->user_email?>">
+                                    <input type="email" name="email" class="form-control"
+                                           placeholder="<?= USERS_MAIL ?>" value="<?= $user->userEmail ?>">
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                     </div>
-                                    <input type="text" name="pseudo" class="form-control" placeholder="<?=_Users_pseudo?>" value="<?=$user->user_pseudo?>">
+                                    <input type="text" name="pseudo" class="form-control"
+                                           placeholder="<?= USERS_PSEUDO ?>" value="<?= $user->userPseudo ?>">
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                                     </div>
-                                    <input type="text" name="name" class="form-control" placeholder="<?=_Users_firstname?>" value="<?=$user->user_firstname?>">
+                                    <input type="text" name="name" class="form-control"
+                                           placeholder="<?= USERS_FIRSTNAME ?>" value="<?= $user->userFirstname ?>">
                                 </div>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                                     </div>
-                                    <input type="text" name="lastname" class="form-control" placeholder="<?=_Users_surname?>" value="<?=$user->user_lastname?>">
+                                    <input type="text" name="lastname" class="form-control"
+                                           placeholder="<?= USERS_SURNAME ?>" value="<?= $user->userLastname ?>">
                                 </div>
                                 <div class="form-group">
-                                    <label><?=_Users_role?></label>
+                                    <label><?= USERS_ROLE ?></label>
                                     <select name="role" class="form-control">
-                                        <?php foreach ($roles as $role) : ?>
-                                            <option value="<?=$role['role_id']?>" <?=($user->role_id == $role['role_id'] ? "selected" : "")?>><?=$role['role_name']?></option>
+                                        <?php /** @var RolesModel[] $roles */
+                                        foreach ($roles as $role) : ?>
+                                            <option value="<?= $role['role_id'] ?>" <?= ($user->roleId === $role['role_id'] ? "selected" : "") ?>><?= $role['role_name'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label><?=_Users_new_pass?></label>
+                                    <label><?= USERS_NEW_PASS ?></label>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
@@ -55,19 +66,21 @@ $description = _Users_edit_DESC; ?>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label><?=_Users_repeat_pass?></label>
+                                    <label><?= USERS_REPEAT_PASS ?></label>
                                     <div class="input-group mb-3">
 
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                         </div>
-                                        <input type="password" name="pass_verif" class="form-control" placeholder="*****">
+                                        <input type="password" name="pass_verif" class="form-control"
+                                               placeholder="*****">
                                     </div>
                                 </div>
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary float-right"><?=_Users_list_button_save?></button>
+                                <button type="submit"
+                                        class="btn btn-primary float-right"><?= USERS_LIST_BUTTON_SAVE ?></button>
                             </div>
                         </div>
                     </form>
@@ -75,25 +88,29 @@ $description = _Users_edit_DESC; ?>
                 <div class="col-6">
                     <div class="card card-info">
                         <div class="card-header">
-                            <h3 class="card-title"><?=_Users_about?></h3>
+                            <h3 class="card-title"><?= USERS_ABOUT ?></h3>
                         </div>
                         <div class="card-body">
-                            <p><b><?=_Users_creation?> :</b> <?=$user->user_created?></p>
-                            <p><b><?=_Users_last_edit?> :</b> <?=$user->user_updated?></p>
-                            <p><b><?=_Users_last_connection?> :</b> <?=$user->user_logged?></p>
+                            <p><b><?= USERS_CREATION ?> :</b> <?= $user->userCreated ?></p>
+                            <p><b><?= USERS_LAST_EDIT ?> :</b> <?= $user->userUpdated ?></p>
+                            <p><b><?= USERS_LAST_CONNECTION ?> :</b> <?= $user->userLogged ?></p>
                             <div>
                                 <form action="../edit-state" method="post" class="d-inline-block">
-                                    <input type="hidden" value="<?=$user->user_id?>" name="id">
-                                    <input type="hidden" value="<?=$user->user_state?>" name="actual_state">
-                                    <?php if($user->user_state) : ?>
-                                        <button type="submit" class="btn btn-warning"><i class="fa fa-user-slash"></i> <?=_Users_edit_disable_account?></button>
+                                    <input type="hidden" value="<?= $user->userId ?>" name="id">
+                                    <input type="hidden" value="<?= $user->userState ?>" name="actual_state">
+                                    <?php if ($user->userState) : ?>
+                                        <button type="submit" class="btn btn-warning"><i
+                                                    class="fa fa-user-slash"></i> <?= USERS_EDIT_DISABLE_ACCOUNT ?>
+                                        </button>
                                     <?php else : ?>
-                                        <button type="submit" class="btn btn-success"><i class="fa fa-user"></i> <?=_Users_edit_activate_account?></button>
+                                        <button type="submit" class="btn btn-success"><i
+                                                    class="fa fa-user"></i> <?= USERS_EDIT_ACTIVATE_ACCOUNT ?></button>
                                     <?php endif; ?>
                                 </form>
                                 <form action="../delete" method="post" class="d-inline-block">
-                                    <input type="hidden" value="<?=$user->user_id?>" name="id">
-                                    <button type="submit" class="btn btn-danger"><i class="fa fa-user-times"></i> <?=_Users_edit_delete_account?></button>
+                                    <input type="hidden" value="<?= $user->userId ?>" name="id">
+                                    <button type="submit" class="btn btn-danger"><i
+                                                class="fa fa-user-times"></i> <?= USERS_EDIT_DELETE_ACCOUNT ?></button>
                                 </form>
                             </div>
                         </div>
@@ -107,4 +124,4 @@ $description = _Users_edit_DESC; ?>
     <!-- /.main-content -->
 <?php $content = ob_get_clean(); ?>
 
-<?php require(getenv("PATH_ADMIN_VIEW").'template.php'); ?>
+<?php require(getenv("PATH_ADMIN_VIEW") . 'template.php'); ?>

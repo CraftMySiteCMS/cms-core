@@ -35,8 +35,12 @@ require_once("Router/RouterException.php");
 use CMS\Router\RouterException;
 
 /* Router Creation */
-if(isset($_GET['url'])) $router = new Router($_GET['url']);
-else $router = new Router("");
+if(isset($_GET['url'])) {
+    $router = new Router($_GET['url']);
+}
+else {
+    $router = new Router("");
+}
 
 /* Insert all packages */
 require_once ("app/config/Manager.php");

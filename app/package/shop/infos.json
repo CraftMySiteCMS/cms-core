@@ -1,0 +1,16 @@
+{
+  "name": "shop",
+  "name_menu": "Shop",
+  "icon_menu": "fas fa-shopping-cart",
+  "url_menu": "",
+  "urls_submenu": {
+    "Informations": "shop/",
+    "Liste des articles": "shop/items/",
+    "Ajouter un article": "shop/items/add",
+    "Liste des catégories": "shop/categories/",
+    "Ajouter une catégorie": "shop/categories/add"
+  },
+  "description": "Créez une boutique complète pour votre site.",
+  "version": "1.0.0",
+  "author": "BadiiiX"
+}

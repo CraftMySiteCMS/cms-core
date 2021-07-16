@@ -6,13 +6,13 @@ class Env
      *
      * @var string
      */
-    protected $path;
+    protected string $path;
 
 
     public function __construct(string $path)
     {
         if(!file_exists($path)) {
-            throw new \InvalidArgumentException(sprintf('%s does not exist', $path));
+            throw new InvalidArgumentException(sprintf('%s does not exist', $path));
         }
         $this->path = $path;
     }
@@ -20,7 +20,7 @@ class Env
     public function load() :void
     {
         if (!is_readable($this->path)) {
-            throw new \RuntimeException(sprintf('%s file is not readable', $this->path));
+            throw new RuntimeException(sprintf('%s file is not readable', $this->path));
         }
 
         $lines = file($this->path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
@@ -30,7 +30,7 @@ class Env
                 continue;
             }
 
-            list($name, $value) = explode('=', $line, 2);
+            [$name, $value] = explode('=', $line, 2);
             $name = trim($name);
             $value = trim($value);
 
