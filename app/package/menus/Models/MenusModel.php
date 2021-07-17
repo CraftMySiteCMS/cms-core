@@ -18,8 +18,8 @@ class MenusModel extends Manager {
      */
     public function fetchMenu(): void
     {
-        $db = $this->dbConnect();
-        $req = $db->query('SELECT menu_id, menu_name, menu_url, menu_level, menu_parent_id FROM cms_core_menu');
+        $db = self::dbConnect();
+        $req = $db->query('SELECT menu_id, menu_name, menu_url, menu_level, menu_parent_id FROM cms_menus');
         $this->menu = $req->fetchAll(\PDO::FETCH_CLASS);
     }
 }

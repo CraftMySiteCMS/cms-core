@@ -8,7 +8,7 @@
      * @var string $title
      * @var string $description
      */
-    $core->cms_head($title, $description) ?>
+    $core->cmsHead($title, $description) ?>
 
     <!-- Theme style -->
     <link rel="stylesheet" type="text/css"

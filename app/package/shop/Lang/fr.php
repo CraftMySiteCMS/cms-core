@@ -8,8 +8,11 @@ const SHOP_MAIN_DESCRIPTION = "Gérer votre boutique en toute simplicité !";
 const SHOP_ERROR_INCOMPATIBLE_THEME = "Le thème selectionné n'est pas compatible !";
 const SHOP_ERROR_MISSING_TABLE = "Des tables sont manquantes dans la base de données. <br> &rarr; Tables manquantes : ";
 const SHOP_ERROR_INIT = "<b>Attention !</b> Des erreurs ont été détectés et peuvent nuir au fonctionnement de ce Package !";
+const SHOP_ERROR_RETRY = "Veuillez rafraîchir votre page et réessayer votre action";
 
-
+const SHOP_SUCCESS_MODIFICATION = "Vos modifications ont bien été enregistrées";
+const SHOP_SUCCESS_ACTION = "Vos actions ont bien été enregistrées";
+const SHOP_SUCCESS_DELETE = "Vos suppressions ont bien été enregistrées";
 /**
  * Items
  */
@@ -35,3 +38,6 @@ const SHOP_ITEM_NOCATEGORY = "Aucune catégorie";
 
 const SHOP_CATEGORY_LIST_TITLE = "Catégorie / List";
 const SHOP_CATEGORY_LIST_DESCRIPTION = "Liste de toutes les catégories disponible dans votre Boutique !";
+
+const SHOP_CATEGORY_ADD_TITLE = "Catégorie / Ajout";
+const SHOP_CATEGORY_ADD_DESCRIPTION = "Ajouter une catégorie à votre Boutique !";

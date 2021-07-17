@@ -36,7 +36,6 @@ class ShopController extends CoreController
 
         $this->itemsList = $this->itemModel->fetchAll();
         $this->categoriesList = $this->categoryModel->fetchAll();
-
     }
 
     /**
@@ -74,6 +73,13 @@ class ShopController extends CoreController
         require('app/package/shop/views/list.categories.admin.view.php');
     }
 
+    public function addCategoriesAdmin(): void
+    {
+        usersController::isAdminLogged();
+
+        require('app/package/shop/views/add.categories.admin.view.php');
+    }
+
     public function addItemAdmin(): void
     {
         usersController::isAdminLogged();
@@ -98,6 +104,18 @@ class ShopController extends CoreController
         echo $addedItem->create($_POST['item_categories']);
     }
 
+    public function addCategoriesPostAdmin(): void
+    {
+        usersController::isAdminLogged();
+
+        $addedCategory = new CategoryModel();
+        $addedCategory->categoryName = $_POST['category_name'];
+        $addedCategory->categoryDesc = $_POST['category_description'];
+        $addedCategory->categoryPermission = '{}';
+
+        echo $addedCategory->create();
+    }
+
     public function deleteItemPostAdmin(): void
     {
         usersController::isAdminLogged();
@@ -107,6 +125,48 @@ class ShopController extends CoreController
 
         $removedItem->fetch($itemId);
         echo $removedItem->delete();
+    }
+
+    public function deleteCategoriesPostAdmin(): void
+    {
+        usersController::isAdminLogged();
+
+        $categoryId = (int)$_POST['categoryId'];
+        $removedCategory = new CategoryModel();
+
+        $removedCategory->fetch($categoryId);
+        echo $removedCategory->delete();
+    }
+
+    public function swapItemCategoriesPostAdmin(): void
+    {
+        usersController::isAdminLogged();
+
+        $resDelete = 1;
+
+        var_dump($_POST);
+
+        if ($_POST['begin_category'] !== "null") {
+            $beginCategory = new CategoryModel();
+        }
+        $endCategory = new CategoryModel();
+
+        if ($_POST['begin_category'] !== "null") {
+            $beginCategory->fetch((int)$_POST['begin_category']);
+        }
+        $endCategory->fetch((int)$_POST['end_category']);
+
+        if ($_POST['begin_category'] !== "null") {
+            $beginCategory->categoryId = (int)$_POST['begin_category'];
+        }
+        $endCategory->categoryId = (int)$_POST['end_category'];
+
+        if ($_POST['begin_category'] !== "null") {
+            $resDelete = $beginCategory->deleteItem((int)$_POST['item_id']);
+        }
+        $resAdd = $endCategory->addItem((int)$_POST['item_id']);
+
+        echo ($resDelete !== -1 && $resAdd !== -1) ? (int)$_POST['item_id'] : -1;
     }
 
     /**

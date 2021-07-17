@@ -17,7 +17,7 @@ class MenusController extends CoreController {
     /*
      * Retrieving the menu saved in the database
      */
-    public function cmsMenu(): array
+    public function cmsMenu()
     {
         $coreModel = new MenusModel();
         $coreModel->fetchMenu();

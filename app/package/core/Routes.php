@@ -7,7 +7,7 @@ require_once('Lang/'.getenv("LOCALE").'.php');
 /** @var $router Router Main router */
 
 /* Basics pages of CMS */
-$router->get('/',"core#front_home");
+$router->get('/',"core#frontHome");
 
 /* Administration scope of package */
 $router->scope('/cms-admin', function($router) {

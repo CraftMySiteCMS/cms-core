@@ -113,7 +113,7 @@ $(() => {
                                                    
                                                    toast.fire({
                                                      icon: (res === -1) ? "error" : "success",
-                                                     title:  (res === -1) ? "Veuillez réessayer votre action" : "Votre contenu a bien été enregistré."
+                                                     title:  (res === -1) ? "'. SHOP_ERROR_RETRY .'" : "'. SHOP_SUCCESS_ACTION .'"
                                                    })
                                                    
                                                    if(res !== -1) {

@@ -106,4 +106,82 @@ class CategoryModel extends Manager
         return false;
     }
 
+    public function create()
+    {
+        $params = array(
+            'category_name' => mb_strimwidth($this->categoryName, 0, 255),
+            'category_desc' => $this->categoryDesc,
+            'category_permissions' => $this->categoryPermission
+        );
+        $sql = "INSERT INTO `$this->categoryTableName`(shop_category_name, shop_category_description, shop_category_permission) 
+                VALUES (:category_name, :category_desc, :category_permissions)";
+
+        $db = Manager::dbConnect();
+        $req = $db->prepare($sql);
+
+        if ($req->execute($params)) {
+            $this->categoryId = $db->lastInsertId();
+            return $this->categoryId;
+        }
+
+        return -1;
+    }
+
+    public function addItem($itemId): int
+    {
+        $params = array(
+            'itemId' => (int)$itemId,
+            'categoryId' => $this->categoryId
+        );
+        $sql = "INSERT INTO `$this->categoryItemTableName`(shop_item_id, shop_category_id) VALUES (:itemId, :categoryId)";
+
+        $db = Manager::dbConnect();
+        $req = $db->prepare($sql);
+        $res = $req->execute($params);
+
+        return ($res) ? $itemId : -1;
+    }
+
+    public function deleteItem($itemId): int
+    {
+        $params = array(
+            'itemId' => (int)$itemId,
+            'categoryId' => $this->categoryId
+        );
+        $sql = "DELETE FROM `$this->categoryItemTableName`WHERE shop_category_id=:categoryId AND shop_item_id=:itemId";
+
+        $db = Manager::dbConnect();
+        $req = $db->prepare($sql);
+        $req->execute($params);
+        $req->debugDumpParams();
+
+        return ($req->execute($params)) ? $itemId : -1;
+    }
+
+    public function delete(): bool
+    {
+        $resItem = $this->deleteItems();
+
+        $params = array(
+            'categoryId' => $this->categoryId,
+        );
+        $sql = "DELETE FROM `$this->categoryTableName` WHERE shop_category_id=:categoryId";
+
+        $db = Manager::dbConnect();
+        $req = $db->prepare($sql);
+        return $req->execute($params) && $resItem;
+    }
+
+    public function deleteItems(): bool
+    {
+        $params = array(
+            'categoryId' => $this->categoryId,
+        );
+        $sql = "DELETE FROM `$this->categoryItemTableName` WHERE shop_category_id=:categoryId";
+
+        $db = Manager::dbConnect();
+        $req = $db->prepare($sql);
+        return $req->execute($params);
+    }
+
 }

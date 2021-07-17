@@ -5,19 +5,16 @@ $title = SHOP_CATEGORY_LIST_TITLE;
 $description = SHOP_CATEGORY_LIST_DESCRIPTION;
 
 $styles = '<link rel="stylesheet" href="' . getenv("PATH_SUBFOLDER") . 'admin/resources/vendors/dragula/dragula.css">';
+$styles .= "<link rel='stylesheet' href='" . getenv("PATH_SUBFOLDER") . "admin/resources/vendors/sweetalert2/sweetalert2.min.css'>";
 $styles .= '<style>
-.save-change {
-    position: absolute;
-    bottom: 20%;
-    right: 10%;
-}
-li.nav-item {
-    list-style: none;
+::marker {
+    content: none;
 }
 </style>';
 
 $scripts = '<script type="text/javascript" src="' . getenv("PATH_SUBFOLDER") . 'admin/resources/vendors/dragula/dragula.js"> </script>';
 $scripts .= '<script src="' . getenv("PATH_SUBFOLDER") . 'admin/resources/vendors/jquery-ui/jquery-ui.js" ></script>';
+$scripts .= '<script src="' . getenv("PATH_SUBFOLDER") . 'admin/resources/vendors/sweetalert2/sweetalert2.min.js" ></script>';
 $scripts .= "<script>
 
 $('.save-change').hide();
@@ -27,52 +24,11 @@ let setToNotSaved = element => {
         element.classList.add('not-saved');
         element.children[0].innerHTML = `<span title='Unsaved' class='badge bg-danger'>Unsaved</span> ` + element.children[0].innerHTML
     }
+},
+removeNotSaved = element => {
+     element.children[0].removeChild( element.children[0].firstElementChild)
 }
 
-let saveChange = () => {
-    $('.save-change').show(200, () => {
-        $('.save-change').click(() => {
-            $('.save-change i:first-child').removeClass()
-                                           .addClass('spinner-border spinner-border-sm mr-2')
-            $('.save-change span').text('loading...')   
-            
-            let resetMessage = () => {
-                setTimeout(() => {
-                    //Reset Button
-                    $('.save-change i:first-child').removeClass().addClass('fas fa-save')
-                    $('.save-change div:first-child').removeClass('btn-success btn-danger').addClass('btn-warning')
-                    $('.save-change span').text('Save Change')
-                }, 850);
-            },
-            successMessage = () => { 
-                setTimeout(() => {
-                    $('.save-change div:first-child').removeClass('btn-warning').addClass('btn-success')
-                    $('.save-change i:first-child').removeClass().addClass('fas fa-check')
-                    $('.save-change span').text('Saved!')
-                    $('.save-change').delay(800).hide(100)     
-                    
-                    resetMessage() 
-                }, 600)
-            },
-            errorMessage = () => { 
-                setTimeout(() => {
-                    $('.save-change div:first-child').removeClass('btn-warning').addClass('btn-danger')
-                    $('.save-change i:first-child').removeClass().addClass('fas fa-times')
-                    $('.save-change span').text('ERROR!')
-                    $('.save-change').effect('shake', {times: 4, distance: 10}, 700)
-
-                    
-                    resetMessage()
-                }, 800)
-            }
-            
-            errorMessage()
-            //TODO POST TO MOVE ELEMENTS IN DATABASE
-            
-
-        })
-    })
-}
 
 let drake = dragula([...document.querySelectorAll('[data-category-id ^=category-]'), document.querySelector('#itemList')],{
     removeOnSpill: true,
@@ -104,12 +60,39 @@ drake.on('dragend', el => {
 drake.on('drop', (el, target, source, sibling) => {
       let itemModified = el.dataset.itemId,
       categoryWhereAdded = target.dataset.categoryId,
-      categoryWhereRemoved = source.id === 'itemList' ? null : source.dataset.categoryId
+      categoryWhereRemoved = source.id === 'itemList' ? 'null-null' : source.dataset.categoryId
       
+      let itemId = itemModified.split('-')[1]
+      let addCategoryId = categoryWhereAdded.split('-')[1]
+      let removeCategoryId = categoryWhereRemoved.split('-')[1]
       setToNotSaved(el);
-      saveChange();
       
-      
+      $.ajax({
+        url    : '" . getenv('PATH_SUBFOLDER') . "cms-admin/shop/categories/swapItem',
+        type   : 'POST',
+        data   : {
+            'begin_category': removeCategoryId,
+            'end_category': addCategoryId,
+            'item_id': itemId,
+        },
+        success: res => {
+        
+                console.log(res)
+                let toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000
+                            });
+                toast.fire({
+                      icon: (res === -1) ? 'error' : 'success',
+                      title:  (res === -1) ? '" . SHOP_ERROR_RETRY . "' : '" . SHOP_SUCCESS_ACTION . "'
+               })
+               
+               setTimeout(() => removeNotSaved(el), 200);
+
+        },
+      })
       console.log(`L'objet déplacé a comme id \${itemModified} de catégorie de départ \${categoryWhereRemoved} et d'arrivé \${categoryWhereAdded}...`);
       
       });
@@ -120,11 +103,80 @@ drake.on('remove', (el, target, source) => {
     let itemRemoved = el.dataset.itemId,
     categoryWhereRemoved = target.dataset.categoryId
     
-     console.log(`L'objet retiré a comme id \${itemRemoved} et catégorie d'id \${categoryWhereRemoved}...`);
+    let removeCategoryId = categoryWhereRemoved.split('-')[1],
+    itemId = itemRemoved.split('-')[1]
     
+    
+    
+    $.ajax({
+            url    : '" . getenv('PATH_SUBFOLDER') . "cms-admin/shop/categories/swapItem',
+            type   : 'POST',
+            data   : {
+                'begin_category': removeCategoryId,
+                'end_category': 'null',
+                'item_id': itemId,
+            },
+            success: res => {
+                console.log(res)
+                    let toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 3000
+                                });
+                    toast.fire({
+                          icon: (res === -1) ? 'error' : 'success',
+                          title:  (res === -1) ? '" . SHOP_ERROR_RETRY . "' : '" . SHOP_SUCCESS_DELETE . "'
+                   })
+    
+            },
+          })    
 })
 </script>";
+$scripts .= '<script>
 
+$(".deleteButton").click((el) => {
+
+    let successMessage = () => {
+        Swal.fire(
+            "Supprimé!",
+            "L\'article a bien été supprimé.",
+            "success",
+        )
+    }
+    let categoryId         = el.target.parentNode.dataset.categoryId
+
+    Swal.fire({
+                  title             : "Êtes-vous sûr ?",
+                  text              : "Vous ne pourrez plus retourner en arrière !",
+                  icon              : "warning",
+                  showCancelButton  : true,
+                  confirmButtonColor: "#3085d6",
+                  cancelButtonColor : "#d33",
+                  confirmButtonText : "Oui, je supprime cette catégorie !",
+                  cancelButtonText  : "Annuler",
+              }).then(result => {
+        if (result.isConfirmed) {
+            $.ajax({
+                       url    : "' . getenv('PATH_SUBFOLDER') . 'cms-admin/shop/categories/delete",
+                       type   : "POST",
+                       data   : {
+                           "categoryId": categoryId,
+                       },
+                       success: res => {
+                           if (parseInt(res) === 1)  {
+                               successMessage()
+                               let column = el.target.offsetParent.offsetParent.offsetParent
+                               column.remove();
+                           }
+                       },
+                   })
+        }
+    })
+
+})
+
+</script>';
 
 ob_start();
 ?>
@@ -153,7 +205,7 @@ ob_start();
                                 <div class="d-block nav-link" href="#"><?= $item->itemName ?>
                                     <small>(<?= $item->itemId ?>)</small>
                                     <a class="float-right d-inline-block" href="../item/edit/<?= $item->itemId ?>">
-                                        <i class="fa fas fa-cog"></i>
+                                        <i class="fas fa-cog"></i>
                                     </a>
                                 </div>
                             </li>
@@ -184,6 +236,11 @@ ob_start();
                                 <div class="card card-light">
 
                                     <div class="card-header">
+                                        <div class="card-option float-left mr-3">
+                                            <a href="#" data-category-id="<?= $category->categoryId ?>" class="deleteButton text-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
                                         <h3 class="card-title"><?= $category->categoryName ?></h3>
                                         <!-- <h6><?= mb_strimwidth($category->categoryDesc, 0, 255, '...') ?></h6> -->
                                         <div class="card-tools">
@@ -219,15 +276,6 @@ ob_start();
                 </div>
             </div>
         </div>
-    </div>
-
-</div>
-
-
-<div class="save-change">
-
-    <div class="btn btn-warning" id="saveChange">
-        <i class="fas fa-save"></i> <span>Save Change</span>
     </div>
 
 </div>

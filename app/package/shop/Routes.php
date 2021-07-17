@@ -23,4 +23,7 @@ $router->scope('/cms-admin/', function($router) {
     $router->get('shop/categories/', 'shop#listCategoriesAdmin');
     $router->get('shop/categories/add/', 'shop#addCategoriesAdmin');
     $router->post('shop/categories/add/', 'shop#addCategoriesPostAdmin');
+    $router->post('shop/categories/add/', 'shop#addCategoriesPostAdmin');
+    $router->post('shop/categories/delete/', 'shop#deleteCategoriesPostAdmin');
+    $router->post('shop/categories/swapItem/', 'shop#swapItemCategoriesPostAdmin');
 });
