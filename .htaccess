@@ -24,7 +24,7 @@ Order allow,deny
 Deny from all
 </Files>
 
-# Deny access to .htaccess
+# Deny access to .env
 <Files .env>
 Order allow,deny
 Deny from all
