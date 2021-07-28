@@ -37,7 +37,7 @@ const INSTALL_THANKS = "CraftMySite est installé. Merci de l'utiliser et profit
 const INSTALL_WARNING_TITLE = "Attention";
 const INSTALL_WARNING_FOLDER = "Supprimez le dossier installation !";
 const INSTALL_WARNING_ENV = "Un fichier de configuration est déjà présent.<br>
-                            Veuillez supprimer le fichier <code>.env</code> et vider votre base de données si nécéssaire avant d'effectuer une nouvelle installation.";
+                            Veuillez supprimer le fichier <code class='dark'>.env</code> et vider votre base de données si nécéssaire avant d'effectuer une nouvelle installation.";
 const INSTALL_LOCATION = "Aller voir mon site !";
 
 const INSTALL_INFOS_TITLE = "Félicitation";

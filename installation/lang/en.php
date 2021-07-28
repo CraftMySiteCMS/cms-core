@@ -34,7 +34,7 @@ const INSTALL_SAVE = "Save";
 const INSTALL_THANKS = "CraftMySite is installed. Thanks for using it and enjoy your site!";
 const INSTALL_WARNING_TITLE = "Warning";
 const INSTALL_WARNING_FOLDER = "Delete the installation folder!";
-const INSTALL_WARNING_ENV = "A configuration file is already present.<br>Please delete the <code>.env</code> file and empty your database if necessary before performing a new installation.";
+const INSTALL_WARNING_ENV = "A configuration file is already present.<br>Please delete the <code class='dark'>.env</code> file and empty your database if necessary before performing a new installation.";
 const INSTALL_LOCATION = "Go to my site !";
 
 const INSTALL_INFOS_TITLE = "Congratulations";

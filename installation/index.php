@@ -30,7 +30,7 @@ require_once("../admin/resources/lang/$lang.php");
     <script src="../admin/resources/vendors/jquery/jquery.min.js"></script>
 
     <style>
-        code {
+        code.dark {
             background: #2b2929;
             padding: 0 5px;
             border-radius: 3px;
