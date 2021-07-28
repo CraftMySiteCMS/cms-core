@@ -3,25 +3,39 @@
 require_once("../app/EnvBuilder.php");
 if (file_exists("../.env")) {
     (new Env("../.env"))->load();
-} ?>
+}
+$lang = "fr";
+if(isset($_GET['lang'])) :
+    $lang = $_GET['lang'];
+endif;
+require_once("lang/$lang.php");
+require_once("../admin/resources/lang/$lang.php");
+?>
 <html lang="fr-FR">
 <head>
     <meta charset="utf-8"/>
-    <title>CraftMySite | Installation</title>
+    <title><?=INSTALL_TITLE?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <meta name="robots" content="NOINDEX, NOFOLLOW">
-    <meta name="description" content="Installation du CMS">
+    <meta name="description" content="<?=INSTALL_DESC?>">
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="../admin/resources/vendors/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../admin/resources/css/adminlte.min.css">
 
     <script src="../admin/resources/vendors/jquery/jquery.min.js"></script>
+
+    <style>
+        code {
+            background: #2b2929;
+            padding: 0 5px;
+            border-radius: 3px;
+        }
+    </style>
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -50,31 +64,39 @@ if (file_exists("../.env")) {
         <div class="sidebar">
             <!-- Sidebar Menu -->
             <nav class="mt-2">
+                <div class="row mb-3 justify-content-center">
+                    <div class="col-3">
+                        <a href="./?lang=fr"><img src="../admin/resources/vendors/flag-icon-css/flags/fr.svg" class="flag-icon"></a>
+                    </div>
+                    <div class="col-3">
+                        <a href="./?lang=en"><img src="../admin/resources/vendors/flag-icon-css/flags/gb.svg" class="flag-icon"></a>
+                    </div>
+                </div>
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <?php if (!file_exists("../.env")) : ?>
                     <li class="nav-item">
                         <a class="nav-link <?= (!isset($_GET['step']) || $_GET['step'] == 1) ? "active" : ""; ?>">
                             <i class="nav-icon fas fa-hourglass-start"></i>
-                            <p>Etape 1</p>
+                            <p><?=INSTALL_STEP?> 1</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= (isset($_GET['step']) && $_GET['step'] == 2) ? "active" : ""; ?>">
                             <i class="nav-icon fas fa-hourglass-half"></i>
-                            <p>Etape 2</p>
+                            <p><?=INSTALL_STEP?> 2</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= (isset($_GET['step']) && $_GET['step'] == 3) ? "active" : ""; ?>">
                             <i class="nav-icon fas fa-hourglass-end"></i>
-                            <p>Etape 3</p>
+                            <p><?=INSTALL_STEP?> 3</p>
                         </a>
                     </li>
                     <?php else : ?>
                         <li class="nav-item">
                             <a class="nav-link active">
                                 <i class="nav-icon fas fa-exclamation-triangle"></i>
-                                <p>Erreur</p>
+                                <p><?=INSTALL_ERROR?></p>
                             </a>
                         </li>
                     <?php endif; ?>
@@ -90,12 +112,12 @@ if (file_exists("../.env")) {
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Installation</h1>
+                        <h1 class="m-0"><?=INSTALL_MAIN_TITLE?></h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="../cms-admin">CraftMySite</a></li>
-                            <li class="breadcrumb-item active">Installation</li>
+                            <li class="breadcrumb-item active"><?=INSTALL_MAIN_TITLE?></li>
                         </ol>
                     </div>
                 </div>
@@ -109,49 +131,45 @@ if (file_exists("../.env")) {
                         <?php if (!isset($_GET['step']) || $_GET['step'] == 1) : ?>
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Informations sur votre base de données</h3>
+                                    <h3 class="card-title"><?=INSTALL_BDD_TITLE?></h3>
                                 </div>
                                 <!-- form start -->
                                 <form action="controller.php" role="form" method="post">
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <label for="bdd_name">Nom de la base de donnéess</label>
+                                            <label for="bdd_name"><?INSTALL_BDD_NAME?></label>
                                             <input type="text" name="bdd_name" class="form-control" id="bdd_name" required>
-                                            <small class="text-muted">Le nom de la base de données sur laquelle vous
-                                                souhaitez installer Craft My Website (Elle se créée <b>automatiquement</b>
-                                                si elle n'existe pas encore)</small>
+                                            <small class="text-muted"><?=INSTALL_BDD_NAME_ABOUT?></small>
                                         </div>
                                         <div class="form-group">
-                                            <label for="bdd_login">Identifiant</label>
+                                            <label for="bdd_login"><?=INSTALL_BDD_USER?></label>
                                             <input type="text" name="bdd_login" class="form-control" id="bdd_login"
                                                    required>
-                                            <small class="text-muted">Nom d'utilisateur de la base de données</small>
+                                            <small class="text-muted"><?=INSTALL_BDD_USER_ABOUT?></small>
                                         </div>
                                         <div class="form-group">
-                                            <label for="bdd_pass">Mot de passe</label>
+                                            <label for="bdd_pass"><?=INSTALL_BDD_PASS?></label>
                                             <input type="text" name="bdd_pass" class="form-control" id="bdd_pass">
-                                            <small class="text-muted">Mot de passe de la base de données</small>
+                                            <small class="text-muted"><?=INSTALL_BDD_PASS_ABOUT?></small>
                                         </div>
                                         <div class="form-group">
-                                            <label for="bdd_address">Adresse de la base de données</label>
+                                            <label for="bdd_address"><?=INSTALL_BDD_ADDRESS?></label>
                                             <input type="text" name="bdd_address" class="form-control" id="bdd_address"
-                                                   required>
-                                            <small class="text-muted">Généralement <code>localhost</code>. Si localhost ne
-                                                fonctionne pas, veuillez demander l'information à votre hébergeur.</small>
+                                                   required value="localhost">
+                                            <small class="text-muted"><?=INSTALL_BDD_ADDRESS_ABOUT?></small>
                                         </div>
                                         <hr>
-                                        <h2>A propos du site :</h2>
+                                        <h2><?=INSTALL_SITE_TITLE?></h2>
                                         <div class="form-group">
-                                            <label for="install_folder">Dossier d'installation</label>
+                                            <label for="install_folder"><?=INSTALL_SITE_FOLDER?></label>
                                             <input type="text" name="install_folder" class="form-control"
-                                                   id="install_folder" required>
-                                            <small class="text-muted">Généralement <code>/</code>. Si CraftMySite se trouve
-                                                dans un dossier, veuillez indiquer <code>/dossier/</code>.</small>
+                                                   id="install_folder" required value="/">
+                                            <small class="text-muted"><?=INSTALL_SITE_FOLDER_ABOUT?></small>
                                         </div>
                                     </div>
                                     <!-- /.card-body -->
                                     <div class="card-footer">
-                                        <button type="submit" name="update_env" class="btn btn-primary">Enregistrer</button>
+                                        <button type="submit" name="update_env" class="btn btn-primary"><?=INSTALL_SAVE?></button>
                                     </div>
                                 </form>
                             </div>
@@ -159,27 +177,27 @@ if (file_exists("../.env")) {
                         <?php if (isset($_GET['step']) && $_GET['step'] == 2) : ?>
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Créez votre compte administrateur</h3>
+                                    <h3 class="card-title"><?=INSTALL_ADMIN_TITLE?></h3>
                                 </div>
                                 <!-- form start -->
                                 <form action="controller.php" role="form" method="post">
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <label for="email">Adresse email</label>
+                                            <label for="email"><?=INSTALL_ADMIN_EMAIL?></label>
                                             <input type="text" name="email" class="form-control" id="email" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="pseudo">Identifiant</label>
+                                            <label for="pseudo"><?=INSTALL_ADMIN_USERNAME?></label>
                                             <input type="text" name="pseudo" class="form-control" id="pseudo" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="password">Mot de passe</label>
+                                            <label for="password"><?=INSTALL_ADMIN_PASS?></label>
                                             <input type="text" name="password" class="form-control" id="password">
                                         </div>
                                     </div>
                                     <!-- /.card-body -->
                                     <div class="card-footer">
-                                        <button type="submit" name="create_admin" class="btn btn-primary">Enregistrer
+                                        <button type="submit" name="create_admin" class="btn btn-primary"><?=INSTALL_SAVE?>
                                         </button>
                                     </div>
                                 </form>
@@ -188,32 +206,31 @@ if (file_exists("../.env")) {
                         <?php if (isset($_GET['step']) && $_GET['step'] == 3) : ?>
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Succès !</h3>
+                                    <h3 class="card-title"><?=INSTALL_SUCCESS?> !</h3>
                                 </div>
                                 <div class="card-body">
-                                    <p>CraftMySite est installé. Merci de l'utiliser et profitez bien de votre site !</p>
+                                    <p><?=INSTALL_THANKS?></p>
                                     <hr>
                                     <div class="info-box bg-danger">
                                         <span class="info-box-icon"><i class="fas fa-exclamation-triangle"></i></span>
 
                                         <div class="info-box-content">
-                                            <span class="info-box-text font-weight-bold">Attention</span>
-                                            <span class="progress-description">Supprimez le dossier installation !</span>
+                                            <span class="info-box-text font-weight-bold"><?=INSTALL_WARNING_TITLE?></span>
+                                            <span class="progress-description"><?=INSTALL_WARNING_FOLDER?></span>
                                         </div>
                                         <!-- /.info-box-content -->
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
                                 <div class="card-footer">
-                                    <a href="../" class="btn btn-primary">Aller voir mon site !</a>
+                                    <a href="../" class="btn btn-primary"><?=INSTALL_LOCATION?></a>
                                 </div>
                             </div>
                         <?php endif; ?>
                     <?php else : ?>
                         <div class="alert alert-danger alert-dismissible">
-                            <h5><i class="icon fas fa-ban"></i> Attention !</h5>
-                            Un fichier de configuration est déjà présent.<br>
-                            Veuillez supprimer le fichier .env et vider votre base de données si nécéssaire avant d'effectuer une nouvelle installation.
+                            <h5><i class="icon fas fa-ban"></i> <?=INSTALL_WARNING_TITLE?> !</h5>
+                            <?=INSTALL_WARNING_ENV?>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -228,21 +245,21 @@ if (file_exists("../.env")) {
                                     <span class="info-box-icon"><i class="fas fa-server"></i></span>
 
                                     <div class="info-box-content">
-                                        <span class="info-box-text font-weight-bold">Félicitation</span>
-                                        <span class="progress-description">Votre base a été créée</span>
+                                        <span class="info-box-text font-weight-bold"><?=INSTALL_INFOS_TITLE?></span>
+                                        <span class="progress-description"><?=INSTALL_INFOS_TEXT?></span>
                                     </div>
                                     <!-- /.info-box-content -->
                                 </div>
 
-                                <?php $dbHost = getenv("DB_HOST") ?? "<span class='text-danger'>erreur</span>";
-                                $dbUsername = getenv("DB_USERNAME") ?? "<span class='text-danger'>erreur</span>";
-                                $dbPassword = !empty(getenv("DB_PASSWORD")) ? "*****" : "<span class='text-danger'>erreur / vide</span>";
-                                $dbName = getenv("DB_NAME") ?? "<span class='text-danger'>erreur</span>"; ?>
+                                <?php $dbHost = getenv("DB_HOST") ?? "<span class='text-danger'>".INSTALL_INFOS_ERROR."</span>";
+                                $dbUsername = getenv("DB_USERNAME") ?? "<span class='text-danger'>".INSTALL_INFOS_ERROR."</span>";
+                                $dbPassword = !empty(getenv("DB_PASSWORD")) ? "*****" : "<span class='text-danger'>".INSTALL_INFOS_ERROR." / ".INSTALL_INFOS_EMPTY."</span>";
+                                $dbName = getenv("DB_NAME") ?? "<span class='text-danger'>".INSTALL_INFOS_ERROR."</span>"; ?>
                                 <p>
-                                    <b>Adresse de la base de données :</b> <?= $dbHost ?><br>
-                                    <b>Identifiant de la base de données :</b> <?= $dbUsername ?><br>
-                                    <b>Mot de passe de la base de données :</b> <?= $dbPassword ?><br>
-                                    <b>Nom de la base de données :</b> <?= $dbName ?>
+                                    <b><?=INSTALL_BDD_ADDRESS?> :</b> <?= $dbHost ?><br>
+                                    <b><?=INSTALL_BDD_USER_ABOUT?> :</b> <?= $dbUsername ?><br>
+                                    <b><?=INSTALL_BDD_PASS_ABOUT?> :</b> <?= $dbPassword ?><br>
+                                    <b><?=INSTALL_BDD_NAME?> :</b> <?= $dbName ?>
                                 </p>
                             <?php endif ?>
 
