@@ -40,7 +40,8 @@ const INSTALL_WARNING_ENV = "Un fichier de configuration est déjà présent.<br
                             Veuillez supprimer le fichier <code class='dark'>.env</code> et vider votre base de données si nécéssaire avant d'effectuer une nouvelle installation.";
 const INSTALL_LOCATION = "Aller voir mon site !";
 
-const INSTALL_INFOS_TITLE = "Félicitation";
+const INSTALL_INFOS_TITLE = "A propos de votre installation";
+const INSTALL_INFOS_SUCESS = "Félicitation";
 const INSTALL_INFOS_TEXT = "Votre base a été créée";
 const INSTALL_INFOS_ERROR = "erreur";
 const INSTALL_INFOS_EMPTY = "vide";

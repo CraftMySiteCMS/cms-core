@@ -237,7 +237,7 @@ require_once("../admin/resources/lang/$lang.php");
                 <div class="col-5">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">A propos de votre installation</h3>
+                            <h3 class="card-title"><?=INSTALL_INFOS_TITLE?></h3>
                         </div>
                         <div class="card-body">
                             <?php if (file_exists("../.env")) : ?>
@@ -245,7 +245,7 @@ require_once("../admin/resources/lang/$lang.php");
                                     <span class="info-box-icon"><i class="fas fa-server"></i></span>
 
                                     <div class="info-box-content">
-                                        <span class="info-box-text font-weight-bold"><?=INSTALL_INFOS_TITLE?></span>
+                                        <span class="info-box-text font-weight-bold"><?=INSTALL_INFOS_SUCESS?></span>
                                         <span class="progress-description"><?=INSTALL_INFOS_TEXT?></span>
                                     </div>
                                     <!-- /.info-box-content -->

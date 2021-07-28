@@ -37,7 +37,8 @@ const INSTALL_WARNING_FOLDER = "Delete the installation folder!";
 const INSTALL_WARNING_ENV = "A configuration file is already present.<br>Please delete the <code class='dark'>.env</code> file and empty your database if necessary before performing a new installation.";
 const INSTALL_LOCATION = "Go to my site !";
 
-const INSTALL_INFOS_TITLE = "Congratulations";
+const INSTALL_INFOS_TITLE = "About your installation";
+const INSTALL_INFOS_SUCESS = "Congratulations";
 const INSTALL_INFOS_TEXT = "Your database has been created";
 const INSTALL_INFOS_ERROR = "error";
 const INSTALL_INFOS_EMPTY = "empty";
