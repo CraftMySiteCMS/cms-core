@@ -89,6 +89,14 @@ class CoreController
     /* //////////////////////////////////////////////////////////////////////////// */
     /* CMS FUNCTION */
 
+    /* Security Warning */
+    public function cmsSWarn(): string
+    {
+        if( is_dir( "installation" ) ) {
+            return "<p class='security-warning'>ATTENTION - Votre dossier d'installation n'a pas encore été supprimé. Pour des questions de sécurité, vous devez supprimer le dossier installation situé à la racine de votre site.</p>";
+        }
+    }
+
     /*
      * Head constructor
      */
@@ -107,7 +115,7 @@ class CoreController
      */
     public function cmsFooter(): string
     {
-        return "<p>Coucou je suis le footer</p>";
+        return "<p>Un site fierement propuslé par <a href='https://craftmysite.com/'>CraftMySite</a></p>";
     }
 
     /*

@@ -2,14 +2,11 @@
 $description = "page d'accueil du CMS"; ?>
 
 <?php ob_start(); ?>
+
 <h1>Accueil</h1>
 
 <main>
-
-    <p>Héhé, direction l'administration ?</p>
-
-    <a href="./cms-admin/">En vrai faut cliquer ici :)</a>
-
+    <a href="./cms-admin/">Accès rapide à l'administration</a>
 </main>
 
 <?php $content = ob_get_clean(); ?>
