@@ -50,8 +50,8 @@ if (file_exists("../.env")) {
         <div class="sidebar">
             <!-- Sidebar Menu -->
             <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                    data-accordion="false">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <?php if (!file_exists("../.env")) : ?>
                     <li class="nav-item">
                         <a class="nav-link <?= (!isset($_GET['step']) || $_GET['step'] == 1) ? "active" : ""; ?>">
                             <i class="nav-icon fas fa-hourglass-start"></i>
@@ -70,6 +70,14 @@ if (file_exists("../.env")) {
                             <p>Etape 3</p>
                         </a>
                     </li>
+                    <?php else : ?>
+                        <li class="nav-item">
+                            <a class="nav-link active">
+                                <i class="nav-icon fas fa-exclamation-triangle"></i>
+                                <p>Erreur</p>
+                            </a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -97,107 +105,115 @@ if (file_exists("../.env")) {
         <div class="container-fluid">
             <div class="row">
                 <div class="col-7">
-                    <?php if (!isset($_GET['step']) || $_GET['step'] == 1) : ?>
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Informations sur votre base de données</h3>
+                    <?php if (!file_exists("../.env")) : ?>
+                        <?php if (!isset($_GET['step']) || $_GET['step'] == 1) : ?>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Informations sur votre base de données</h3>
+                                </div>
+                                <!-- form start -->
+                                <form action="controller.php" role="form" method="post">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="bdd_name">Nom de la base de donnéess</label>
+                                            <input type="text" name="bdd_name" class="form-control" id="bdd_name" required>
+                                            <small class="text-muted">Le nom de la base de données sur laquelle vous
+                                                souhaitez installer Craft My Website (Elle se créée <b>automatiquement</b>
+                                                si elle n'existe pas encore)</small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="bdd_login">Identifiant</label>
+                                            <input type="text" name="bdd_login" class="form-control" id="bdd_login"
+                                                   required>
+                                            <small class="text-muted">Nom d'utilisateur de la base de données</small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="bdd_pass">Mot de passe</label>
+                                            <input type="text" name="bdd_pass" class="form-control" id="bdd_pass">
+                                            <small class="text-muted">Mot de passe de la base de données</small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="bdd_address">Adresse de la base de données</label>
+                                            <input type="text" name="bdd_address" class="form-control" id="bdd_address"
+                                                   required>
+                                            <small class="text-muted">Généralement <code>localhost</code>. Si localhost ne
+                                                fonctionne pas, veuillez demander l'information à votre hébergeur.</small>
+                                        </div>
+                                        <hr>
+                                        <h2>A propos du site :</h2>
+                                        <div class="form-group">
+                                            <label for="install_folder">Dossier d'installation</label>
+                                            <input type="text" name="install_folder" class="form-control"
+                                                   id="install_folder" required>
+                                            <small class="text-muted">Généralement <code>/</code>. Si CraftMySite se trouve
+                                                dans un dossier, veuillez indiquer <code>/dossier/</code>.</small>
+                                        </div>
+                                    </div>
+                                    <!-- /.card-body -->
+                                    <div class="card-footer">
+                                        <button type="submit" name="update_env" class="btn btn-primary">Enregistrer</button>
+                                    </div>
+                                </form>
                             </div>
-                            <!-- form start -->
-                            <form action="controller.php" role="form" method="post">
+                        <?php endif; ?>
+                        <?php if (isset($_GET['step']) && $_GET['step'] == 2) : ?>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Créez votre compte administrateur</h3>
+                                </div>
+                                <!-- form start -->
+                                <form action="controller.php" role="form" method="post">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="email">Adresse email</label>
+                                            <input type="text" name="email" class="form-control" id="email" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pseudo">Identifiant</label>
+                                            <input type="text" name="pseudo" class="form-control" id="pseudo" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password">Mot de passe</label>
+                                            <input type="text" name="password" class="form-control" id="password">
+                                        </div>
+                                    </div>
+                                    <!-- /.card-body -->
+                                    <div class="card-footer">
+                                        <button type="submit" name="create_admin" class="btn btn-primary">Enregistrer
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (isset($_GET['step']) && $_GET['step'] == 3) : ?>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Succès !</h3>
+                                </div>
                                 <div class="card-body">
-                                    <div class="form-group">
-                                        <label for="bdd_name">Nom de la base de donnéess</label>
-                                        <input type="text" name="bdd_name" class="form-control" id="bdd_name" required>
-                                        <small class="text-muted">Le nom de la base de données sur laquelle vous
-                                            souhaitez installer Craft My Website (Elle se créée <b>automatiquement</b>
-                                            si elle n'existe pas encore)</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="bdd_login">Identifiant</label>
-                                        <input type="text" name="bdd_login" class="form-control" id="bdd_login"
-                                               required>
-                                        <small class="text-muted">Nom d'utilisateur de la base de données</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="bdd_pass">Mot de passe</label>
-                                        <input type="text" name="bdd_pass" class="form-control" id="bdd_pass">
-                                        <small class="text-muted">Mot de passe de la base de données</small>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="bdd_address">Adresse de la base de données</label>
-                                        <input type="text" name="bdd_address" class="form-control" id="bdd_address"
-                                               required>
-                                        <small class="text-muted">Généralement <code>localhost</code>. Si localhost ne
-                                            fonctionne pas, veuillez demander l'information à votre hébergeur.</small>
-                                    </div>
+                                    <p>CraftMySite est installé. Merci de l'utiliser et profitez bien de votre site !</p>
                                     <hr>
-                                    <h2>A propos du site :</h2>
-                                    <div class="form-group">
-                                        <label for="install_folder">Dossier d'installation</label>
-                                        <input type="text" name="install_folder" class="form-control"
-                                               id="install_folder" required>
-                                        <small class="text-muted">Généralement <code>/</code>. Si CraftMySite se trouve
-                                            dans un dossier, veuillez indiquer <code>/dossier/</code>.</small>
-                                    </div>
-                                </div>
-                                <!-- /.card-body -->
-                                <div class="card-footer">
-                                    <button type="submit" name="update_env" class="btn btn-primary">Enregistrer</button>
-                                </div>
-                            </form>
-                        </div>
-                    <?php endif; ?>
-                    <?php if (isset($_GET['step']) && $_GET['step'] == 2) : ?>
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Créez votre compte administrateur</h3>
-                            </div>
-                            <!-- form start -->
-                            <form action="controller.php" role="form" method="post">
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <label for="email">Adresse email</label>
-                                        <input type="text" name="email" class="form-control" id="email" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="pseudo">Identifiant</label>
-                                        <input type="text" name="pseudo" class="form-control" id="pseudo" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="password">Mot de passe</label>
-                                        <input type="text" name="password" class="form-control" id="password">
-                                    </div>
-                                </div>
-                                <!-- /.card-body -->
-                                <div class="card-footer">
-                                    <button type="submit" name="create_admin" class="btn btn-primary">Enregistrer
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    <?php endif; ?>
-                    <?php if (isset($_GET['step']) && $_GET['step'] == 3) : ?>
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Succès !</h3>
-                            </div>
-                            <div class="card-body">
-                                <p>CraftMySite est installé. Merci de l'utiliser et profitez bien de votre site !</p>
-                                <hr>
-                                <div class="info-box bg-danger">
-                                    <span class="info-box-icon"><i class="fas fa-exclamation-triangle"></i></span>
+                                    <div class="info-box bg-danger">
+                                        <span class="info-box-icon"><i class="fas fa-exclamation-triangle"></i></span>
 
-                                    <div class="info-box-content">
-                                        <span class="info-box-text font-weight-bold">Attention</span>
-                                        <span class="progress-description">Supprimez le dossier installation !</span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text font-weight-bold">Attention</span>
+                                            <span class="progress-description">Supprimez le dossier installation !</span>
+                                        </div>
+                                        <!-- /.info-box-content -->
                                     </div>
-                                    <!-- /.info-box-content -->
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    <a href="../" class="btn btn-primary">Aller voir mon site !</a>
                                 </div>
                             </div>
-                            <!-- /.card-body -->
-                            <div class="card-footer">
-                                <a href="../" class="btn btn-primary">Aller voir mon site !</a>
-                            </div>
+                        <?php endif; ?>
+                    <?php else : ?>
+                        <div class="alert alert-danger alert-dismissible">
+                            <h5><i class="icon fas fa-ban"></i> Attention !</h5>
+                            Un fichier de configuration est déjà présent.<br>
+                            Veuillez supprimer le fichier .env et vider votre base de données si nécéssaire avant d'effectuer une nouvelle installation.
                         </div>
                     <?php endif; ?>
                 </div>
