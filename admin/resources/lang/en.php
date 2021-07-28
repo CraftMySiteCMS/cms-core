@@ -20,3 +20,7 @@ const DATATABLES_LIST_NEXT = "Next";
 const DATATABLES_LIST_LAST = "Last";
 const DATATABLES_LIST_SORTASCENDING = ": activate to sort the column in ascending order";
 const DATATABLES_LIST_SORTDESCENDING = ": activate to sort the column in descending order";
+
+/* FOOTER */
+const FOOTER_LEFT = "Copyright &copy; 2021 All right reserved.";
+const FOOTER_RIGHT = "Thank you for using <a href='https://craftmysite.com/'>CraftMySite</a>.";

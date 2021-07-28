@@ -19,3 +19,7 @@ const DATATABLES_LIST_NEXT = "Suivant";
 const DATATABLES_LIST_LAST = "Dernier";
 const DATATABLES_LIST_SORTASCENDING = ": activer pour trier la colonne par ordre croissant";
 const DATATABLES_LIST_SORTDESCENDING = ": activer pour trier la colonne par ordre décroissant";
+
+/* FOOTER */
+const FOOTER_LEFT = "Copyright &copy; 2021 Tous droits réservés.";
+const FOOTER_RIGHT = "Merci d'utiliser <a href='https://craftmysite.com/'>CraftMySite</a>.";
