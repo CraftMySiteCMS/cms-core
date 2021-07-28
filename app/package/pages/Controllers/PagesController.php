@@ -49,7 +49,7 @@ class PagesController extends CoreController
         $page->pageTitle = $_POST["news_title"];
         $page->pageSlug = $_POST["news_slug"];
         $page->pageContent = $_POST["news_content"];
-        $page->pageState = 1;
+        $page->pageState = $_POST["page_state"];
         $page->userId = $user->getLoggedUser();
 
         $page->create();
@@ -73,13 +73,12 @@ class PagesController extends CoreController
     {
         usersController::isAdminLogged();
 
-        $user = new usersModel();
-
         $page = new pagesModel();
         $page->pageId = $_POST["news_id"];
         $page->pageTitle = $_POST["news_title"];
         $page->pageSlug = $_POST["news_slug"];
         $page->pageContent = $_POST["news_content"];
+        $page->pageState = $_POST["page_state"];
 
         $page->update();
 

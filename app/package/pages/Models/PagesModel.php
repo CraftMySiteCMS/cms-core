@@ -4,7 +4,6 @@ namespace CMS\Model\Pages;
 
 use CMS\Model\Manager;
 use CMS\Model\Users\UsersModel;
-use JsonException;
 use PDO;
 
 /**
@@ -20,10 +19,10 @@ class PagesModel extends Manager
     public usersModel $user;
     public string $pageTitle;
     public string $pageSlug;
-    public ?string $pageContent;
+    public ?string $pageContent = null;
     public string $pageCreated;
-    public ?string $pageUpdated;
-    public bool $pageState;
+    public string $pageUpdated;
+    public int $pageState;
     public string $pageContentTranslated;
 
     public static function exist($var, $is_slug = null)
@@ -68,21 +67,23 @@ class PagesModel extends Manager
     {
         $var = $is_slug ? array("page_slug" => $this->pageSlug) : array("page_id" => $this->pageId);
 
-        $sql = "SELECT page_id, page_title, page_slug, user_id, page_content, DATE_FORMAT(page_created, '%d/%m/%Y à %H:%i:%s') AS 'page_created', DATE_FORMAT(page_updated, '%d/%m/%Y à %H:%i:%s') AS 'page_updated'"
-            . " FROM cms_pages"
-            . " WHERE page_state = 1";
-        $sql .= $is_slug ? " AND page_slug=:page_slug" : " AND page_id=:page_id";
+        $sql = "SELECT page_id, page_title, page_slug, user_id, page_content, page_state, DATE_FORMAT(page_created, '%d/%m/%Y à %H:%i:%s') AS 'page_created', DATE_FORMAT(page_updated, '%d/%m/%Y à %H:%i:%s') AS 'page_updated'"
+            . " FROM cms_pages";
+        $sql .= $is_slug ? " WHERE page_slug=:page_slug" : " WHERE page_id=:page_id";
 
         $db = Manager::dbConnect();
         $req = $db->prepare($sql);
 
         if ($req->execute($var)) {
             $result = $req->fetch(PDO::FETCH_ASSOC);
-            foreach ($result as $key => $property) {
-                if (property_exists(pagesModel::class, $key)) {
-                    $this->$key = $property;
-                }
-            }
+
+            $this->pageId = $result['page_id'];
+            $this->pageSlug = $result['page_slug'];
+            $this->pageTitle = $result['page_title'];
+            $this->pageContent = $result['page_content'];
+            $this->pageCreated = $result['page_created'];
+            $this->pageUpdated = $result['page_updated'];
+            $this->pageState = $result['page_state'];
 
             $this->translatePage();
 
@@ -92,9 +93,6 @@ class PagesModel extends Manager
         }
     }
 
-    /**
-     * @throws JsonException
-     */
     public static function fetchAll(): array
     {
         $return = [];
@@ -114,6 +112,7 @@ class PagesModel extends Manager
                 $pages->pageContent = $result['page_content'];
                 $pages->pageCreated = $result['page_created'];
                 $pages->pageUpdated = $result['page_updated'];
+                $pages->pageState = $result['page_state'];
 
                 $pages->translatePage();
 
@@ -135,30 +134,14 @@ class PagesModel extends Manager
             "page_id" => $this->pageId,
             "page_slug" => $this->pageSlug,
             "page_title" => mb_strimwidth($this->pageTitle, 0, 255),
-            "page_content" => $this->pageContent
+            "page_content" => $this->pageContent,
+            "page_state" => $this->pageState
         );
 
         $sql = "UPDATE cms_pages SET "
             . "page_slug" . "=:page_slug,"
             . "page_title" . "=:page_title,"
-            . "page_content" . "=:page_content"
-            . " WHERE " . "page_id" . "=:page_id";
-
-        $db = Manager::dbConnect();
-        $req = $db->prepare($sql);
-        $req->execute($var);
-
-        $this->updateEditTime();
-    }
-
-    public function changeState(): void
-    {
-        $var = array(
-            "page_id" => $this->pageId,
-            "page_state" => $this->pageState,
-        );
-
-        $sql = "UPDATE cms_pages SET "
+            . "page_content" . "=:page_content,"
             . "page_state" . "=:page_state"
             . " WHERE " . "page_id" . "=:page_id";
 
@@ -198,12 +181,9 @@ class PagesModel extends Manager
         $req->execute($var);
     }
 
-    /**
-     * @throws JsonException
-     */
     public function translatePage(): void
     {
-        $content = json_decode($this->pageContent, false, 512, JSON_THROW_ON_ERROR);
+        $content = json_decode($this->pageContent, false, 512);
         $blocks = $content->blocks;
         $convertedHtml = "";
         foreach ($blocks as $block) {

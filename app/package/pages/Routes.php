@@ -14,7 +14,7 @@ $router->scope('/cms-admin/pages', function ($router) {
     $router->get('/list', "pages#adminPagesList");
 
     $router->get('/edit/:id', function ($id) {
-        (new pagesController)->admin_pages_edit($id);
+        (new pagesController)->adminPagesEdit($id);
     })->with('id', '[0-9]+');
     $router->post('/edit', "pages#adminPagesEditPost");
 

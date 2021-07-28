@@ -96,7 +96,7 @@ $description = PAGES_ADD_DESC; ?>
         /**
          * Initial Editor data
          */
-        data: '.$page_content.',
+        data: '.$pageContent.',
         onReady: function(){
             new Undo({ editor });
             const undo = new Undo({ editor });
@@ -114,7 +114,10 @@ $description = PAGES_ADD_DESC; ?>
      * Saving action
      */
     saveButton.addEventListener("click", function () {
-        
+        let page_state = 1;
+        if (jQuery("#draft").is(":checked")) {
+            page_state = 2;
+        }
         editor.save()
         .then((savedData) => {
             $.ajax({
@@ -124,11 +127,12 @@ $description = PAGES_ADD_DESC; ?>
                     "news_id" : jQuery("#page_id").val(),
                     "news_title" : jQuery("#title").val(),
                     "news_slug" : jQuery("#slug").val(),
-                    "news_content" : JSON.stringify(savedData)
+                    "news_content" : JSON.stringify(savedData),
+                    "page_state" : page_state
                 },
                 success: function (data) {
                     console.log(data)
-                    $(document).Toasts("create", {
+                    jQuery(document).Toasts("create", {
                           title: "Page mise à jour !",
                           body: "Votre contenu a bien été enregistré.",
                           class: "body-success"
@@ -137,7 +141,7 @@ $description = PAGES_ADD_DESC; ?>
             });
         })
         .catch((error) => {
-            $(document).Toasts("create", {
+            jQuery(document).Toasts("create", {
                   title: "Erreur",
                   body: "Une erreur est survenue, veuillez re-essayer",
                   class: "body-danger"
@@ -172,10 +176,9 @@ $description = PAGES_ADD_DESC; ?>
                 <div class="col-9">
                     <div class="card card-primary">
                         <div class="card-body">
-                            <input type="hidden" id="page_id" name="page_id" value="<?= /** @var PagesModel $page */
-                            $page->page_id?>">
-                            <input class="page-title" type="text" id="title" placeholder="Titre de la page" value="<?=$page->page_title?>">
-                            <p class="page-slug text-blue mb-3 d-flex"><?php echo "http://" . $_SERVER['SERVER_NAME'] . '/'; ?> <input class="border-0 text-blue p-0 w-100" type="text" id="slug" value="<?=$page->page_slug?>"></p>
+                            <input type="hidden" id="page_id" name="page_id" value="<?=$page->pageId?>">
+                            <input class="page-title" type="text" id="title" placeholder="Titre de la page" value="<?=$page->pageTitle?>">
+                            <p class="page-slug text-blue mb-3 d-flex"><?php echo "http://" . $_SERVER['SERVER_NAME'] . '/'; ?> <input class="border-0 text-blue p-0 w-100" type="text" id="slug" value="<?=$page->pageSlug?>"></p>
                             <div>
                                 <div id="editorjs"></div>
                             </div>
@@ -189,7 +192,7 @@ $description = PAGES_ADD_DESC; ?>
                         </div>
                         <div class="card-body">
                             <div class="custom-control custom-switch mb-2">
-                                <input type="checkbox" class="custom-control-input" id="draft" name="draft">
+                                <input type="checkbox" class="custom-control-input" id="draft" name="draft" <?=$page->pageState==2 ? "checked" : "";?>>
                                 <label class="custom-control-label" for="draft">Brouillon</label>
                             </div>
                             <div class="btn btn-block btn-primary" id="saveButton">

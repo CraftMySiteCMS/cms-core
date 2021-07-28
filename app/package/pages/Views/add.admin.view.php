@@ -112,7 +112,10 @@ $description = PAGES_ADD_DESC; ?>
      * Saving action
      */
     saveButton.addEventListener("click", function () {
-        
+        let page_state = 1;
+        if (jQuery("#draft").is(":checked")) {
+            page_state = 2;
+        }
         editor.save()
         .then((savedData) => {
             if(jQuery("#page_id").val()) {
@@ -123,7 +126,8 @@ $description = PAGES_ADD_DESC; ?>
                         "news_id" : jQuery("#page_id").val(),
                         "news_title" : jQuery("#title").val(),
                         "news_slug" : jQuery("#slug").val(),
-                        "news_content" : JSON.stringify(savedData)
+                        "news_content" : JSON.stringify(savedData),
+                        "page_state" : page_state
                     },
                     success: function (data) {
                         console.log(data)
@@ -142,7 +146,8 @@ $description = PAGES_ADD_DESC; ?>
                     data : {
                         "news_title" : jQuery("#title").val(),
                         "news_slug" : jQuery("#slug").val(),
-                        "news_content" : JSON.stringify(savedData)
+                        "news_content" : JSON.stringify(savedData),
+                        "page_state" : page_state
                     },
                     success: function (data) {
                         jQuery("#page_id").val(data);
