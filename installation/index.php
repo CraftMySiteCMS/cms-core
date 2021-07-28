@@ -137,7 +137,7 @@ require_once("../admin/resources/lang/$lang.php");
                                 <form action="controller.php" role="form" method="post">
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <label for="bdd_name"><?INSTALL_BDD_NAME?></label>
+                                            <label for="bdd_name"><?=INSTALL_BDD_NAME?></label>
                                             <input type="text" name="bdd_name" class="form-control" id="bdd_name" required>
                                             <small class="text-muted"><?=INSTALL_BDD_NAME_ABOUT?></small>
                                         </div>
