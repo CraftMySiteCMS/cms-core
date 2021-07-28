@@ -11,7 +11,9 @@ const INSTALL_SUCCESS = "Succès";
 
 const INSTALL_MAIN_TITLE = "Installation";
 
-const INSTALL_ = "";
+const INSTALL_PHP_VERSION_INFOS = "Votre version";
+const INSTALL_ALERT_VERSION_TITLE = "IMPORTANT ! Votre version PHP n'est pas assez récente.";
+const INSTALL_ALERT_VERSION_INFOS = "Pour utiliser CraftMySite, votre version PHP doit être au minimum en 7.4.0. Si vous ne savez pas comment changer votre version PHP, contactez votre hébergeur.";
 
 const INSTALL_BDD_TITLE = "Informations sur votre base de données";
 const INSTALL_BDD_NAME = "Nom de la base de données";
@@ -36,12 +38,11 @@ const INSTALL_SAVE = "Enregistrer";
 const INSTALL_THANKS = "CraftMySite est installé. Merci de l'utiliser et profitez bien de votre site !";
 const INSTALL_WARNING_TITLE = "Attention";
 const INSTALL_WARNING_FOLDER = "Supprimez le dossier installation !";
-const INSTALL_WARNING_ENV = "Un fichier de configuration est déjà présent.<br>
-                            Veuillez supprimer le fichier <code class='dark'>.env</code> et vider votre base de données si nécéssaire avant d'effectuer une nouvelle installation.";
+const INSTALL_WARNING_ENV = "Un fichier de configuration est déjà présent.<br>Veuillez supprimer le fichier <code class='dark'>.env</code> et vider votre base de données si nécéssaire avant d'effectuer une nouvelle installation.";
 const INSTALL_LOCATION = "Aller voir mon site !";
 
 const INSTALL_INFOS_TITLE = "A propos de votre installation";
 const INSTALL_INFOS_SUCESS = "Félicitation";
-const INSTALL_INFOS_TEXT = "Votre base a été créée";
+const INSTALL_INFOS_TEXT = "Votre fichier de configuration a été créé";
 const INSTALL_INFOS_ERROR = "erreur";
 const INSTALL_INFOS_EMPTY = "vide";

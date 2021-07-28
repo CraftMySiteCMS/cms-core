@@ -4,10 +4,16 @@ require_once("../app/EnvBuilder.php");
 if (file_exists("../.env")) {
     (new Env("../.env"))->load();
 }
+
 $lang = "fr";
-if(isset($_GET['lang'])) :
-    $lang = $_GET['lang'];
+if (file_exists("../.env")) :
+    $lang = getenv("LOCALE");
+else :
+    if(isset($_GET['lang'])) :
+        $lang = $_GET['lang'];
+    endif;
 endif;
+
 require_once("lang/$lang.php");
 require_once("../admin/resources/lang/$lang.php");
 ?>
@@ -73,7 +79,7 @@ require_once("../admin/resources/lang/$lang.php");
                     </div>
                 </div>
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <?php if (!file_exists("../.env")) : ?>
+                    <?php if (!file_exists("../.env") || getenv("STATUS") == 0 || (isset($_GET['finish_step']) && $_GET['step'] == 3)) : ?>
                     <li class="nav-item">
                         <a class="nav-link <?= (!isset($_GET['step']) || $_GET['step'] == 1) ? "active" : ""; ?>">
                             <i class="nav-icon fas fa-hourglass-start"></i>
@@ -127,7 +133,7 @@ require_once("../admin/resources/lang/$lang.php");
         <div class="container-fluid">
             <div class="row">
                 <div class="col-7">
-                    <?php if (!file_exists("../.env")) : ?>
+                    <?php if (!file_exists("../.env") || getenv("STATUS") == 0 || (isset($_GET['finish_step']) && $_GET['step'] == 3)) : ?>
                         <?php if (!isset($_GET['step']) || $_GET['step'] == 1) : ?>
                             <div class="card">
                                 <div class="card-header">
@@ -169,6 +175,7 @@ require_once("../admin/resources/lang/$lang.php");
                                     </div>
                                     <!-- /.card-body -->
                                     <div class="card-footer">
+                                        <input type="hidden" name="lang" id="lang" value="<?=$_GET['lang'] ?? 'fr'?>">
                                         <button type="submit" name="update_env" class="btn btn-primary"><?=INSTALL_SAVE?></button>
                                     </div>
                                 </form>
@@ -203,7 +210,7 @@ require_once("../admin/resources/lang/$lang.php");
                                 </form>
                             </div>
                         <?php endif; ?>
-                        <?php if (isset($_GET['step']) && $_GET['step'] == 3) : ?>
+                        <?php if (isset($_GET['step']) && $_GET['step'] == 3 && isset($_GET['finish_step'])) : ?>
                             <div class="card">
                                 <div class="card-header">
                                     <h3 class="card-title"><?=INSTALL_SUCCESS?> !</h3>
@@ -240,6 +247,13 @@ require_once("../admin/resources/lang/$lang.php");
                             <h3 class="card-title"><?=INSTALL_INFOS_TITLE?></h3>
                         </div>
                         <div class="card-body">
+                            <p><?= '<b>'.INSTALL_PHP_VERSION_INFOS.' PHP :</b> ' . phpversion();?></p>
+                            <?php if (PHP_VERSION_ID < 70400) : ?>
+                                <div class="alert alert-danger alert-dismissible">
+                                    <p class="info-box-text font-weight-bold"><i class="fas fa-exclamation-triangle"></i> <?=INSTALL_ALERT_VERSION_TITLE?></p>
+                                    <?=INSTALL_ALERT_VERSION_INFOS?>
+                                </div>
+                            <?php endif; ?>
                             <?php if (file_exists("../.env")) : ?>
                                 <div class="info-box bg-success">
                                     <span class="info-box-icon"><i class="fas fa-server"></i></span>

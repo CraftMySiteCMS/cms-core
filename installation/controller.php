@@ -27,7 +27,7 @@ if (isset($_POST['update_env'])):
     $db = $_POST['bdd_name'];
     $subFolder = $_POST['install_folder'];
     $devMode = 1;
-    $locale = "fr";
+    $locale = $_POST['lang'];
     $timezone = date_default_timezone_get();
 
 
@@ -53,6 +53,7 @@ if (isset($_POST['update_env'])):
         $txt = "DEV_MODE=$devMode\n";fwrite($envFile, $txt);
         $txt = "LOCALE=$locale\n";fwrite($envFile, $txt);
         $txt = "TIMEZONE=$timezone\n";fwrite($envFile, $txt);
+        $txt = "STATUS=0\n";fwrite($envFile, $txt);
         fclose($envFile);
     }
 
@@ -107,6 +108,10 @@ if (isset($_POST['create_admin'])):
 
     $db = null;
 
-    header('Location: index.php?step=3');
+    file_put_contents($path, str_replace(
+        'STATUS=0', 'STATUS=1', file_get_contents($path)
+    ));
+
+    header('Location: index.php?step=3&finish_step');
     die();
 endif;

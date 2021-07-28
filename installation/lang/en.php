@@ -11,6 +11,10 @@ const INSTALL_SUCCESS = "Success";
 
 const INSTALL_MAIN_TITLE = "Installation";
 
+const INSTALL_PHP_VERSION_INFOS = "Your version";
+const INSTALL_ALERT_VERSION_TITLE = "IMPORTANT ! Your PHP version is not recent enough.";
+const INSTALL_ALERT_VERSION_INFOS = "To use CraftMySite, your PHP version must be at least 7.4.0. If you don't know how to change your PHP version, contact your web host.";
+
 const INSTALL_BDD_TITLE = "Information about your database";
 const INSTALL_BDD_NAME = "Database name";
 const INSTALL_BDD_NAME_ABOUT = "The name of the database on which you want to install Craft My Website (It is created <b>automatically</b> if it does not exist yet)";
@@ -39,6 +43,6 @@ const INSTALL_LOCATION = "Go to my site !";
 
 const INSTALL_INFOS_TITLE = "About your installation";
 const INSTALL_INFOS_SUCESS = "Congratulations";
-const INSTALL_INFOS_TEXT = "Your database has been created";
+const INSTALL_INFOS_TEXT = "Your configuration file has been created";
 const INSTALL_INFOS_ERROR = "error";
 const INSTALL_INFOS_EMPTY = "empty";
