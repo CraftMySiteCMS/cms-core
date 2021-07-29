@@ -21,12 +21,14 @@ if (isset($_POST['update_env'])):
         ));
     }
 
+    $dev = isset($_POST['dev_mode']) ? 1 : 0;
+
     $host = $_POST['bdd_address'];
     $username = $_POST['bdd_login'];
     $password= $_POST['bdd_pass'];
     $db = $_POST['bdd_name'];
     $subFolder = $_POST['install_folder'];
-    $devMode = 1;
+    $devMode = $dev;
     $locale = $_POST['lang'];
     $timezone = date_default_timezone_get();
 
@@ -65,6 +67,7 @@ if (isset($_POST['update_env'])):
 
     $query = file_get_contents("init.sql");
     $stmt = $db->query($query);
+    $stmt->closeCursor();
 
     /* IMPORT PACKAGE SQL */
     $packageFolder = '../app/package/';
@@ -73,9 +76,10 @@ if (isset($_POST['update_env'])):
     foreach ($scannedDirectory as $package) :
         $packageSqlFile = "../app/package/$package/init.sql";
         if(file_exists($packageSqlFile)) {
-            $query = file_get_contents($packageSqlFile);
-            $stmt = $db->query($query);
-
+            $query_package = file_get_contents($packageSqlFile);
+            $stmt_package = $db->prepare($query_package);
+            $stmt_package->execute();
+            $stmt_package->closeCursor();
             if($devMode === 0) {
                 unlink($packageSqlFile);
             }

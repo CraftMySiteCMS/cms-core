@@ -172,6 +172,12 @@ require_once("../admin/resources/lang/$lang.php");
                                                    id="install_folder" required value="/">
                                             <small class="text-muted"><?=INSTALL_SITE_FOLDER_ABOUT?></small>
                                         </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" name="dev_mode" class="form-check-input" id="dev_mode">
+                                            <label class="form-check-label" for="dev_mode"><?=INSTALL_DEVMODE_NAME?></label>
+                                            <br>
+                                            <small class="text-muted"><?=INSTALL_DEVMODE_NAME_ABOUT?></small>
+                                        </div>
                                     </div>
                                     <!-- /.card-body -->
                                     <div class="card-footer">

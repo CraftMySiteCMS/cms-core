@@ -15,6 +15,9 @@ const INSTALL_PHP_VERSION_INFOS = "Votre version";
 const INSTALL_ALERT_VERSION_TITLE = "IMPORTANT ! Votre version PHP n'est pas assez récente.";
 const INSTALL_ALERT_VERSION_INFOS = "Pour utiliser CraftMySite, votre version PHP doit être au minimum en 7.4.0. Si vous ne savez pas comment changer votre version PHP, contactez votre hébergeur.";
 
+const INSTALL_DEVMODE_NAME = "Activer le mode développeur";
+const INSTALL_DEVMODE_NAME_ABOUT = "ATTENTION ! A n'utiliser qu'en connaissance de cause.<br>Le cocher inutilement peut engendrer des failles sur votre site internet. Il est fortement déconseillé d'activer cette option pour un site en production.";
+
 const INSTALL_BDD_TITLE = "Informations sur votre base de données";
 const INSTALL_BDD_NAME = "Nom de la base de données";
 const INSTALL_BDD_NAME_ABOUT = "Le nom de la base de données sur laquelle vous souhaitez installer Craft My Website (Elle se créée <b>automatiquement</b> si elle n'existe pas encore)";
