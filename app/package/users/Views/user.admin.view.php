@@ -52,7 +52,7 @@ $description = USERS_EDIT_DESC;
                                     <select name="role" class="form-control">
                                         <?php /** @var RolesModel[] $roles */
                                         foreach ($roles as $role) : ?>
-                                            <option value="<?= $role['role_id'] ?>" <?= ($user->roleId === $role['role_id'] ? "selected" : "") ?>><?= $role['role_name'] ?></option>
+                                            <option value="<?= $role['role_id'] ?>" <?= ($user->roleId == $role['role_id'] ? "selected" : "") ?>><?= $role['role_name'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
