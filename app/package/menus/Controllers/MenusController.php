@@ -24,4 +24,8 @@ class MenusController extends CoreController {
 
         return $coreModel->menu;
     }
+
+    public function adminMenus() {
+        require('app/package/menus/views/menus.admin.view.php');
+    }
 }
