@@ -1,57 +1,66 @@
 <?php
 
 /*
- * Warning : This file must not be modified !
+ * Warning : This file must NOT be modified !
  */
 
-/* Loading environment variables */
+session_start();
+
+/* Load installation if empty installation */
 if(!file_exists(".env")) {
     header('Location: installation/index.php');
     die();
 }
 
-require_once("app/EnvBuilder.php");
+/* Loading environment variables */
+require_once("app/envBuilder.php");
 (new Env('.env'))->load();
+
+/* Delete installation folder */
 if(is_dir("installation") && getenv("DEV_MODE") == 0) {
     array_map('unlink', glob("installation/*.*"));
     rmdir("installation");
 }
 
+/* Loading global lang file */
 require_once("admin/resources/lang/" . getenv("LOCALE") . ".php");
 
+/* Display all php errors if dev mode active */
 if(getenv("DEV_MODE")) {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 }
 
-/* Router Initialization */
-require_once("Router/Router.php");
+/* Insert Global functions */
+require_once ("app/tools/builder.php");
+require_once ("app/tools/functions.php");
 
+/* router Initialization */
+require_once("router/router.php");
+use CMS\Router\router;
+require_once("router/route.php");
+require_once("router/routerException.php");
+use CMS\Router\routerException;
 
-use CMS\Router\Router;
-require_once("Router/Route.php");
-require_once("Router/RouterException.php");
-use CMS\Router\RouterException;
-
-/* Router Creation */
+/* router Creation */
 if(isset($_GET['url'])) {
-    $router = new Router($_GET['url']);
+    $router = new router($_GET['url']);
 }
 else {
-    $router = new Router("");
+    $router = new router("");
 }
 
 /* Insert all packages */
-require_once ("app/config/Manager.php");
+require_once("app/manager.php");
 require_once("app/__model.php");
 require_once("app/__controller.php");
 require_once("app/__routes.php");
 
-/* Router Display Route */
+/* router Display route */
 try {
     $router->listen();
 }
-catch (RouterException $e) {
+catch (routerException $e) {
     echo $e->getMessage();
 }

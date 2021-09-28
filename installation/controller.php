@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 $path ='../.env';
 
-require_once("../app/EnvBuilder.php");
+require_once("../app/envBuilder.php");
 if(file_exists($path)) {
     (new Env($path))->load();
 }

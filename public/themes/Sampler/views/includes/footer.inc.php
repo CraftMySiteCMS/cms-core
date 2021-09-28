@@ -1,7 +1,7 @@
-<?php use CMS\Controller\CoreController; ?>
+<?php use CMS\Controller\coreController; ?>
 
 <footer>
-    <?= /** @var CoreController $core */
+    <?= /** @var coreController $core */
     $core->cmsFooter() ?>
 </footer>
 </body>

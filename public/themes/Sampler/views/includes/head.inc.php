@@ -1,4 +1,4 @@
-<?php use CMS\Controller\CoreController; ?>
+<?php use CMS\Controller\coreController; ?>
 
 <!DOCTYPE html>
 <html lang="fr-FR">

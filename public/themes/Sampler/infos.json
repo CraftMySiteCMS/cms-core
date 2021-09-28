@@ -2,5 +2,5 @@
   "creator": "LoGuardiaN",
   "name": "Sampler",
   "version": "0.0.1",
-  "packages": ["faq", "staff", "votes", "menus", "users", "core"]
+  "packages": ["core", "menus", "pages", "users"]
 }

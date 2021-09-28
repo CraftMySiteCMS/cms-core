@@ -1,9 +1,9 @@
-<?php use CMS\Model\Users\UsersModel;?>
+<?php use CMS\Model\Users\usersModel;?>
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="<?=getenv("PATH_SUBFOLDER")?>cms-admin/" class="brand-link">
-        <img src="<?=getenv("PATH_SUBFOLDER")?>admin/resources/images/identity/CraftMySite_Logo.svg" alt="<?=ALT_LOGO?>" class="brand-image img-circle elevation-3">
+        <img src="<?=getenv("PATH_SUBFOLDER")?>admin/resources/images/identity/CraftMySite_Logo.svg" alt="<?=_ALT_LOGO?>" class="brand-image img-circle elevation-3">
         <span class="brand-text font-weight-light">Craft My Site</span>
     </a>
 
@@ -15,7 +15,7 @@
                 <img src="<?=getenv("PATH_SUBFOLDER")?>admin/resources/images/identity/CraftMySite_Logo.svg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block"><?php $user = new usersModel; $user->fetch($_SESSION['cms_user_id']); echo $user->userPseudo; ?></a>
+                <a href="#" class="d-block"><?php $user = new usersModel; $user->fetch($_SESSION['cmsUserId']); echo $user->userPseudo; ?></a>
             </div>
         </div>
 

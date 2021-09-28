@@ -1,11 +1,11 @@
-<?php use CMS\Controller\Menus\MenusController;
-use CMS\Controller\CoreController; ?>
+<?php use CMS\Controller\Menus\menusController;
+use CMS\Controller\coreController; ?>
 
 <header>
     <nav>
         <ul>
             <?php
-            /** @var MenusController $menu */
+            /** @var menusController $menu */
 
             $menu = $menu->cmsMenu();
             foreach ($menu as $item) :
@@ -13,6 +13,4 @@ use CMS\Controller\CoreController; ?>
             endforeach; ?>
         </ul>
     </nav>
-    <?= /** @var CoreController $core */
-    $core->cmsErrorsDisplay() ?>
 </header>
