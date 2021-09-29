@@ -4,7 +4,7 @@ namespace CMS\Controller\Users;
 
 use CMS\Controller\coreController;
 use CMS\Controller\Menus\menusController;
-use CMS\Model\Users\rolesModel;
+use CMS\Model\Roles\rolesModel;
 use CMS\Model\Users\usersModel;
 
 /**
@@ -71,8 +71,8 @@ class usersController extends coreController
 
     public function adminUsersList(): void
     {
-        $userModel = new usersModel();
-        $userList = $userModel->fetchAll();
+        $usersModel = new usersModel();
+        $userList = $usersModel->fetchAll();
 
         view('users', 'list.admin', ["userList" => $userList], 'admin');
     }

@@ -1,13 +1,13 @@
 <?php
 
-namespace CMS\Model\Users;
+namespace CMS\Model\Roles;
 
 use CMS\Model\manager;
 
 /**
  * Class: @rolesModel
  * @package Users
- * @author LoGuardian | CraftMySite <contact@craftmysite.fr>
+ * @author LoGuardian | CraftMySite <loguardian@hotmail.com>
  * @version 1.0
  */
 class rolesModel extends manager {
