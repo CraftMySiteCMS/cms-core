@@ -224,5 +224,3 @@ $description = PAGES_ADD_DESC; ?>
 
     <!-- /.main-content -->
 <?php $content = ob_get_clean(); ?>
-
-<?php require(getenv("PATH_ADMIN_VIEW") . 'template.php'); ?>

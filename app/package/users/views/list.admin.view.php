@@ -80,7 +80,7 @@ $description = USERS_LIST_DESC; ?>
                                         <td><?=$user['user_role_name']?></td>
                                         <td><?=$user['user_created']?></td>
                                         <td><?=$user['user_updated']?></td>
-                                        <td><a href="../users/edit/<?=$user['user_id']?>" target="_blank"><i class="fa fa-cog"></i></a></td>
+                                        <td><a href="../users/edit/<?=$user['user_id']?>"><i class="fa fa-cog"></i></a></td>
                                     </tr>
                                 <?php endforeach; ?>
                                 </tbody>
@@ -108,5 +108,3 @@ $description = USERS_LIST_DESC; ?>
     </div>
     <!-- /.main-content -->
 <?php $content = ob_get_clean(); ?>
-
-<?php require(getenv("PATH_ADMIN_VIEW").'template.php'); ?>
