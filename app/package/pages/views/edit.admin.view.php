@@ -196,8 +196,15 @@ $description = PAGES_ADD_DESC; ?>
                                 <label class="custom-control-label" for="draft">Brouillon</label>
                             </div>
                             <div class="btn btn-block btn-primary" id="saveButton">
-                                <?=PAGES_BUTTON_SAVE?>
+                                <?=BUTTON_SAVE?>
                             </div>
+                            <form action="/cms-admin/pages/delete" method="post">
+                                <input type="hidden" name="id" value="<?=$page->pageId?>">
+                                <button class="text-danger mt-3 text-right d-block" id="deleteButton">
+                                    <?=BUTTON_DELETE?>
+                                </button>
+                            </form>
+
                         </div>
                     </div>
                 </div>

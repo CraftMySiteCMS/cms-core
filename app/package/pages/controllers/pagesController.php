@@ -15,19 +15,14 @@ use CMS\Model\Users\usersModel;
  */
 class pagesController extends coreController
 {
-    public static string $themePath;
-
-    public function __construct($theme_path = null)
-    {
-        parent::__construct($theme_path);
-    }
-
     public function adminPagesList()
     {
         $pagesModel = new pagesModel();
         $pagesList = $pagesModel->fetchAll();
 
-        view('pages', 'list.admin', ["pagesList" => $pagesList], 'admin');
+        $toaster = bigToaster();
+
+        view('pages', 'list.admin', ["pagesList" => $pagesList, "toaster" => $toaster], 'admin');
     }
 
     public function adminPagesAdd(): void
@@ -78,5 +73,18 @@ class pagesController extends coreController
         $page->update();
 
         echo $page->pageId;
+    }
+
+    public function adminPagesDelete(): void {
+        $page = new pagesModel();
+        $page->pageId = $_POST['id'];
+        $page->delete();
+
+        $_SESSION['toaster'][0]['title'] = TOASTER_TITLE_INFORMATION;
+        $_SESSION['toaster'][0]['type'] = "bg-success";
+        $_SESSION['toaster'][0]['body'] = TOASTER_TOASTER_DELETE_SUCCESS;
+
+        header("location: ../pages/list");
+        die();
     }
 }
