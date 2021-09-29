@@ -10,7 +10,7 @@ use CMS\Model\Users\usersModel;
 /**
  * Class: @pagesController
  * @package Pages
- * @author LoGuardiaN | CraftMySite <contact@craftmysite.fr>
+ * @author LoGuardiaN | CraftMySite <loguardian@hotmail.com>
  * @version 1.0
  */
 class pagesController extends coreController
@@ -20,9 +20,7 @@ class pagesController extends coreController
         $pagesModel = new pagesModel();
         $pagesList = $pagesModel->fetchAll();
 
-        $toaster = bigToaster();
-
-        view('pages', 'list.admin', ["pagesList" => $pagesList, "toaster" => $toaster], 'admin');
+        view('pages', 'list.admin', ["pagesList" => $pagesList], 'admin');
     }
 
     public function adminPagesAdd(): void

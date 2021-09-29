@@ -10,7 +10,7 @@ use CMS\Model\Users\usersModel;
 /**
  * Class: @usersController
  * @package Users
- * @author LoGuardian | CraftMySite <contact@craftmysite.fr>
+ * @author LoGuardian | CraftMySite <loguardian@hotmail.com>
  * @version 1.0
  */
 class usersController extends coreController
@@ -35,8 +35,7 @@ class usersController extends coreController
         if (usersModel::getLoggedUser() !== -1) {
             header('Location: ' . getenv('PATH_SUBFOLDER') . 'cms-admin/dashboard');
         } else {
-            $toaster = bigToaster();
-            view('users', 'login.admin', ["toaster" => $toaster], 'admin', 1);
+            view('users', 'login.admin', [], 'admin', 1);
         }
     }
 
@@ -86,9 +85,7 @@ class usersController extends coreController
         $roles = new rolesModel();
         $roles = $roles->fetchAll();
 
-        $toaster = bigToaster();
-
-        view('users', 'user.admin', ["user" => $user, "roles" => $roles, "toaster" => $toaster], 'admin');
+        view('users', 'user.admin', ["user" => $user, "roles" => $roles], 'admin');
     }
 
     public function adminUsersEditPost($id): void
