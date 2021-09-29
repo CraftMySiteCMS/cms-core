@@ -209,16 +209,7 @@ class usersController extends coreController
         $_SESSION['toaster'][0]['type'] = "bg-success";
         $_SESSION['toaster'][0]['body'] = USERS_DELETE_TOASTER_SUCCESS;
 
-        header("location: ../");
+        header("location: ../users/list");
         die();
-    }
-
-    /* FRONT */
-    public function frontUserList(): void
-    {
-        $core = new coreController();
-        $menu = new menusController();
-
-        view('users', 'users_infos', ["core" => $core, "menu" => $menu], 'public');
     }
 }
