@@ -7,7 +7,7 @@ use CMS\Model\manager;
 /**
  * Class: @menusModel
  * @package Menus
- * @author LoGuardiaN | CraftMySite <contact@craftmysite.fr>
+ * @author LoGuardiaN | CraftMySite <loguardian@hotmail.com>
  * @version 1.0
  */
 class menusModel extends manager {

@@ -62,7 +62,6 @@ $description = MENUS_DESC;
                         <div class="card-body">
                             <style>
                                 .menu-drag {
-                                    width: 420px;
                                     margin: 0 auto;
                                 }
 

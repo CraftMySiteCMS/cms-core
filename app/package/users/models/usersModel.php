@@ -7,7 +7,7 @@ use CMS\Model\manager;
 /**
  * Class: @usersModel
  * @package Users
- * @author LoGuardian | CraftMySite <contact@craftmysite.fr>
+ * @author LoGuardian | CraftMySite <loguardian@hotmail.com>
  * @version 1.0
  */
 class usersModel extends manager

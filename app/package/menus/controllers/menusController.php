@@ -8,7 +8,7 @@ use CMS\Model\Menus\menusModel;
 /**
  * Class: @menusController
  * @package Menus
- * @author LoGuardiaN | CraftMySite <contact@craftmysite.fr>
+ * @author LoGuardiaN | CraftMySite <loguardian@hotmail.com>
  * @version 1.0
  */
 class menusController extends coreController {
