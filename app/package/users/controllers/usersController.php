@@ -15,17 +15,6 @@ use CMS\Model\Users\usersModel;
  */
 class usersController extends coreController
 {
-    public static string $themePath;
-
-    public function __construct($theme_path = null)
-    {
-        parent::__construct($theme_path);
-    }
-
-    /* //////////////////////////////////////////////////////////////////////////// */
-    /*
-     * If is admin logged
-     */
     public static function isAdminLogged(): void
     {
         if (usersModel::getLoggedUser() !== -1) {
@@ -41,7 +30,6 @@ class usersController extends coreController
         }
     }
 
-    /* ADMINISTRATION */
     public function adminLogin(): void
     {
         if (usersModel::getLoggedUser() !== -1) {
