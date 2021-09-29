@@ -35,10 +35,10 @@ class coreController
         $core = new coreController();
         $menu = new menusController();
 
-        view('core', 'home', ["core" => $core, "menu" => $menu], 'public', self::$themePath);
+        view('core', 'home', ["core" => $core, "menu" => $menu], 'public');
     }
 
-    private function cmsThemePath(): string
+    public function cmsThemePath(): string
     {
         $coreModel = new coreModel();
         $coreModel->fetchOption("theme");

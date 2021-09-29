@@ -48,7 +48,7 @@ class usersController extends coreController
             header('Location: ' . getenv('PATH_SUBFOLDER') . 'cms-admin/dashboard');
         } else {
             $toaster = bigToaster();
-            view('users', 'login.admin', ["toaster" => $toaster], 'admin', null, 1);
+            view('users', 'login.admin', ["toaster" => $toaster], 'admin', 1);
         }
     }
 
@@ -219,6 +219,6 @@ class usersController extends coreController
         $core = new coreController();
         $menu = new menusController();
 
-        view('users', 'users_infos', ["core" => $core, "menu" => $menu], 'public', self::$themePath);
+        view('users', 'users_infos', ["core" => $core, "menu" => $menu], 'public');
     }
 }
