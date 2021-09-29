@@ -23,3 +23,13 @@ const DATATABLES_LIST_SORTDESCENDING = ": activer pour trier la colonne par ordr
 /* FOOTER */
 const FOOTER_LEFT = "Copyright &copy; 2021 Tous droits réservés.";
 const FOOTER_RIGHT = "Merci d'utiliser <a href='https://craftmysite.com/'>CraftMySite</a>.";
+
+const BUTTON_SAVE = "Sauvegarder";
+const BUTTON_DELETE = "Supprimer";
+
+
+
+/* TOASTER */
+
+const TOASTER_TITLE_INFORMATION = "Information";
+const TOASTER_TOASTER_DELETE_SUCCESS = "L'élément a bien été supprimé";

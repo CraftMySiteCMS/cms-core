@@ -216,7 +216,7 @@ $description = PAGES_ADD_DESC; ?>
                                 <label class="custom-control-label" for="draft">Brouillon</label>
                             </div>
                             <div class="btn btn-block btn-primary" id="saveButton">
-                                <?=PAGES_BUTTON_SAVE?>
+                                <?=BUTTON_SAVE?>
                             </div>
                         </div>
                     </div>
