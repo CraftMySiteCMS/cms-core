@@ -72,7 +72,7 @@ $description = PAGES_LIST_DESC; ?>
                                         <td><?=$page->pageTitle?></td>
                                         <td><?=$page->user->userPseudo?></td>
                                         <td><?=$page->pageCreated?></td>
-                                        <td><a href="../pages/edit/<?=$page->pageId?>" target="_blank"><i class="fa fa-cog"></i></a></td>
+                                        <td><a href="../pages/edit/<?=$page->pageId?>"><i class="fa fa-cog"></i></a></td>
                                     </tr>
                                 <?php endforeach; ?>
                                 </tbody>
