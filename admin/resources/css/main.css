@@ -3,3 +3,17 @@
 .darkMode-navbar{
     background-color: #6B48FF !important;
 }
+
+/* Fix drag-menu text color */
+.dark-mode .menu-drag{
+    color: black !important;
+}
+
+/* Fix page menu input background */
+.page-title, .page-slug-input{
+    background-color: transparent !important;
+}
+.dark-mode .page-title{
+    color: whitesmoke !important;
+}
+

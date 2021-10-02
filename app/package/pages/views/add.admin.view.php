@@ -198,7 +198,7 @@ $description = PAGES_ADD_DESC; ?>
                         <div class="card-body">
                             <input type="hidden" id="page_id" name="page_id">
                             <input class="page-title" type="text" id="title" placeholder="Titre de la page">
-                            <p class="page-slug text-blue mb-3 d-flex"><?php echo "http://" . $_SERVER['SERVER_NAME'] . '/'; ?> <input class="border-0 text-blue p-0 w-100" type="text" id="slug"></p>
+                            <p class="page-slug text-blue mb-3 d-flex"><?php echo "http://" . $_SERVER['SERVER_NAME'] . '/'; ?> <input class="border-0 text-blue p-0 w-100 page-slug-input" type="text" id="slug"></p>
                             <div>
                                 <div id="editorjs"></div>
                             </div>
