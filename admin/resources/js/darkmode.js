@@ -10,6 +10,10 @@ const enableDarkMode = () => {
     document.getElementById('navbarTop').classList.add('darkMode-navbar', 'navbar-dark');
     document.getElementById('navbarTop').classList.remove('navbar-light');
 
+    //Change the icon
+    document.getElementById('darkModeIcon').classList.remove('far');
+    document.getElementById('darkModeIcon').classList.add('fas');
+
     localStorage.setItem('darkMode', 'enabled');
 };
 
@@ -19,6 +23,10 @@ const disableDarkMode = () => {
     document.body.classList.remove('dark-mode');
     document.getElementById('navbarTop').classList.remove('darkMode-navbar', 'navbar-dark');
     document.getElementById('navbarTop').classList.add('navbar-light');
+
+    //Change the icon
+    document.getElementById('darkModeIcon').classList.remove('fas');
+    document.getElementById('darkModeIcon').classList.add('far');
 
     localStorage.setItem('darkMode', null);
 };

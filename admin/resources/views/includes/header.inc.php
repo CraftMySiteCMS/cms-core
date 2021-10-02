@@ -33,7 +33,7 @@
         <!-- DarkMode -->
         <li class="nav-item">
             <a class="nav-link" href="#" id="darkModeToggle">
-                <i class="fas fa-adjust"></i>
+                <i class="far fa-lightbulb" id="darkModeIcon"></i>
             </a>
         </li>
         <!-- Full-screen -->
