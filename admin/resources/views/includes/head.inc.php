@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="<?=getenv("PATH_SUBFOLDER")?>admin/resources/vendors/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?=getenv("PATH_SUBFOLDER")?>admin/resources/css/adminlte.min.css">
+    <!-- Main css file -->
+    <link rel="stylesheet" href="<?=getenv("PATH_SUBFOLDER")?>admin/resources/css/main.css">
 
     <script src="<?=getenv("PATH_SUBFOLDER")?>admin/resources/vendors/jquery/jquery.min.js"></script>
 
