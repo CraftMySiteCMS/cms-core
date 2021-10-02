@@ -26,6 +26,8 @@ require_once("../admin/resources/lang/$lang.php");
     <meta name="robots" content="NOINDEX, NOFOLLOW">
     <meta name="description" content="<?=INSTALL_DESC?>">
 
+    <link rel="icon" type="image/png" href="<?=getenv("PATH_SUBFOLDER")?>admin/resources/images/identity/CraftMySite_Logo.png">
+
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
@@ -34,6 +36,8 @@ require_once("../admin/resources/lang/$lang.php");
     <link rel="stylesheet" href="../admin/resources/css/adminlte.min.css">
 
     <script src="../admin/resources/vendors/jquery/jquery.min.js"></script>
+
+    <script src="../admin/resources/js/main.js"></script>
 
     <style>
         code.dark {
@@ -155,7 +159,12 @@ require_once("../admin/resources/lang/$lang.php");
                                         </div>
                                         <div class="form-group">
                                             <label for="bdd_pass"><?=INSTALL_BDD_PASS?></label>
-                                            <input type="text" name="bdd_pass" class="form-control" id="bdd_pass">
+                                            <div class="input-group" id="showHidePassword">
+                                                <input type="password" name="bdd_pass" class="form-control" id="bdd_pass">
+                                                <div class="input-group-append">
+                                                    <a class="input-group-text" href="#"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                                </div>
+                                            </div>
                                             <small class="text-muted"><?=INSTALL_BDD_PASS_ABOUT?></small>
                                         </div>
                                         <div class="form-group">
@@ -203,10 +212,17 @@ require_once("../admin/resources/lang/$lang.php");
                                             <label for="pseudo"><?=INSTALL_ADMIN_USERNAME?></label>
                                             <input type="text" name="pseudo" class="form-control" id="pseudo" required>
                                         </div>
+
                                         <div class="form-group">
                                             <label for="password"><?=INSTALL_ADMIN_PASS?></label>
-                                            <input type="text" name="password" class="form-control" id="password">
+                                                <div class="input-group" id="showHidePassword">
+                                                    <input type="password" name="password" class="form-control" id="password">
+                                                    <div class="input-group-append">
+                                                        <a class="input-group-text" href="#"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                                    </div>
+                                                </div>
                                         </div>
+
                                     </div>
                                     <!-- /.card-body -->
                                     <div class="card-footer">
