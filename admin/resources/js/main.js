@@ -13,3 +13,19 @@ $(document).ready(function() {
         }
     });
 });
+
+//If we have 2 password, this is for the second (verify)
+$(document).ready(function() {
+    $("#showHidePasswordR a").on('click', function(event) {
+        event.preventDefault();
+        if($('#showHidePasswordR input').attr("type") == "text"){
+            $('#showHidePasswordR input').attr('type', 'password');
+            $('#showHidePasswordR i').addClass( "fa-eye-slash" );
+            $('#showHidePasswordR i').removeClass( "fa-eye" );
+        }else if($('#showHidePasswordR input').attr("type") == "password"){
+            $('#showHidePasswordR input').attr('type', 'text');
+            $('#showHidePasswordR i').removeClass( "fa-eye-slash" );
+            $('#showHidePasswordR i').addClass( "fa-eye" );
+        }
+    });
+});
