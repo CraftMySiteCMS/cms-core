@@ -1,7 +1,11 @@
 <?php use CMS\Model\Users\rolesModel;
 
 $title = USERS_ADD_TITLE;
-$description = USERS_ADD_DESC; ?>
+$description = USERS_ADD_DESC;
+
+$scripts = '<script src="' . getenv("PATH_SUBFOLDER") . 'admin/resources/js/main.js"></script>';
+
+?>
 
 <?php ob_start(); ?>
     <!-- main-content -->
@@ -51,11 +55,14 @@ $description = USERS_ADD_DESC; ?>
                                 </div>
                                 <div class="form-group">
                                     <label><?=USERS_PASS?></label>
-                                    <div class="input-group mb-3">
+                                    <div class="input-group mb-3" id="showHidePassword">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                         </div>
-                                        <input type="text" name="pass" class="form-control" placeholder="******">
+                                        <input type="password" name="pass" class="form-control" placeholder="******">
+                                        <div class="input-group-append">
+                                            <a class="input-group-text" href="#"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

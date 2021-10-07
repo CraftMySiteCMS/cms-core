@@ -4,6 +4,8 @@ use CMS\Model\Users\usersModel;
 $title = USERS_EDIT_TITLE;
 $description = USERS_EDIT_DESC;
 
+$scripts = '<script src="' . getenv("PATH_SUBFOLDER") . 'admin/resources/js/main.js"></script>';
+
 /** @var usersModel $user */
 ?>
 
@@ -58,22 +60,27 @@ $description = USERS_EDIT_DESC;
                                 </div>
                                 <div class="form-group">
                                     <label><?= USERS_NEW_PASS ?></label>
-                                    <div class="input-group mb-3">
+                                    <div class="input-group mb-3" id="showHidePassword">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                         </div>
                                         <input type="password" name="pass" class="form-control" placeholder="******">
+                                        <div class="input-group-append">
+                                            <a class="input-group-text" href="#"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label><?= USERS_REPEAT_PASS ?></label>
-                                    <div class="input-group mb-3">
-
+                                    <div class="input-group mb-3" id="showHidePasswordR">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                         </div>
                                         <input type="password" name="pass_verif" class="form-control"
                                                placeholder="*****">
+                                        <div class="input-group-append">
+                                            <a class="input-group-text" href="#"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -3,7 +3,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="<?=getenv("PATH_SUBFOLDER")?>cms-admin/" class="brand-link">
-        <img src="<?=getenv("PATH_SUBFOLDER")?>admin/resources/images/identity/CraftMySite_Logo.svg" alt="<?=_ALT_LOGO?>" class="brand-image img-circle elevation-3">
+        <img src="<?=getenv("PATH_SUBFOLDER")?>admin/resources/images/identity/CraftMySite_Logo.svg" alt="<?=ALT_LOGO?>" class="brand-image img-circle elevation-3">
         <span class="brand-text font-weight-light">Craft My Site</span>
     </a>
 
