@@ -4,26 +4,17 @@
  * Warning : This file must NOT be modified !
  */
 
-session_start();
-
 /* Load installation if empty installation */
 if(!file_exists(".env")) {
     header('Location: installation/index.php');
     die();
 }
 
+session_start();
+
 /* Loading environment variables */
 require_once("app/envBuilder.php");
 (new Env('.env'))->load();
-
-/* Delete installation folder */
-if(is_dir("installation") && getenv("DEV_MODE") == 0) {
-    array_map('unlink', glob("installation/*.*"));
-    rmdir("installation");
-}
-
-/* Loading global lang file */
-require_once("admin/resources/lang/" . getenv("LOCALE") . ".php");
 
 /* Display all php errors if dev mode active */
 if(getenv("DEV_MODE")) {
@@ -32,9 +23,18 @@ if(getenv("DEV_MODE")) {
     error_reporting(E_ALL);
 }
 
+/* Loading global lang file */
+require_once("admin/resources/lang/" . getenv("LOCALE") . ".php");
+
 /* Insert Global functions */
 require_once ("app/tools/builder.php");
 require_once ("app/tools/functions.php");
+
+/* Delete installation folder */
+if(is_dir("installation") && getenv("DEV_MODE") == 0) {
+    deleteDirectory('installation');
+}
+
 
 /* router Initialization */
 require_once("router/router.php");
