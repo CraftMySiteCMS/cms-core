@@ -31,6 +31,10 @@ const INSTALL_SITE_TITLE = "About the site:";
 const INSTALL_SITE_FOLDER = "Installation folder";
 const INSTALL_SITE_FOLDER_ABOUT = "Usually <code>/</code>. If CraftMySite is in a folder, please specify <code>/folder/</code>.";
 
+const INSTALL_INFO_DOCUMENT_ROOT = "Path: ";
+const INSTALL_INFO_HOST = "Hôte: ";
+const INSTALL_INFO_IP = "IP: ";
+
 const INSTALL_ADMIN_TITLE = "Create your administrator account";
 const INSTALL_ADMIN_EMAIL = "Email";
 const INSTALL_ADMIN_USERNAME = "Login";

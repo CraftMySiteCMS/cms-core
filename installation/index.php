@@ -297,6 +297,11 @@ require_once("../admin/resources/lang/$lang.php");
                                     <b><?=INSTALL_BDD_PASS_ABOUT?> :</b> <?= $dbPassword ?><br>
                                     <b><?=INSTALL_BDD_NAME?> :</b> <?= $dbName ?>
                                 </p>
+                                <p>
+                                    <b><?= INSTALL_INFO_DOCUMENT_ROOT ?></b> <?= $_SERVER['DOCUMENT_ROOT']; ?><br>
+                                    <b><?= INSTALL_INFO_HOST ?></b><?= php_uname('n'); ?><br>
+                                    <b><?= INSTALL_INFO_IP ?></b><?= $_SERVER['SERVER_ADDR']; ?>:<?= $_SERVER['SERVER_PORT']; ?>
+                                </p>
                             <?php endif ?>
 
                         </div>
