@@ -200,7 +200,7 @@ $description = PAGES_ADD_DESC; ?>
                             </div>
                             <form action="/cms-admin/pages/delete" method="post">
                                 <input type="hidden" name="id" value="<?=$page->pageId?>">
-                                <button class="text-danger mt-3 text-right d-block" id="deleteButton">
+                                <button class="mt-3 btn btn-danger btn-block" id="deleteButton">
                                     <?=BUTTON_DELETE?>
                                 </button>
                             </form>
