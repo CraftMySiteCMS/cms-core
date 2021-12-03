@@ -1,5 +1,4 @@
-<?php use CMS\Model\Users\rolesModel;
-
+<?php
 $title = USERS_ADD_TITLE;
 $description = USERS_ADD_DESC;
 
@@ -47,7 +46,6 @@ $scripts = '<script src="' . getenv("PATH_SUBFOLDER") . 'admin/resources/js/main
                                     <label><?=USERS_ROLE?></label>
                                     <select name="role" class="form-control">
                                         <?php
-                                        /** @var rolesModel[] $roles */
                                         foreach ($roles as $role) : ?>
                                             <option value="<?=$role['role_id']?>"><?=$role['role_name']?></option>
                                         <?php endforeach; ?>

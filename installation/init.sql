@@ -10,7 +10,8 @@ CREATE TABLE `cms_core_options`
 CREATE TABLE `cms_roles`
 (
     `role_id`   int(11) DEFAULT NULL,
-    `role_name` tinytext NOT NULL
+    `role_name` tinytext NOT NULL,
+    `role_description` text DEFAULT NULL
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
@@ -31,11 +32,35 @@ CREATE TABLE `cms_users`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
+CREATE TABLE `cms_permissions` (
+    `permission_id` int(11) NOT NULL,
+    `permission_code` varchar(255) NOT NULL,
+    `permission_libelle` varchar(255) NOT NULL,
+    `permission_description` varchar(255) NOT NULL,
+    `permission_group_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
+CREATE TABLE `cms_permissions_groups` (
+    `permission_group_id` int(11) NOT NULL,
+    `permission_group_libelle` varchar(255) NOT NULL,
+    `permission_group_description` varchar(255) NOT NULL,
+    `permission_group_main_group` varchar(255) NOT NULL,
+    `permission_group_code` varchar(255) NOT NULL
+) ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
+CREATE TABLE `cms_permissions_groups_roles` (
+    `permission_id` int(11) NOT NULL,
+    `role_id` int(11) NOT NULL
+) ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
+
 
 ALTER TABLE `cms_core_options`
     ADD PRIMARY KEY (`option_id`),
     ADD UNIQUE KEY `option_name` (`option_name`);
-
 
 ALTER TABLE `cms_roles`
     ADD UNIQUE KEY `role_id` (`role_id`);
@@ -54,6 +79,28 @@ ALTER TABLE `cms_users`
 
 ALTER TABLE `cms_users`
     ADD CONSTRAINT `fk_users_roles` FOREIGN KEY (`role_id`) REFERENCES `cms_roles` (`role_id`);
+
+ALTER TABLE `cms_permissions`
+    ADD PRIMARY KEY (`permission_id`);
+
+ALTER TABLE `cms_permissions_groups`
+    ADD PRIMARY KEY (`permission_group_id`);
+
+ALTER TABLE `cms_permissions_groups_roles`
+    ADD KEY `fk_permission` (`permission_id`),
+    ADD KEY `fk_role` (`role_id`);
+
+ALTER TABLE `cms_permissions`
+    MODIFY `permission_id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `cms_permissions_groups`
+    MODIFY `permission_group_id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `cms_permissions_groups_roles`
+    ADD CONSTRAINT `fk_permission` FOREIGN KEY (`permission_id`) REFERENCES `cms_permissions` (`permission_id`),
+    ADD CONSTRAINT `fk_role` FOREIGN KEY (`role_id`) REFERENCES `cms_roles` (`role_id`);
+COMMIT;
+
 
 INSERT INTO `cms_core_options` (`option_id`, `option_value`, `option_name`, `option_updated`)
 VALUES (1, 'Sampler', 'theme', NOW());

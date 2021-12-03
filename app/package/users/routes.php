@@ -7,14 +7,6 @@ require_once('Lang/'.getenv("LOCALE").'.php');
 
 /** @var $router router Main router */
 
-/* Fronts pages of CMS */
-$router->scope('/utilisateurs', function($router) {
-    $router->get('/', "users#frontUsersList");
-    $router->get('/:id-:pseudo', "users#frontUsersInfos");
-
-    $router->post('/editer', "users#frontUsersEditPost");
-});
-
 /* Administration scope of package */
 $router->scope('/cms-admin', function($router) {
     $router->get('/', "users#adminLogin");
@@ -38,4 +30,8 @@ $router->scope('/cms-admin/users', function($router) {
 
     $router->post('/edit-state', "users#adminUserState");
     $router->post('/delete', "users#adminUsersDelete");
+});
+
+$router->scope('/cms-admin/roles', function($router) {
+    $router->get('/list', "roles#adminRolesList");
 });
