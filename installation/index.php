@@ -17,7 +17,7 @@ endif;
 require_once("lang/$lang.php");
 require_once("../admin/resources/lang/$lang.php");
 ?>
-<html lang="fr-FR">
+<html lang="<?=$lang?>">
 <head>
     <meta charset="utf-8"/>
     <title><?=INSTALL_TITLE?></title>
@@ -35,6 +35,8 @@ require_once("../admin/resources/lang/$lang.php");
     <!-- Theme style -->
     <link rel="stylesheet" href="../admin/resources/css/adminlte.min.css">
 
+    <link rel="stylesheet" href="../admin/resources/css/main.css">
+
     <script src="../admin/resources/vendors/jquery/jquery.min.js"></script>
 
     <script src="../admin/resources/js/main.js"></script>
@@ -51,14 +53,26 @@ require_once("../admin/resources/lang/$lang.php");
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light" id="navbarTop">
         <!-- Left navbar links -->
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
         </ul>
+
+        <ul class="navbar-nav ml-auto">
+
+            <!-- DARKMODE -->
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="darkModeToggle">
+                    <i class="far fa-lightbulb" id="darkModeIcon"></i>
+                </a>
+            </li>
+
+        </ul>
     </nav>
+
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
@@ -297,6 +311,11 @@ require_once("../admin/resources/lang/$lang.php");
                                     <b><?=INSTALL_BDD_PASS_ABOUT?> :</b> <?= $dbPassword ?><br>
                                     <b><?=INSTALL_BDD_NAME?> :</b> <?= $dbName ?>
                                 </p>
+                                <p>
+                                    <b><?= INSTALL_INFO_DOCUMENT_ROOT ?></b> <?= $_SERVER['DOCUMENT_ROOT']; ?><br>
+                                    <b><?= INSTALL_INFO_HOST ?></b><?= php_uname('n'); ?><br>
+                                    <b><?= INSTALL_INFO_IP ?></b><?= $_SERVER['SERVER_ADDR']; ?>:<?= $_SERVER['SERVER_PORT']; ?>
+                                </p>
                             <?php endif ?>
 
                         </div>
@@ -314,5 +333,7 @@ require_once("../admin/resources/lang/$lang.php");
 <script src="../admin/resources/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../admin/resources/js/adminlte.min.js"></script>
+<!-- DARKMODE -->
+<script src="../admin/resources/js/darkmode.js"></script>
 </body>
 </html>
