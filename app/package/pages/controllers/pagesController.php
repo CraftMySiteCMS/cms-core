@@ -35,10 +35,10 @@ class pagesController extends coreController
         $user = new usersModel();
 
         $page = new pagesModel();
-        $page->pageTitle = $_POST["news_title"];
-        $page->pageSlug = $_POST["news_slug"];
-        $page->pageContent = $_POST["news_content"];
-        $page->pageState = $_POST["page_state"];
+        $page->pageTitle = filter_input(INPUT_POST, "news_title");
+        $page->pageSlug = filter_input(INPUT_POST, "news_slug");
+        $page->pageContent = filter_input(INPUT_POST, "news_content");
+        $page->pageState = filter_input(INPUT_POST, "page_state");
         $page->userId = $user->getLoggedUser();
 
         $page->create();
@@ -62,11 +62,11 @@ class pagesController extends coreController
         usersController::isAdminLogged();
 
         $page = new pagesModel();
-        $page->pageId = $_POST["news_id"];
-        $page->pageTitle = $_POST["news_title"];
-        $page->pageSlug = $_POST["news_slug"];
-        $page->pageContent = $_POST["news_content"];
-        $page->pageState = $_POST["page_state"];
+        $page->pageId = filter_input(INPUT_POST, "news_id");
+        $page->pageTitle = filter_input(INPUT_POST, "news_title");
+        $page->pageSlug = filter_input(INPUT_POST, "news_slug");
+        $page->pageContent = filter_input(INPUT_POST, "news_content");
+        $page->pageState = filter_input(INPUT_POST, "page_state");
 
         $page->update();
 
@@ -75,7 +75,7 @@ class pagesController extends coreController
 
     public function adminPagesDelete(): void {
         $page = new pagesModel();
-        $page->pageId = $_POST['id'];
+        $page->pageId = filter_input(INPUT_POST, "id");
         $page->delete();
 
         $_SESSION['toaster'][0]['title'] = TOASTER_TITLE_INFORMATION;

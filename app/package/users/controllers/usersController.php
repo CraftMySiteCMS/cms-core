@@ -42,8 +42,8 @@ class usersController extends coreController
     public function adminLoginPost(): void
     {
         $infos = array(
-            "email" => $_POST['login_email'],
-            "password" => $_POST['login_password']
+            "email" => filter_input(INPUT_POST, "login_email"),
+            "password" => filter_input(INPUT_POST, "login_password")
         );
         $cookie = 0;
         if (isset($_POST['login_keep_connect']) && $_POST['login_keep_connect']) {
@@ -94,20 +94,20 @@ class usersController extends coreController
 
         $user = new usersModel();
         $user->userId = $id;
-        $user->userEmail = $_POST['email'];
-        $user->userPseudo = $_POST['pseudo'];
-        $user->userFirstname = $_POST['name'];
-        $user->userLastname = $_POST['lastname'];
-        $user->roleId = $_POST['role'];
+        $user->userEmail = filter_input(INPUT_POST, "email");
+        $user->userPseudo = filter_input(INPUT_POST, "pseudo");
+        $user->userFirstname = filter_input(INPUT_POST, "name");
+        $user->userLastname = filter_input(INPUT_POST, "lastname");
+        $user->roleId = filter_input(INPUT_POST, "role");
         $user->update();
 
         $_SESSION['toaster'][0]['title'] = USERS_TOASTER_TITLE;
         $_SESSION['toaster'][0]['type'] = "bg-success";
         $_SESSION['toaster'][0]['body'] = USERS_EDIT_TOASTER_SUCCESS;
 
-        if (!empty($_POST['pass'])) {
-            if ($_POST['pass'] === $_POST['pass_verif']) {
-                $user->setPassword(password_hash($_POST['pass'], PASSWORD_BCRYPT));
+        if (!empty(filter_input(INPUT_POST, "pass"))) {
+            if (filter_input(INPUT_POST, "pass") === filter_input(INPUT_POST, "pass_verif")) {
+                $user->setPassword(password_hash(filter_input(INPUT_POST, "pass"), PASSWORD_BCRYPT));
                 $user->updatePass();
             } else {
                 $_SESSION['toaster'][1]['title'] = USERS_TOASTER_TITLE_ERROR;
@@ -134,14 +134,14 @@ class usersController extends coreController
         self::isAdminLogged();
 
         $user = new usersModel();
-        $user->userEmail = $_POST['email'];
-        $user->userPseudo = $_POST['pseudo'];
-        $user->userFirstname = $_POST['name'];
-        $user->userLastname = $_POST['lastname'];
-        $user->roleId = $_POST['role'];
+        $user->userEmail = filter_input(INPUT_POST, "email");
+        $user->userPseudo = filter_input(INPUT_POST, "pseudo");
+        $user->userFirstname = filter_input(INPUT_POST, "name");
+        $user->userLastname = filter_input(INPUT_POST, "lastname");
+        $user->roleId = filter_input(INPUT_POST, "role");
         $user->create();
 
-        $user->setPassword(password_hash($_POST['pass'], PASSWORD_BCRYPT));
+        $user->setPassword(password_hash(filter_input(INPUT_POST, "pass"), PASSWORD_BCRYPT));
         $user->updatePass();
 
         header("location: ../users/list");
@@ -151,7 +151,7 @@ class usersController extends coreController
     {
         self::isAdminLogged();
 
-        if (usersModel::getLoggedUser() == $_POST['id']) {
+        if (usersModel::getLoggedUser() == filter_input(INPUT_POST, "id")) {
             $_SESSION['toaster'][0]['title'] = USERS_TOASTER_TITLE_ERROR;
             $_SESSION['toaster'][0]['type'] = "bg-danger";
             $_SESSION['toaster'][0]['body'] = USERS_STATE_TOASTER_ERROR;
@@ -159,10 +159,10 @@ class usersController extends coreController
             die();
         }
 
-        $state = ($_POST['actual_state']) ? 0 : 1;
+        $state = (filter_input(INPUT_POST, "actual_state")) ? 0 : 1;
 
         $user = new usersModel();
-        $user->userId = $_POST['id'];
+        $user->userId = filter_input(INPUT_POST, "id");
         $user->userState = $state;
         $user->changeState();
 
@@ -178,7 +178,7 @@ class usersController extends coreController
     {
         self::isAdminLogged();
 
-        if (usersModel::getLoggedUser() == $_POST['id']) {
+        if (usersModel::getLoggedUser() == filter_input(INPUT_POST, "id")) {
             $_SESSION['toaster'][0]['title'] = USERS_TOASTER_TITLE_ERROR;
             $_SESSION['toaster'][0]['type'] = "bg-danger";
             $_SESSION['toaster'][0]['body'] = USERS_DELETE_TOASTER_ERROR;
@@ -187,7 +187,7 @@ class usersController extends coreController
         }
 
         $user = new usersModel();
-        $user->userId = $_POST['id'];
+        $user->userId = filter_input(INPUT_POST, "id");
         $user->delete();
 
         $_SESSION['toaster'][0]['title'] = USERS_TOASTER_TITLE;
