@@ -23,13 +23,13 @@ if (isset($_POST['update_env'])):
 
     $dev = isset($_POST['dev_mode']) ? 1 : 0;
 
-    $host = $_POST['bdd_address'];
-    $username = $_POST['bdd_login'];
-    $password= $_POST['bdd_pass'];
-    $db = $_POST['bdd_name'];
-    $subFolder = $_POST['install_folder'];
+    $host = filter_input(INPUT_POST, "bdd_address");
+    $username = filter_input(INPUT_POST, "bdd_login");
+    $password= filter_input(INPUT_POST, "bdd_pass");
+    $db = filter_input(INPUT_POST, "bdd_name");
+    $subFolder = filter_input(INPUT_POST, "install_folder");
     $devMode = $dev;
-    $locale = $_POST['lang'];
+    $locale = filter_input(INPUT_POST, "lang");
     $timezone = date_default_timezone_get();
 
 
@@ -59,9 +59,14 @@ if (isset($_POST['update_env'])):
         fclose($envFile);
     }
 
-    $db = new PDO("mysql:host=".$_POST['bdd_address'],$_POST['bdd_login'],$_POST['bdd_pass']);
-    $db->exec("CREATE DATABASE IF NOT EXISTS ".$_POST['bdd_name'].";");
-    $db->exec("USE ".$_POST['bdd_name'].";");
+    $dbAdress = filter_input(INPUT_POST, "bdd_address");
+    $dbLogin = filter_input(INPUT_POST, "bdd_login");
+    $dbPassword = filter_input(INPUT_POST, "bdd_pass");
+    $dbName = filter_input(INPUT_POST, "bdd_name");
+
+    $db = new PDO("mysql:host=".$dbAdress,$dbLogin,$dbPassword);
+    $db->exec("CREATE DATABASE IF NOT EXISTS ".$dbName.";");
+    $db->exec("USE ".$dbName.";");
 
 
 
@@ -96,14 +101,14 @@ endif;
 if (isset($_POST['create_admin'])):
     $db = new PDO("mysql:host=".getenv('DB_HOST').";dbname=".getenv('DB_NAME')."", getenv('DB_USERNAME'), getenv('DB_PASSWORD'));
 
-    $userEmail = $_POST['email'];
-    $userUsername = $_POST['pseudo'];
-    $userPassword = password_hash($_POST['password'], PASSWORD_BCRYPT);
+    $userEmail = filter_input(INPUT_POST, "email");
+    $userUsername = filter_input(INPUT_POST, "pseudo");
+    $userPassword = password_hash(filter_input(INPUT_POST, "password"), PASSWORD_BCRYPT);
 
     $query = $db->prepare('INSERT INTO cms_users (user_email, user_pseudo, user_password, user_state, role_id, user_key, user_created, user_updated) VALUES (:user_email, :user_pseudo, :user_password, :user_state, :role_id, :user_key, NOW(), NOW())');
     $query->execute(array(
-        'user_email' => $_POST['email'],
-        'user_pseudo' => $_POST['pseudo'],
+        'user_email' => filter_input(INPUT_POST, "email"),
+        'user_pseudo' => filter_input(INPUT_POST, "pseudo"),
         'user_password' => $userPassword,
         'user_state' => 1,
         'role_id' => 10,

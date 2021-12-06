@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php session_start();
+require_once("required.php");
 require_once("../app/envBuilder.php");
 if (file_exists("../.env")) {
     (new Env("../.env"))->load();
