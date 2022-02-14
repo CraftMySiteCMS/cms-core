@@ -24,3 +24,13 @@ $router->scope('/cms-admin/pages', function ($router) {
     $router->post('/edit-state', "pages#adminUserState");
     $router->post('/delete', "pages#adminPagesDelete");
 });
+
+
+//Public pages
+$router->scope('/', function ($router){
+
+    $router->get('/:slug', function($slug) {
+        (new pagesController)->publicShowPage($slug);
+    })->with('slug', '.*?');
+
+});

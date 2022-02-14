@@ -3,6 +3,7 @@
 namespace CMS\Controller\pages;
 
 use CMS\Controller\coreController;
+use CMS\Controller\Menus\menusController;
 use CMS\Controller\Users\usersController;
 use CMS\Model\Pages\pagesModel;
 use CMS\Model\Users\usersModel;
@@ -73,7 +74,8 @@ class pagesController extends coreController
         echo $page->pageId;
     }
 
-    public function adminPagesDelete(): void {
+    public function adminPagesDelete(): void
+    {
         $page = new pagesModel();
         $page->pageId = filter_input(INPUT_POST, "id");
         $page->delete();
@@ -85,4 +87,29 @@ class pagesController extends coreController
         header("location: ../pages/list");
         die();
     }
+
+
+
+    /* Public section */
+    public function publicShowPage($slug): void
+    {
+
+        //Default controllers (important)
+        $core = new coreController();
+        $menu = new menusController();
+
+        $page = new pagesModel();
+
+        $page->pageSlug = $slug;
+        $page->fetch($page->pageSlug);
+        $pageContent = $page->pageContent;
+
+
+        //Include the public view file ("public/themes/$themePath/views/wiki/main.view.php")
+        view('pages', 'main', ["page" => $page,"pageContent" => $pageContent,
+            "slug" => $slug , "core" => $core, "menu" => $menu], 'public');
+    }
+
+
+
 }
