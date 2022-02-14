@@ -23,6 +23,9 @@ if(getenv("DEV_MODE")) {
     error_reporting(E_ALL);
 }
 
+/* Change the default timezone */
+date_default_timezone_set(getenv("TIMEZONE"));
+
 /* Loading global lang file */
 require_once("admin/resources/lang/" . getenv("LOCALE") . ".php");
 

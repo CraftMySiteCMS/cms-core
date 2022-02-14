@@ -3,7 +3,7 @@
 use CMS\Controller\coreController;
 use CMS\Controller\Users\usersController;
 
-function view($module, $view, $data = array(), $type, $noAdminControl = null){
+function view(string $module, string $view, ?array $data, string $type, ?string $noAdminControl = null){
     $toaster = bigToaster();
 
     extract($data);
