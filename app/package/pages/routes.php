@@ -27,7 +27,7 @@ $router->scope('/cms-admin/pages', function ($router) {
 
 
 //Public pages
-$router->scope('/', function ($router){
+$router->scope('/p/', function ($router){
 
     $router->get('/:slug', function($slug) {
         (new pagesController)->publicShowPage($slug);
